@@ -1,5 +1,117 @@
 \chapter{Monads and Comonads}
-
+\section{Definition of Monads and Comonads}
 \begin{definition}[Monad]
-    A $Monad$ $(T,\mu, \eta) $  
+    A \textit{Monad} $(T,\mu, \eta) $ in a Category $\mathcal{X}$ consists of
+    \begin{itemize}
+        \item an endofunctor $T\colon \mathcal{X} \to \mathcal{X}$
+        \item a natural transformation $\eta \colon \id_\mathcal{X} \implies T$ 
+        \item a natural transformation $\mu\colon T^2 \implies T $
+    \end{itemize}  
+    such that the following diagrams commute:
+    \begin{enumerate}[(a)]
+    \item 
+    \begin{minipage}{0.4\linewidth}
+    \centering
+    \begin{tikzcd}
+        T^3 \arrow[r] \arrow[d] 
+          & T^2 \arrow[d] \\
+        T^2 \arrow[r]
+          & T
+    \end{tikzcd}
+    \end{minipage}
+    $\mathrm{and}$
+    \begin{minipage}{0.4\linewidth}
+    \centering
+    \begin{tikzcd}
+        T \arrow[rd,"\id_T"'] \arrow[r, "\eta T"] 
+        & T^2 \arrow[d,"\mu"] 
+        & T \arrow[l,"T \eta "'] \arrow[ld,"\id_T"]\\
+        & T
+    \end{tikzcd}
+    \end{minipage}
+    % der ' nach dem Text ändert die Position der Pfeil-Beschriftung
+\end{enumerate}
 \end{definition}
+
+\begin{example}[preorder]
+    Recall: A \textit{preorder} $(\mathcal{P},\le)$ is a category with $\mathcal{P}$ as objects and 
+    a morphism between $X$ and $Y$ iff $X \le Y$.
+A functor $T\colon \mathcal{P} \to \mathcal{P}$ is thus a monotonic function $\mathcal{P}\to \mathcal{P}$
+($x \le y \implies Tx\le Ty$).
+The existence of the natural transformations $\eta$ is equivalent to
+\[x \le Tx \ \forall x \in \mathcal{P}\]
+and the existence of $\mu$ is equivalent to
+\[T(Tx) \le Tx \ \forall x \in \mathcal{P}\] 
+because there is at most one morphism $x \to y$, so the neccessary diagrams commute trivially.\\
+Now suppose $\mathcal{P}$ is a \textit{partial order}, i.e. $x \le y \le x \implies x = y \ \forall x,y \in \mathcal{P}$. \\
+Then:
+\begin{align*}
+    x \le Tx \implies Tx \le T(Tx) \\
+    T(Tx) \le Tx \implies Tx = T(Tx)
+\end{align*}
+so a Monad $T$ in a partial order $\mathcal{P}$ is a \textit{closure operation} in $\mathcal{P}$, i.e. 
+a monotonic function $T \colon \mathcal{P} \to \mathcal{P}$ 
+with $x \le Tx$ and $T(Tx)=Tx \ \forall x \in \mathcal{P}.$ \\
+Now every topological space $X$ induces a partial order $\mathcal{P} = (\mathscr{P}(X),\subseteq)$.
+Here an example for a closure operation is taking the topological closure $A \mapsto \overline{A}$,
+since it holds for all $A \subseteq X$ that $A \subseteq \overline{A}$ and
+$\overline{\overline{A}} = \overline{A}$.
+\end{example}
+
+\begin{definition}[Comonad]
+    A \textit{Comonad} $(L,\eps, \omega) $ in a Category $\mathcal{A}$ consists of
+    \begin{itemize}
+        \item an endofunctor $L\colon \mathcal{A} \to \mathcal{A}$
+        \item a natural transformation $\eps \colon L \implies \id_{\mathcal{A}}$ 
+        \item a natural transformation $\omega\colon L \implies L^2 $
+    \end{itemize}  
+    such that the following diagrams commute:
+    \begin{enumerate}[(a)]
+    \item 
+    \begin{minipage}{0.4\linewidth}
+    \centering
+    \begin{tikzcd}
+        L \arrow[r,"L\omega"] \arrow[d,"\omega L"'] 
+          & L^2 \arrow[d,"L\omega"] \\
+        L^2 \arrow[r,"\omega L"]
+          & L^3
+    \end{tikzcd}
+    \end{minipage}
+    $\mathrm{and}$
+    \begin{minipage}{0.4\linewidth}
+    \centering
+    \begin{tikzcd}
+        L   
+        & L^2 \arrow[l, "\eps L"'] \arrow[r,"L \eps "]  
+        & L  \\
+        & L \arrow[lu,"\id_L"] \arrow[u,"\omega"'] \arrow[ru,"\id_L"']
+    \end{tikzcd}
+    \end{minipage}
+    % der ' nach dem Text ändert die Position der Pfeil-Beschriftung
+\end{enumerate}
+\end{definition}
+
+
+\begin{definition}[Morphism of monads]
+    Let $\mathcal{X}$ be a category, let $(T,\eta,\mu)$ and $(T',\eta',\mu')$ be monads in $\mathcal{X}$.
+    We say that a natural transformation $\nat[\delta]{T}{T'}$ is a \textit{morphism of monads} if it preserves
+    the unit and the multiplication, i.e. the following diagrams commute:
+    \[\begin{tikzcd}
+        \id_x \arrow[rd,"\eta'_x"'] \arrow[r, "\eta_x"] & Tx \arrow[d,"\delta_x"] \\
+                                    & T'x
+    \end{tikzcd}
+        \]
+    \[\begin{tikzcd}
+        T^2x \arrow[r,"\mu_x"] \arrow[d,"\delta T' \circ T\delta"'] 
+          & Tx \arrow[d,"\delta_x"] \\
+        T'^2 \arrow[r,"\mu'_x"]
+          & T'x
+    \end{tikzcd}
+    \vadjust{\todo{show that the other composition is the same(siehe iPad)}} 
+    %vadjust allows todo in math-mode
+    \]   
+\end{definition}
+\begin{definition}[Morphism of comonas]
+    \todo{definition}
+\end{definition}
+\end{document}

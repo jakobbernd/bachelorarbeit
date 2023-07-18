@@ -50,8 +50,8 @@
 \mathtoolsset{centercolon} % sorgt dafür dass := und =: besser aussehen
 \usepackage{mathdots} % sorgt dafür, dass Punte wie zB \ddots besser aussehen
 \newcommand{\Underbrace}[2]{{\underbrace{#1}_{#2}}} % Underbrace als Befehl in LaTeX-Syntax (und ohne Spacing-Probleme mit nachfolgenden Operatoren...)
-\renewcommand{\le}{\leqslant} % ich finde Kleinergleich mit schrägen Strich schöner
-\renewcommand{\ge}{\geqslant}
+%\renewcommand{\le}{\leqslant} % ich finde Kleinergleich mit schrägen Strich schöner
+%\renewcommand{\ge}{\geqslant}
 
 %-- charakteristische-Funktion-/Indikatorfunktion-Eins '\ind'
 \usepackage{silence}
@@ -80,6 +80,9 @@
 %-- eigene Befehle
 \DeclareMathOperator{\id}{id}
 \DeclareMathOperator{\Hom}{Hom}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\nat}[3][\eta]{#1 \colon #2 \implies #3}
 
 
 
@@ -183,4 +186,5 @@
 \declaretheorem[name=Lemma,sharenumber=definition,style=mainstyle]{lemma}
 \declaretheorem[name=Proposition,sharenumber=definition,style=mainstyle]{proposition}
 
-\declaretheorem[name=Beweis,numbered=no,style=beweise]{beweis}
+\declaretheorem[name=Proof,numbered=no,style=beweise]{beweis}
+\declaretheorem[name=Example,numbered=yes,style=definition]{example}
