@@ -4,9 +4,6 @@ INPUT c:/texlive/2023/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt
 INPUT c:/Users/jakob/OneDrive/Desktop/Uni/latex/bachelorarbeit/bachelorarbeit.tex
 OUTPUT bachelorarbeit.log
-INPUT ./config/preamble.tex
-INPUT ./config/preamble.tex
-INPUT ./config/preamble.tex
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrreprt.cls
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrreprt.cls
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrkbase.sty
@@ -29,6 +26,8 @@ INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrsize10pt.clo
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrsize10pt.clo
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrsize10pt.clo
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/typearea.sty
+INPUT ./config/preamble.sty
+INPUT ./config/preamble.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/xcolor/xcolor.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/xcolor/xcolor.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/graphics-cfg/color.cfg
