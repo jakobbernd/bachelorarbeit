@@ -4,8 +4,8 @@
     A \textit{Monad} $(T,\mu, \eta) $ in a Category $\mathcal{X}$ consists of
     \begin{itemize}
         \item an endofunctor $T\colon \mathcal{X} \to \mathcal{X}$
-        \item a natural transformation $\eta \colon \id_\mathcal{X} \implies T$ 
-        \item a natural transformation $\mu\colon T^2 \implies T $
+        \item a natural transformation $\eta \colon \id_\mathcal{X} \Rightarrow T$ 
+        \item a natural transformation $\mu\colon T^2 \Rightarrow T $
     \end{itemize}  
     such that the following diagrams commute:
     \begin{enumerate}[(a)]
@@ -62,8 +62,8 @@ $\overline{\overline{A}} = \overline{A}$.
     A \textit{Comonad} $(L,\eps, \omega) $ in a Category $\mathcal{A}$ consists of
     \begin{itemize}
         \item an endofunctor $L\colon \mathcal{A} \to \mathcal{A}$
-        \item a natural transformation $\eps \colon L \implies \id_{\mathcal{A}}$ 
-        \item a natural transformation $\omega\colon L \implies L^2 $
+        \item a natural transformation $\eps \colon L \Rightarrow \id_{\mathcal{A}}$ 
+        \item a natural transformation $\omega\colon L \Rightarrow L^2 $
     \end{itemize}  
     such that the following diagrams commute:
     \begin{enumerate}[(a)]
@@ -111,7 +111,6 @@ $\overline{\overline{A}} = \overline{A}$.
     %vadjust allows todo in math-mode
     \]   
 \end{definition}
-\begin{definition}[Morphism of comonas]
+\begin{definition}[Morphism of comonads]
     \todo{definition}
 \end{definition}
-\end{document}

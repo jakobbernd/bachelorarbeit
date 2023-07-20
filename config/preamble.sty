@@ -84,6 +84,58 @@
 \newcommand{\eps}{\varepsilon}
 \newcommand{\nat}[3][\eta]{#1 \colon #2 \implies #3}
 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Fp}{\mathbb{F}_p}
+\newcommand{\W}{\mathbb{W}}
+
+\newcommand{\hin}{(\Rightarrow)}
+\newcommand{\rueck}{(\Leftarrow)}
+
+\newcommand{\cat}[1]{
+  \mathbf{#1}
+  }
+
+% Steffen's line break
+\newcommand{\sectiondone}{\hfill \break \rightline{\mbox{\rotatebox{145}{${\|}$}}}}
+
+% Steffen's small qed
+\newcommand{\smallqed}{\mbox{\rotatebox{145}{${\|}$}}}
+
+%theorem umgebung neu
+% Claim and smallproof --------------------------------------------------------
+% For use inside of proofs.
+
+\newcounter{claimcount}
+\setcounter{claimcount}{-1}
+\newenvironment{bigproof}{%
+	\setcounter{claimcount}{0}
+	\begin{beweis}
+}{%
+	\end{beweis}
+	\setcounter{claimcount}{-1}
+}
+
+\newtheorem{claim}[claimcount]{Claim}
+
+\newtheorem*{claim*}{Claim}
+
+
+\newenvironment{smallproof}{%
+	\renewcommand{\qedsymbol}{\smallqed}
+	\begin{beweis}[Proof of claim\ifnum\c@claimcount<1 
+		\else
+			\:\theclaimcount 
+		\fi]
+}{%
+	\end{beweis}
+	\renewcommand{\qedsymbol}{\square}
+}
+
+% -----------------------------------------------------------------------------
+
 
 
 %-- kommutative Diagramme
@@ -181,8 +233,8 @@
 {beweise}
 
 \declaretheorem[name=Definition,parent=section,style=mainstyle]{definition}
-\declaretheorem[name=Satz,sharenumber=definition,style=mainstyle]{satz}
-\declaretheorem[name=Korollar,sharenumber=definition,style=mainstyle]{korollar}
+\declaretheorem[name=Theorem,sharenumber=definition,style=mainstyle]{theorem}
+\declaretheorem[name=Corollary,sharenumber=definition,style=mainstyle]{cor}
 \declaretheorem[name=Lemma,sharenumber=definition,style=mainstyle]{lemma}
 \declaretheorem[name=Proposition,sharenumber=definition,style=mainstyle]{proposition}
 

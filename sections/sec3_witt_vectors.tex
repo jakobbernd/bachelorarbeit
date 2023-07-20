@@ -1,0 +1,310 @@
+\chapter{Witt vectors}
+\section{Construction of the witt vectors}
+\begin{definition}[truncation set]
+    Let $\N$ be the set of positive integers and let $S\subseteq
+    \N$ be a subset with the property that $\forall n\in \N:$
+    if $d$ is a divisor of $n$, then $d\in S$.
+    We then say that S is a \textit{truncation set}.
+\end{definition}
+As a set, we define the \textit{big Witt ring} $\W_S(A)$ to be $A^S$,
+we will give it a unique ring structure, such that the \textit{ghost map}
+is a ring homomorphism.
+\begin{definition}[ghost map]
+    We define $w \colon \W_S(A) \to A^S$
+    by $(a_n)_{n \in S} \mapsto (w_n)_{n \in S}$ where 
+    \[
+        w_n = \sum_{d \mid n} d a_d^{n/d}
+    \]
+\end{definition}
+\begin{lemma}[Dwork]
+    Suppose that for every prime number
+$p$ there exists a ring homomorphism $\phi_p \colon A \to A$ with
+the property that $\phi_p(a) \equiv a^p$ modulo $pA$. Then for every
+sequence $x = (x_n)_{n \in S}$, the following 
+are equivalent:
+\begin{enumerate}[(i)]
+\item The sequence $x$ is in the image of the ghost map
+$w \colon \mathbb{W}_S(A) \to A^S.$
+\item For every prime number $p$ and every $n \in S$
+with $v_p(n) \geqslant 1$,
+$$x_n \equiv \phi_p(x_{n/p}) \hskip8mm \text{modulo $p^{v_p(n)}A$.}$$
+\end{enumerate}    
+\end{lemma}
+\begin{bigproof}
+    $\hin$ Suppose $x$ is in the image of the ghost map, that means there is a sequence 
+    $a = (a_n)_{n \in S}$ such that $x_n = w_n(a)$ for all $n \in S$. 
+    We calculate:
+    \[
+        \phi(x_{n/p}) = \phi(w_{n/p}(a)) = \phi(\sum_{d \mid n/p} d a_d^{n/pd}) =
+        \sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd}) 
+    \] 
+    since $\phi$ is a ring homomorphism and $d \in \N$.
+    \begin{claim}
+        $\sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd}) \equiv 
+        \sum_{d \mid n/p} d \cdot a_d^{n/d}$ \hskip8mm mod $p^{v_p(n)}A$.
+    \end{claim}
+    \begin{smallproof}
+        \todo{}
+    \end{smallproof}
+    
+    \begin{claim}
+        $\sum_{d \mid n/p} d \cdot a_d^{n/d} \equiv 
+        \sum_{d \mid n} d \cdot a_d^{n/d} \hskip8mm mod \ p^{v_p(n)}A$
+    \end{claim} 
+    \begin{smallproof}
+        \todo{}
+    \end{smallproof}
+    so we get
+    \[
+        \phi(x_{n/p}) \equiv \sum_{d \mid n} d \cdot a_d^{n/d} = w_n(a) = x_n \hskip8mm mod \ p^{v_p(n)}A.
+        \]
+    
+    $\rueck$ Let $(x_n)_{n \in S}$ be a sequence such that 
+    $x_n \equiv \phi_p(x_{n/p}) \hskip8mm mod \ p^{v_p(n)}A \ \forall p\ $prime$, n\in S, v_p(n) \geqslant 1.$
+    Define $(a_n)_{n \in S}$ with $w_n(a) = x_n$ as follows:
+    \[a_1 := x_1\]
+    and if $a_d$ has been chosen for all $d \mid n$ such that $w_d(a) = x_d$ we see that
+    \begin{align*}
+            x_n &\equiv \phi_p(x_{n/p}) \hskip8mm mod \ p^{v_p(n)}A \\
+                &= \phi_p(\sum_{d \mid n/p} d \cdot a_d^{n/pd}) \\
+                &= \sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd})
+    \end{align*}
+ \todo{finish proof}
+\end{bigproof}
+We will often need the following
+\begin{lemma}
+    if $A$ is a torsion-free ring, the ghost map is injective.
+\end{lemma}
+Now we can finish the construction of the Witt vectors:
+\begin{theorem}
+    There exists a unique ring structure such that the ghost map 
+    \[
+      w:\W_S(A) \to A^s  
+    \]
+    is a natural transformation of functors from rings to rings.
+\end{theorem}
+\begin{bigproof}
+    
+\end{bigproof}
+\begin{cor}
+    $w_n \colon \W_S(A) \to A$ is a natural transformation for all $n \in S$.
+\end{cor}
+\begin{proposition}
+    $\W_S$ is a functor $\cat{CRing} \to \cat{CRing}$.
+\end{proposition}
+\section{The Verschiebung, Frobenius and Teichmüller maps}
+If $S\subseteq \N$ is a truncation set, then
+\[
+   S/n := \{d \in \N \mid nd \in S\}
+\]
+is again a truncation set.
+\begin{definition}[Verschiebung]
+    Define 
+    \[
+        V_n \colon \W_{S/n} \to \W_S(A);\  
+        V_n((a_d)_{d \in S/n})_m := 
+        \begin{cases}
+            a_d, &\quad \text{if $m=n \cdot d$} \\
+            0,  &\quad \text{else}
+        \end{cases}
+    \]
+    which is called the \textit{n-th Verschiebung map}. Furthermore define
+    \[
+        \widetilde{V_n} \colon A^{S/n} \to A^S;\ 
+        \widetilde{V_n}((x_d)_{d \in S/n})_m := 
+        \begin{cases}
+            n \cdot x_d, &\quad \text{if $m=n \cdot d$} \\
+            0,  &\quad \text{else}
+        \end{cases}
+    \]
+\end{definition}
+\begin{lemma}
+    The Verschiebung map $V_n$ is additive.
+\end{lemma}
+\section{The comonad structure of witt vectors}
+We will need the following lemma:
+\begin{lemma}
+    Let $m \in \Z$. If $m$ is a non-zero divisor in A, then it is a
+    non-zero divisor in $\W_S(A)$ as well.
+\end{lemma}
+\begin{smallproof}
+    \[
+    \begin{tikzcd}
+        0 \arrow[r]
+          & A \arrow[r,"V_n"]
+            & \W_S(A) \arrow[r,"R_T^S"]
+              & W_T(A) \arrow[r]
+                & 0
+    \end{tikzcd}
+    \]
+    which we can extend to the following commutative diagram:
+    \[
+    \begin{tikzcd}
+        0 \arrow[r] 
+        & A \arrow[r] \arrow[d,"\cdot m"] 
+          & \W_S(A) \arrow[r] \arrow[d,"\cdot m"]
+            & \W_T(A) \arrow[d,"\cdot m"] \arrow[r]
+                & 0 \\
+        0 \arrow[r]
+           & A \arrow[r]
+            & \W_S(A) \arrow[r]
+              & \W_T(A) \arrow[r]
+                & 0 
+    \end{tikzcd}
+    \]
+    \todo{finish}
+\end{smallproof}
+\begin{definition}
+    $\W(A) := \W_{\N}(A)$
+\end{definition}
+For the construction of a natural transformation $\W(A) \to \W(\W(A))$
+we want to use Lemma ??? again. Hence we first show:
+\begin{lemma}
+    Let $p$ be a prime number, let $A$ be any ring.
+    Then the ring homomorphism $F_p \colon \W(A) \to \W(A)$  
+    satisfies $F_p(a) \equiv a^p \ mod \ pA.$
+\end{lemma}
+\begin{proposition}
+    There exists a unique natural transformation
+    \[
+      \Delta \colon \W(A) \to \W(\W(A))  
+    \]
+    such that $w_n(\Delta(a))=F_n(A)$ for all $a \in A, n \in \N$.
+\end{proposition}
+\begin{theorem}
+    The functor $\W(\_) \colon \cat{CRing} \to \cat{CRing}$ together with the
+    natural transformations $\Delta \colon \W \Rightarrow \W^2,$ $w_1 \colon 
+    \W \Rightarrow \id_{\cat{CRing}}$ form a comonad.
+\end{theorem}
+\begin{bigproof}
+    \begin{claim*}
+        
+        \begin{tikzcd}
+            \W(A) \arrow[r,"\Delta_A"] \arrow[d,"\Delta_A"] \arrow[dr,phantom,"\#"]
+             & \W(\W(A)) \arrow[d,"\W(\Delta_A)"] \\
+            \W(\W(A)) \arrow[r,"\Delta_{\W(A)}"]
+              & \W(\W(\W(A)))
+        \end{tikzcd}
+        commutes.
+        
+    \end{claim*}
+    \begin{smallproof}
+        evaluating the ghost coordinates leads to:
+        \[
+            \begin{tikzcd}
+                \W(A) \arrow[r,"\Delta_A",] \arrow[d,"\Delta_A"] \arrow[rr,bend left,"F_A",dotted]
+                 & \W(\W(A)) \arrow[d,"\W(\Delta_A)"] \arrow[r,"w",dotted] 
+                 & \W(A)^{\N} \arrow[d,"\Delta_A^{\N}",dotted]\\
+                \W(\W(A)) \arrow[r,"\Delta_{\W(A)}"] \arrow[rr,bend right,"F_{\W_A}",dotted]
+                  & \W(\W(\W(A))) \arrow[r,"w",blue]
+                  & \W(\W(A))^{\N}
+            \end{tikzcd}  
+        \]
+        which simplifies to
+        \[
+            \begin{tikzcd}
+                \W(A) \arrow[r,"F_A"] \arrow[d,"\Delta_A"] 
+                 & \W(A)^{\N} \arrow[d,"\Delta_A^{\N}"] \\
+                \W(\W(A)) \arrow[r,"F_{\W(A)}"]
+                  & \W(\W(A))^{\N}
+            \end{tikzcd}
+        \]
+        now it suffices to show for an arbitrary n that the following diagram commutes:
+        \[
+            \begin{tikzcd}
+                \W(A) \arrow[r,"F_{n_A}"] \arrow[d,"\Delta_A"] 
+                 & \W(A) \arrow[d,"\Delta_A"] \\
+                \W(\W(A)) \arrow[r,"F_{n_{\W(A)}}"]
+                  & \W(\W(A))
+            \end{tikzcd}
+        \]
+        evaluating the ghost coordinates again, keeping in mind that by Lemma 9, 
+        $w \colon \W(\W(A)) \to \W(A)^{\N}$ is injective as well, we get
+        \[
+            \begin{tikzcd}
+                \W(A) \arrow[r,"F_{n_A}"] \arrow[d,"\Delta_A"] 
+                 & \W(A) \arrow[d,"\Delta_A"] \arrow[dd,bend left = 60,"F_A",dotted]\\
+                \W(\W(A)) \arrow[r,"F_{n_{\W(A)}}"] \arrow[d,"w",dotted]
+                  & \W(\W(A)) \arrow[d,"w",blue] \\
+                \W(A)^{\N} \arrow[r,"\widetilde{F_n}_{\W(A)}",dotted]
+                & \W(A)^{\N}
+            \end{tikzcd}
+        \]
+        using the fact that 
+        \begin{tikzcd}
+            \W(\W(A)) \arrow[d,"w",dotted] \arrow[rd,"w_{nm}",dotted]\\
+            \W(A)^{\N} \arrow[r,"\widetilde{F_n}_{\W(A)}",dotted]
+            & \W(A)^{\N}
+        \end{tikzcd}
+        commutes, we can simplify the situation to
+        \[
+            \begin{tikzcd}
+            \W(A) \arrow[r,"F_n"] \arrow[d,"\Delta_A"] \arrow[rd,"F_{nm}",dotted]
+                 & \W(A) \arrow[d,"F_m"] \\
+                \W(\W(A)) \arrow[r,"w_{nm}"] 
+                  & \W(A) \\
+            \end{tikzcd}
+        \]
+        which can again be simplified to
+        \[
+            \begin{tikzcd}
+                \W(A) \arrow[r,"F_n"] \arrow[rd,"F_{nm}"']
+                & \W(A) \arrow[d,"F_m"]\\
+                & \W(A)
+            \end{tikzcd}
+        \]
+        now this commutes by ???, hence we are finished.
+    \end{smallproof}
+    \begin{claim*}
+        \begin{tikzcd}
+            \W(A) \arrow[d,"\Delta_A"'] \arrow[rd,"\id_{\W(A)}"]\\
+            \W(\W(A)) \arrow[r,"\W(\eps_A)"']
+            & \W(A) 
+        \end{tikzcd}
+        commutes.
+    \end{claim*}
+    \begin{smallproof}
+        evaluate the ghost coordinates:
+        \[
+            \begin{tikzcd}
+                \W(A) \arrow[d,"\Delta_A"'] \arrow[rd,"\id_{\W(A)}"] 
+                \arrow[dd,bend right = 60,"F"',dotted]\\
+                \W(\W(A)) \arrow[r,"\W(\eps_A)"'] \arrow[d,"w",dotted]
+                & \W(A) \arrow[d,"w",blue] \\
+                \W(A)^{\N} \arrow[r,"\eps_A^{\N}",dotted]
+                & A^{\N}
+            \end{tikzcd}
+        \]
+    we can then simplify to
+    \[
+        \begin{tikzcd}
+            \W(A) \arrow[d,"F"'] \arrow[rd,"w"] \\
+            \W(A)^{\N} \arrow[r,"\eps_A^{\N}"'] 
+            & A^{\N}
+        \end{tikzcd}
+    \]
+    now it suffices to show for all $n$ that 
+    \[
+      \begin{tikzcd}
+        \W(A) \arrow[d,"F_n"'] \arrow[dr,"w_n"]\\
+        \W(A) \arrow[r,"\eps_A"'] 
+        & A
+      \end{tikzcd}
+    \]
+    commutes, which is true by ??? ($\eps = w_1$).
+
+    \end{smallproof}
+    \begin{claim*}
+        \begin{tikzcd}
+            & \W(A) \arrow[d,"\Delta_A"] \arrow[ld,"\id_{\W(A)}"'] \\
+            \W(\W(A))  & \W(A) \arrow[l,"\eps_{\W(A)}"]
+        \end{tikzcd}
+        commutes.
+    \end{claim*}
+    \begin{smallproof} 
+        Let $a \in \W(A)$. \\
+        $\eps(\Delta_A(a)) = w_1(\Delta_A(a)) = F_1(a) = a$,
+        since $F_1 = \id_{\W(A)}$.
+    \end{smallproof}
+    This concludes the proof.
+\end{bigproof}
