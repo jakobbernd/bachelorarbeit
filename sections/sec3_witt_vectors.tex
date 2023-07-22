@@ -308,3 +308,59 @@ we want to use Lemma ??? again. Hence we first show:
     \end{smallproof}
     This concludes the proof.
 \end{bigproof}
+\section{The Teichmüller map induces a morphism of comonads}
+We now consider another example of a comonad; the \textit{free monoid comonad}.
+\begin{definition}[monoid ring]
+    Let $R$ be a ring and let $G$ be a monoid.
+    The \textit{monoid ring} of $G$ over $R$, denoted $R[G]$ or $RG$
+    is the set of formal finite sums $\sum_{g \in G}r_g \cdot g$
+    with addition and multiplication defined by:
+    \begin{align*}
+        \sum_{g \in G}r_g \cdot g + \sum_{g \in G}s_g \cdot g
+        & := \sum_{g \in G}(r_g + s_g)\cdot g \\
+        \sum_{g \in G}r_g \cdot g \cdot \sum_{g \in G}s_g \cdot g
+        & := \sum_{g \in G}(\sum_{k \cdot l = g} r_k \cdot s_l)\cdot g 
+    \end{align*}
+\end{definition}
+\begin{example}
+    $R = \R, G = \{x^n \mid n \in \N\} \implies RG = \R[X]$
+\end{example}
+\begin{proposition}
+$R[G]$ together with the ring homomorphism $\alpha \colon R \to R[G]$;
+$r \mapsto r \cdot 1$ and the monoid homomorphism $\beta \colon 
+G \to R[G]$; $g \mapsto 1 \cdot g$ 
+enjoys the following universal property:
+\[
+  \alpha(r) \cdot \beta(g) = \beta(g) \cdot \alpha(r)
+   \quad \forall r \in R, g \in G
+\]
+and if $(S,\alpha',\beta')$ is another such triple with
+$\alpha'(r) \cdot \beta'(g) = \beta'(g) \cdot \alpha'(r)
+   \quad \forall r \in R, g \in G$,
+there is a unique monoid homomorphism $\gamma \colon R[G] \to S$
+such that the following diagram commutes:
+\[
+    \begin{tikzcd}
+        & S \\
+        R \arrow[r,"\alpha"'] \arrow[ur,"\alpha'"] 
+        & R[G] \arrow[u,"\gamma",dotted] 
+        & G \arrow[l,"\beta"] \arrow[ul,"\beta'"']
+    \end{tikzcd}
+\]
+\end{proposition}
+
+Let $G \colon \cat{CRing} \to \cat{CMon}$ be the forgetful functor and
+let $F \colon \cat{CMon} \to \cat{CRing}$ be the \textit{free monoid ring functor},
+$M \mapsto \Z M$.
+\begin{proposition}
+    There is an adjoint situation \begin{tikzcd}
+        \cat{CMon}
+            \arrow[r, bend left = 25, "F"{name=D}]
+            \arrow[r, leftarrow, bend right = 25, swap, "G"{name=C}]
+              \arrow[d, from=D, to=C, phantom, "{\bot}"]
+          & \cat{CRing}
+    \end{tikzcd}
+\end{proposition}
+\begin{theorem}
+    $\tau \colon \Z A \to \W(A)$ is a morphism of comonads.
+\end{theorem}
