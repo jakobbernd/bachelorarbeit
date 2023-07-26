@@ -46,6 +46,8 @@
 
 
 
+
+
 %-- Mathematikpakete und Einstellungen
 \mathtoolsset{centercolon} % sorgt dafür dass := und =: besser aussehen
 \usepackage{mathdots} % sorgt dafür, dass Punte wie zB \ddots besser aussehen
@@ -217,7 +219,7 @@
 	headfont=\sffamily\bfseries,
 	notefont=\normalfont\sffamily,
 	bodyfont=\normalfont,
-	headformat=\NUMBER\ \NAME\NOTE,
+	headformat= \NAME \ \NUMBER\NOTE, %format des titels
 	headpunct={},
 	postheadspace=1ex,
 	postheadhook=\theorembookmark,
@@ -232,7 +234,7 @@
 	qed=\qedsymbol]%
 {beweise}
 
-\declaretheorem[name=Definition,parent=section,style=mainstyle]{definition}
+\declaretheorem[name=Definition,parent=chapter,style=mainstyle]{definition}
 \declaretheorem[name=Theorem,sharenumber=definition,style=mainstyle]{theorem}
 \declaretheorem[name=Corollary,sharenumber=definition,style=mainstyle]{cor}
 \declaretheorem[name=Lemma,sharenumber=definition,style=mainstyle]{lemma}
