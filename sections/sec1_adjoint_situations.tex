@@ -17,7 +17,7 @@
     \end{tikzcd},
     the following are equivalent:
     \begin{enumerate}[(a)]
-        \item $\exists \eta\colon \id_B \to GF$ and $\epsilon\colon FG \to \id_A$ 
+        \item $\exists \eta\colon \id_B \Rightarrow GF$ and $\epsilon\colon FG \Rightarrow \id_A$ 
         such that $\forall a \in Ob(A), b \in Ob(B)$ the following two diagrams commute:
         \[
             \begin{tikzcd}
@@ -32,24 +32,24 @@
         \]
         \item $\forall a \in Ob(A), b \in Ob(B)$ there is a bijection 
         \[
-        \phi_{a,b}\colon\hom(F(b),a)\to \hom(b,G(a))
+        \phi_{a,b}\colon\Hom(F(b),a)\to \Hom(b,G(a))
         \]
         which is natural in a and b, i.e. for $p\colon a\to a':$
         \[
             \begin{tikzcd}
-                \hom(F(b),a) \arrow[r] \arrow[d] 
-                  & \hom(b,G(a)) \arrow[d] \\
-                \hom(F(b),a') \arrow[r]
-                  & \hom(b,G(a'))
+                \Hom(F(b),a) \arrow[r] \arrow[d] 
+                  & \Hom(b,G(a)) \arrow[d] \\
+                \Hom(F(b),a') \arrow[r]
+                  & \Hom(b,G(a'))
             \end{tikzcd}
         \]
         and for $q\colon b \to b':$
         \[
             \begin{tikzcd}
-                \hom(F(b'),a) \arrow[r] \arrow[d] 
-                  & \hom(b',G(a)) \arrow[d] \\
-                \hom(F(b),a) \arrow[r]
-                  & \hom(b,G(a))
+                \Hom(F(b'),a) \arrow[r] \arrow[d] 
+                  & \Hom(b',G(a)) \arrow[d] \\
+                \Hom(F(b),a) \arrow[r]
+                  & \Hom(b,G(a))
             \end{tikzcd}
         \]
     \end{enumerate}
@@ -58,7 +58,7 @@
     $(a)\implies (b):$ \\
     define 
     \[
-        \phi_{a,b}\colon \hom(F(b),a)\to \hom(b,G(a))
+        \phi_{a,b}\colon \Hom(F(b),a)\to \Hom(b,G(a))
     \] by $g \mapsto G(g) \circ \eta_b $
     for $g\colon F(b)\to a$
 \end{beweis}

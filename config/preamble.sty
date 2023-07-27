@@ -46,7 +46,7 @@
 
 
 
-
+\setlength\parindent{0pt} %entfernt die Latex-Absatz-Einrückung
 
 %-- Mathematikpakete und Einstellungen
 \mathtoolsset{centercolon} % sorgt dafür dass := und =: besser aussehen
@@ -84,7 +84,7 @@
 \DeclareMathOperator{\Hom}{Hom}
 
 \newcommand{\eps}{\varepsilon}
-\newcommand{\nat}[3][\eta]{#1 \colon #2 \implies #3}
+\newcommand{\nat}[3][\eta]{#1 \colon #2 \Rightarrow #3}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
@@ -218,7 +218,7 @@
 \declaretheoremstyle[%
 	headfont=\sffamily\bfseries,
 	notefont=\normalfont\sffamily,
-	bodyfont=\normalfont,
+	bodyfont=\itshape, %in theoremen ist der text kursiv
 	headformat= \NAME \ \NUMBER\NOTE, %format des titels
 	headpunct={},
 	postheadspace=1ex,
@@ -234,11 +234,13 @@
 	qed=\qedsymbol]%
 {beweise}
 
-\declaretheorem[name=Definition,parent=chapter,style=mainstyle]{definition}
+\declaretheorem[name=Definition,parent=chapter,style=definition]{definition}
 \declaretheorem[name=Theorem,sharenumber=definition,style=mainstyle]{theorem}
 \declaretheorem[name=Corollary,sharenumber=definition,style=mainstyle]{cor}
 \declaretheorem[name=Lemma,sharenumber=definition,style=mainstyle]{lemma}
 \declaretheorem[name=Proposition,sharenumber=definition,style=mainstyle]{proposition}
+
+\declaretheorem[name=Remark,sharenumber=definition,style=definition]{remark}
 
 \declaretheorem[name=Proof,numbered=no,style=beweise]{beweis}
 \declaretheorem[name=Example,numbered=yes,style=definition]{example}

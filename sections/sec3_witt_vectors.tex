@@ -1,5 +1,20 @@
 \chapter{Witt vectors}
 \section*{Construction of the witt vectors}
+
+Recall that for every prime number $p$, we have the \textit{p-adic valuation map}:
+\begin{definition}[p-adic valuation]
+   $v_p \colon \mathbb{Z} \to \mathbb{N} \cup\{\infty\}$
+    is defined by 
+    \[
+        v_p(n)=
+        \begin{cases}
+        \mathrm{max}\{k \in \mathbb{N} : p^k \mid n\} & \text{if } n \neq 0\\
+        \infty & \text{if } n=0
+        \end{cases} 
+    \]
+
+\end{definition}
+
 \begin{definition}[truncation set]
     Let $\N$ be the set of positive integers and let $S\subseteq
     \N$ be a subset with the property that $\forall n\in \N:$
@@ -9,6 +24,7 @@
 As a set, we define the \textit{big Witt ring} $\W_S(A)$ to be $A^S$,
 we will give it a unique ring structure, such that the \textit{ghost map}
 is a ring homomorphism.
+
 \begin{definition}[ghost map]
     We define $w \colon \W_S(A) \to A^S$
     by $(a_n)_{n \in S} \mapsto (w_n)_{n \in S}$ where 
@@ -16,6 +32,7 @@ is a ring homomorphism.
         w_n = \sum_{d \mid n} d a_d^{n/d}
     \]
 \end{definition}
+The core of the construction is contained in the following Lemma:
 \begin{lemma}[Dwork]\label{lem: dwork}
     Suppose that for every prime number
 $p$ there exists a ring homomorphism $\phi_p \colon A \to A$ with
@@ -40,16 +57,20 @@ $$x_n \equiv \phi_p(x_{n/p}) \hskip8mm \text{modulo $p^{v_p(n)}A$.}$$
     \] 
     since $\phi$ is a ring homomorphism and $d \in \N$.
     \begin{claim}
-        $\sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd}) \equiv 
-        \sum_{d \mid n/p} d \cdot a_d^{n/d}$ \hskip8mm mod $p^{v_p(n)}A$.
+        \[
+        \sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd}) \equiv 
+        \sum_{d \mid n/p} d \cdot a_d^{n/d} \text{\hskip8mm mod} \  p^{v_p(n)}A.
+        \]
     \end{claim}
     \begin{smallproof}
         \todo{}
     \end{smallproof}
     
     \begin{claim}
-        $\sum_{d \mid n/p} d \cdot a_d^{n/d} \equiv 
-        \sum_{d \mid n} d \cdot a_d^{n/d} \hskip8mm mod \ p^{v_p(n)}A$
+        \[
+        \sum_{d \mid n/p} d \cdot a_d^{n/d} \equiv 
+        \sum_{d \mid n} d \cdot a_d^{n/d} \text{\hskip8mm mod} \ p^{v_p(n)}A
+        \]
     \end{claim} 
     \begin{smallproof}
         \todo{}
@@ -87,12 +108,13 @@ Now we can finish the construction of the Witt vectors:
     
 \end{bigproof}
 \begin{cor} \label{cor: ghost components are nat trafos}
-    $w_n \colon \W_S(A) \to A$ is a natural transformation for all $n \in S$.
+    $w_n \colon \W_S(A) \to A$ is a natural ring homomorphism for all $n \in S$.
 \end{cor}
 \begin{proposition} \label{prop: W is a functor}
     $\W_S$ is a functor $\cat{CRing} \to \cat{CRing}$.
 \end{proposition}
 \section*{The Verschiebung, Frobenius and Teichmüller maps}
+We have various operations on witt vectors that are of interest.
 \begin{definition}[Restriction map]
     If $T \subseteq S$ are two truncation sets, the \textit{restriction from S to T}
     \[
@@ -100,7 +122,7 @@ Now we can finish the construction of the Witt vectors:
     \]
     is a natural ring homomorphism.
 \end{definition}
-If $S\subseteq \N$ is a truncation set, then
+If $S\subseteq \N$ is a truncation set, $n \in \N$, then
 \[
    S/n := \{d \in \N \mid nd \in S\}
 \]
@@ -142,13 +164,86 @@ is again a truncation set.
         
     \end{smallproof}
 \end{bigproof}
+Define $\widetilde{F_n} \colon A^S \to A^{S/n} \ $
+by $\widetilde{F_n}((x_m)_{m \in S})_d = x_{nd}$.
+\begin{lemma}[Frobenius homomorphism] \label{lem: frobenius}
+    There exists a unique natural ring homomorphism
+    \[
+      F_n \colon \W_S(A) \to \W_{S/n}(A)  
+    \]
+    such that the diagram 
+    \[
+        \begin{tikzcd}
+            \W_S(A) \arrow[r,"w"] \arrow[d,"F_n"] 
+              & A^S \arrow[d,"\widetilde{F_n}"] \\
+            \W_{S/n}(A) \arrow[r,"w"]
+              & A^{S/n}
+        \end{tikzcd}        
+    \]
+    commutes.
+\end{lemma}
+\todo{remark und definition haben andere font}
+
+    We call $F_n$ the \textit{nth Frobenius homomorphism}.
+    The commutativity of the diagram above is equivalent to
+    commutativity of the following diagram for every $d \in S/n$:
+    \[
+        \begin{tikzcd}
+            \W_S(A) \arrow[d,"F_n"] \arrow[dr,"w_{nd}"] \\
+            \W_{S/n}(A) \arrow[r,"w_d"'] 
+            & A
+        \end{tikzcd}
+    \]
+
+\begin{proof}[Proof of Lemma~\ref*{lem: frobenius}]
+    easy
+\end{proof}
+\begin{lemma} \label{lem: F_n after F_m is F_{nm}}
+    Let $n,m \in \N$.
+    Then 
+    \[F_n \circ F_m = F_{nm}.\]
+\end{lemma}
+\begin{beweis}
+    \todo{}
+\end{beweis}
+\begin{definition}[teichmüller representative]
+    The \textit{teichmüller representative} is the map
+    \[
+      \tau \colon A \to \W_S(A)  
+    \]
+    defined by
+    \[
+      (\tau(a))_m =   
+      \begin{cases}
+        a, & \text{if } m = 1\\
+        0, & \text{else}
+        \end{cases}
+    \]
+\end{definition}
+\begin{lemma} \label{lem: teichmüller is multiplicative}
+    The teichmüller map is multiplicative.
+\end{lemma}
+\begin{beweis}
+    The map $\widetilde{\tau} \colon A \to A^S$; $(\widetilde{\tau})_n = a^n$
+    is multiplicative and there is a commutative diagram
+    \[
+        \begin{tikzcd}
+              & A \arrow[rd,"\widetilde{\tau}"] \\ %so kann man btw pfeile umdrehen (leftarrow)
+            \W_S(A) \arrow[ru, leftarrow,"\tau"] \arrow[rr,"w"]
+                && A^S.
+        \end{tikzcd}
+    \]
+    Indeed, $w_n(\tau(a)) = w_n((a,0,0,\dots)) = a^n$
+    by definition of $w_n$.
+
+\end{beweis}
 \section*{The comonad structure of witt vectors}
 We will need the following lemma:
 \begin{lemma}\label{lem: non-zero divisor}
     Let $m \in \Z$. If $m$ is a non-zero divisor in A, then it is a
     non-zero divisor in $\W_S(A)$ as well.
 \end{lemma}
-\begin{smallproof}
+\begin{beweis}
     \[
     \begin{tikzcd}
         0 \arrow[r]
@@ -174,7 +269,11 @@ We will need the following lemma:
     \end{tikzcd}
     \]
     \todo{finish}
-\end{smallproof}
+\end{beweis}
+\begin{cor} 
+    \label{cor: A torsion-free implies W(A) torsion-free}
+    If $A$ is torsion-free, then $\W_S(A)$ is torsion-free as well.
+\end{cor}
 \begin{definition}
     $\W(A) := \W_{\N}(A)$
 \end{definition}
@@ -192,10 +291,14 @@ we want to use Lemma ~\ref{lem: dwork} again. Hence we first show:
     \]
     such that $w_n(\Delta(a))=F_n(A)$ for all $a \in A, n \in \N$.
 \end{proposition}
+
+Recall that by ~\ref{cor: ghost components are nat trafos},
+$w_1 \colon \W(A) \to A$; $(a_n)_{n \in \N} \mapsto a_1$
+is a natural transformation $\W \Rightarrow \id_{\cat{CRing}}$.
 \begin{theorem} \label{thm: comonad structure}
     The functor $\W(\_) \colon \cat{CRing} \to \cat{CRing}$ together with the
     natural transformations $\Delta \colon \W \Rightarrow \W^2,$ $w_1 \colon 
-    \W \Rightarrow \id_{\cat{CRing}}$ form a comonad.
+    \W \Rightarrow \id_{\cat{CRing}}$ form a comonad $(\W,w_1,\Delta)$.
 \end{theorem}
 \begin{bigproof}
     \begin{claim*}
@@ -221,7 +324,7 @@ we want to use Lemma ~\ref{lem: dwork} again. Hence we first show:
                   & \W(\W(A))^{\N}
             \end{tikzcd}  
         \]
-        which simplifies to
+        which by ~\ref{prop: existence of diagonal} simplifies to
         \[
             \begin{tikzcd}
                 \W(A) \arrow[r,"F_A"] \arrow[d,"\Delta_A"] 
@@ -239,7 +342,9 @@ we want to use Lemma ~\ref{lem: dwork} again. Hence we first show:
                   & \W(\W(A))
             \end{tikzcd}
         \]
-        evaluating the ghost coordinates again, keeping in mind that by Lemma 9, 
+        evaluating the ghost coordinates again, keeping in mind that by 
+        ~\ref{cor: A torsion-free implies W(A) torsion-free}
+        and ~\ref{lem: injective ghost map}, 
         $w \colon \W(\W(A)) \to \W(A)^{\N}$ is injective as well, we get
         \[
             \begin{tikzcd}
@@ -279,7 +384,7 @@ we want to use Lemma ~\ref{lem: dwork} again. Hence we first show:
     \begin{claim*}
         \begin{tikzcd}
             \W(A) \arrow[d,"\Delta_A"'] \arrow[rd,"\id_{\W(A)}"]\\
-            \W(\W(A)) \arrow[r,"\W(\eps_A)"']
+            \W(\W(A)) \arrow[r,"\W(w_1)"']
             & \W(A) 
         \end{tikzcd}
         commutes.
@@ -290,9 +395,9 @@ we want to use Lemma ~\ref{lem: dwork} again. Hence we first show:
             \begin{tikzcd}
                 \W(A) \arrow[d,"\Delta_A"'] \arrow[rd,"\id_{\W(A)}"] 
                 \arrow[dd,bend right = 60,"F"',dotted]\\
-                \W(\W(A)) \arrow[r,"\W(\eps_A)"'] \arrow[d,"w",dotted]
+                \W(\W(A)) \arrow[r,"\W(w_1)"'] \arrow[d,"w",dotted]
                 & \W(A) \arrow[d,"w",blue] \\
-                \W(A)^{\N} \arrow[r,"\eps_A^{\N}",dotted]
+                \W(A)^{\N} \arrow[r,"w_1^{\N}",dotted]
                 & A^{\N}
             \end{tikzcd}
         \]
@@ -300,7 +405,7 @@ we want to use Lemma ~\ref{lem: dwork} again. Hence we first show:
     \[
         \begin{tikzcd}
             \W(A) \arrow[d,"F"'] \arrow[rd,"w"] \\
-            \W(A)^{\N} \arrow[r,"\eps_A^{\N}"'] 
+            \W(A)^{\N} \arrow[r,"w_1^{\N}"'] 
             & A^{\N}
         \end{tikzcd}
     \]
@@ -308,7 +413,7 @@ we want to use Lemma ~\ref{lem: dwork} again. Hence we first show:
     \[
       \begin{tikzcd}
         \W(A) \arrow[d,"F_n"'] \arrow[dr,"w_n"]\\
-        \W(A) \arrow[r,"\eps_A"'] 
+        \W(A) \arrow[r,"w_1"'] 
         & A
       \end{tikzcd}
     \]
@@ -331,6 +436,7 @@ we want to use Lemma ~\ref{lem: dwork} again. Hence we first show:
 \end{bigproof}
 \section*{The Teichmüller map induces a morphism of comonads}
 We now consider another example of a comonad; the \textit{free monoid comonad}.
+\todo{maybe ins Kapitel Comonaden als Beispiel schieben}
 \begin{definition}[monoid ring]
     Let $R$ be a ring and let $G$ be a monoid.
     The \textit{monoid ring} of $G$ over $R$, denoted $R[G]$ or $RG$
@@ -346,7 +452,7 @@ We now consider another example of a comonad; the \textit{free monoid comonad}.
 \begin{example}
     $R = \R, G = \{x^n \mid n \in \N\} \implies RG = \R[X]$
 \end{example}
-\begin{proposition} \label{prop: universal property of monoid ring}
+\begin{remark} \label{rem: universal property of monoid ring}
 $R[G]$ together with the ring homomorphism $\alpha \colon R \to R[G]$;
 $r \mapsto r \cdot 1$ and the monoid homomorphism $\beta \colon 
 G \to R[G]$; $g \mapsto 1 \cdot g$ 
@@ -370,7 +476,7 @@ such that the following diagram commutes:
 \]
 Here, $\gamma$ is defined by 
 $\sum_{g \in G}r_g \cdot g \mapsto \sum_{g \in G}\alpha'(r_g) \cdot \beta'(g)$.
-\end{proposition}
+\end{remark}
 \begin{example}
     Let $S$ be a ring, $G$ be a monoid.
     Since there is a unique ring homomorphism $\Z \to S$, 
@@ -403,7 +509,8 @@ $G \mapsto \Z G$.
           & \cat{CRing}
     \end{tikzcd}
 \end{proposition}
-Now consider the \textit{teichmüller map} $\tau \colon A \to \W(A)$.
+Now consider the \textit{teichmüller map} $\tau \colon A \to \W(A); 
+a \mapsto (a,0,0,0,\dots)$.
 $\tau$ is multiplicative and preserves the unit, hence it extends uniquely to 
 a ring homomorphism
 \[

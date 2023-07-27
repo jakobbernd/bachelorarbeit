@@ -1,6 +1,12 @@
 \documentclass[a4paper,index=totoc,toc=bibliography,fontsize=10,DIV=13,headinclude,twoside,BCOR=12mm,cleardoublepage=empty,headsepline=1pt,draft]{scrreprt}
 \usepackage{./config/preamble}
 
+%Titel vom Inhaltsverzeichnis ändern
+\addto\captionsngerman{% Replace "ngerman" with the language you use
+  \renewcommand{\contentsname}%
+    {Contents}%
+}
+
 \begin{document}
 \pagenumbering{Roman} % Seitennummerierung auf römische Zahlen setzen
 \begin{titlepage}
@@ -48,8 +54,14 @@
 	
 \end{titlepage}
 \begin{abstract}
-\section*{Vorwort}
-Hier entsteht ein Vorwort.
+\section*{Preface}
+In this bachelor thesis, I will give an introduction to the concept of monads,
+which are a generalization of monoids, and their categorical duals, comonads.
+Every adjunction induces a monad, but every monad is induced by an adjunction as well.
+In the third and last section, will also introduce Witt vectors, which are used a lot in
+algebraic number theory and proof that they admit a comonad structure. At last,
+I will show that the teichmüller map induces a morphism of comonads between
+the free monoid ring comonad and the witt vector comonad.
 \end{abstract}
 \tableofcontents
 \cleardoubleoddemptypage
