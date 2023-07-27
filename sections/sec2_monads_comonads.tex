@@ -1,7 +1,64 @@
 \chapter{Monads and Comonads}
 \section{Definition of Monads and Comonads}
+A central notion in algebra is that of a \textit{monoid},
+that is, a set $M$ equipped with a map 
+$\mu \colon M \times M \to M$; $(a,b) \mapsto a \cdot b$ 
+(often called \textit{multiplication}) and an element $e \in M$
+such that the following two axioms hold:
+\begin{align}
+    \label{eq: associativity for a monoid}  \tag{associativity} 
+    (a \cdot b) \cdot c = a \cdot (b \cdot c) 
+    \quad &\text{for all} \ a,b,c \in M. \\
+    \label{eq: identity element for a monoid} \tag{identity element}
+    e \cdot a = a \cdot e = a \quad &\text{for all} \ a \in M 
+\end{align}
+We can give an equivalent definition in terms of maps and commuting diagrams as follows:
+A \textit{monoid} is a set $M$ together with two functions 
+\[
+    \mu \colon M \times M \to M, \quad 
+    e \colon \pt \to M
+\]
+such that the following diagrams commute: \\
+
+\begin{minipage}{0.4\linewidth}
+    \centering
+    \begin{tikzcd}
+        M \times M \times M \arrow[r,"\id \times \mu"] \arrow[d,"\mu \times \id"] 
+          & M \times M \arrow[d,"\mu"] \\
+        M \times M \arrow[r,"\mu"]
+          & M
+    \end{tikzcd}
+    \end{minipage}
+    $\mathrm{and}$
+    \begin{minipage}{0.4\linewidth}
+    \centering
+    \begin{tikzcd}
+        \pt \times M \arrow[rd,"l"'] \arrow[r, "e \times \id"] 
+        & M \times M \arrow[d,"\mu"] 
+        & M \times \pt \arrow[l,"\id \times e"'] \arrow[ld,"r"]\\
+        & M
+    \end{tikzcd}
+    \end{minipage} \\
+    where $\id$ is the identity on m, and $l$ and $r$ are the canonical bijections
+    \begin{align*}
+        &l \colon \pt \times M \to M;\ l(\ast,m) = m \\
+        &r \colon M \times \pt \to M;\ r(m,\ast) = m.
+    \end{align*}
+
+Explicitly, the first diagram means that for all $a,b,c \in M$:
+\[
+    (a \cdot b) \cdot c = a \cdot (b \cdot c) 
+    \quad \text{for all} \ a,b,c \in M.
+\]
+which is verbatim the ~\ref{eq: associativity for a monoid} axiom, the second diagram means that for all $m \in M$:
+\[
+  e(\ast) \cdot m = l(\ast,m) = m = r(m,\ast) = m \cdot e(\ast)  
+\]
+which is clearly the ~\ref{eq: identity element for a monoid} axiom 
+for the element $e(\ast)$.
+This motivates the following definition: \todo{monoid/monad/ monoid object}
 \begin{definition}[Monad]
-    A \textit{Monad} $(T,\mu, \eta) $ in a Category $\mathcal{X}$ consists of
+    A \textit{Monad} $(T,\mu, \eta) $ in a category $\mathcal{X}$ consists of
     \begin{itemize}
         \item an endofunctor $T\colon \mathcal{X} \to \mathcal{X}$
         \item a natural transformation $\eta \colon \id_\mathcal{X} \Rightarrow T$ 
@@ -13,9 +70,9 @@
     \begin{minipage}{0.4\linewidth}
     \centering
     \begin{tikzcd}
-        T^3 \arrow[r] \arrow[d] 
-          & T^2 \arrow[d] \\
-        T^2 \arrow[r]
+        T^3 \arrow[r,"T\mu"] \arrow[d,"\mu T"'] 
+          & T^2 \arrow[d,"\mu"] \\
+        T^2 \arrow[r,"\mu"]
           & T
     \end{tikzcd}
     \end{minipage}
@@ -105,7 +162,7 @@ $\overline{\overline{A}} = \overline{A}$.
     \[\begin{tikzcd}
         T^2x \arrow[r,"\mu_x"] \arrow[d,"\delta T' \circ T\delta"'] 
           & Tx \arrow[d,"\delta_x"] \\
-        T'^2 \arrow[r,"\mu'_x"]
+        T'^2x \arrow[r,"\mu'_x"]
           & T'x
     \end{tikzcd}
     \vadjust{\todo{show that the other composition is the same(siehe iPad)}} 
