@@ -6,50 +6,46 @@
 \begin{proposition}
     Given two functors
     \begin{tikzcd}
-        A \ar[r,"F"]
-        &
-        B
-        \end{tikzcd},
-    \begin{tikzcd}
-        B \ar[r,"G"]
-        & 
-        A
-    \end{tikzcd},
-    the following are equivalent:
+        \cat{A} \ar[r,"G",shift left = .60ex]
+          & 
+        \cat{B} \ar[l,"F",shift left = .60ex]
+    \end{tikzcd}
+    the following are equivalent: 
     \begin{enumerate}[(a)]
-        \item $\exists \eta\colon \id_B \Rightarrow GF$ and $\epsilon\colon FG \Rightarrow \id_A$ 
-        such that $\forall a \in Ob(A), b \in Ob(B)$ the following two diagrams commute:
-        \[
-            \begin{tikzcd}
-                A \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & B \arrow[d,"\epsilon_{F(b)}"] \\
+        \item $\exists \eta\colon \id_B \Rightarrow GF$ and $\eps\colon FG \Rightarrow \id_A$ 
+        natural transformations such that $\forall a \in Ob(A), b \in Ob(B)$ 
+        the following two diagrams commute:
+        \begin{equation}
+            \begin{tikzcd}\tag{triangle identity}
+                A \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & B \arrow[d,"\eps_{F(b)}"] \\
                                             & C
             \end{tikzcd}
-            \mathrm{and}
-            \begin{tikzcd}
-                A \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & B \arrow[d,"\epsilon_{F(b)}"] \\
+            \qqq
+            \begin{tikzcd} 
+                A \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & B \arrow[d,"\eps_{F(b)}"] \\
                                             & C
             \end{tikzcd}
-        \]
+        \end{equation}
         \item $\forall a \in Ob(A), b \in Ob(B)$ there is a bijection 
         \[
-        \phi_{a,b}\colon\Hom(F(b),a)\to \Hom(b,G(a))
+        \phi_{a,b}\colon\Hom[A](F(b),a)\to \Hom[B](b,G(a))
         \]
         which is natural in a and b, i.e. for $p\colon a\to a':$
         \[
             \begin{tikzcd}
-                \Hom(F(b),a) \arrow[r] \arrow[d] 
-                  & \Hom(b,G(a)) \arrow[d] \\
-                \Hom(F(b),a') \arrow[r]
-                  & \Hom(b,G(a'))
+                \Hom[A](F(b),a) \arrow[r] \arrow[d] 
+                  & \Hom[B](b,G(a)) \arrow[d] \\
+                \Hom[A](F(b),a') \arrow[r]
+                  & \Hom[B](b,G(a'))
             \end{tikzcd}
         \]
         and for $q\colon b \to b':$
         \[
             \begin{tikzcd}
-                \Hom(F(b'),a) \arrow[r] \arrow[d] 
-                  & \Hom(b',G(a)) \arrow[d] \\
-                \Hom(F(b),a) \arrow[r]
-                  & \Hom(b,G(a))
+                \Hom[A](F(b'),a) \arrow[r] \arrow[d] 
+                  & \Hom[B](b',G(a)) \arrow[d] \\
+                \Hom[A](F(b),a) \arrow[r]
+                  & \Hom[B](b,G(a))
             \end{tikzcd}
         \]
     \end{enumerate}

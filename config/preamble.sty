@@ -18,6 +18,7 @@
 \usepackage[ngerman]{babel}
 \usepackage[babel=true, tracking=true,final]{microtype}
 
+\usepackage{xparse} %if-then-else stuff
 % \useosf % aktiviert sog. "old style figures", also werden Zahlen – im Text – teilweise unterhalb der Grundlinie angezeigt. Muss man mögen...
 
 
@@ -82,7 +83,19 @@
 
 %-- eigene Befehle
 \DeclareMathOperator{\id}{id}
-\DeclareMathOperator{\Hom}{Hom}
+%\DeclareMathOperator{\Hom}{Hom}
+
+%Hom-Befehl mit oder ohne subscript (sehr cool):
+% ruft man \Hom ohne argument auf, wird einfach "Hom" in aufrechter
+% Schrift ausgegeben, ruft man jedoch z.b. \Hom[A] auf,
+% wird A fett gemacht und als Subscript an Hom drangepackt
+\NewDocumentCommand{\Hom}{o}{%
+  % <code>
+  \IfNoValueTF{#1}
+    {\operatorname{Hom}}
+    {\operatorname{Hom}_{\cat{#1}}}%
+  % <code>
+}
 
 \newcommand{\eps}{\varepsilon}
 \newcommand{\nat}[3][\eta]{#1 \colon #2 \Rightarrow #3}
@@ -96,6 +109,8 @@
 
 \newcommand{\hin}{(\Rightarrow)}
 \newcommand{\rueck}{(\Leftarrow)}
+
+\newcommand{\adj}{\dashv}
 
 \newcommand{\cat}[1]{
   \mathbf{#1}
