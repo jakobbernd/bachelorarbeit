@@ -119,6 +119,8 @@
 
 \newcommand{\pt}{\{\ast\}} %one-point-set
 
+\newcommand{\tensor}{\otimes}
+
 % Steffen's line break
 \newcommand{\sectiondone}{\hfill \break \rightline{\mbox{\rotatebox{145}{${\|}$}}}}
 
@@ -146,12 +148,12 @@
 
 \newenvironment{smallproof}{%
 	\renewcommand{\qedsymbol}{\smallqed}
-	\begin{beweis}[Proof of claim\ifnum\c@claimcount<1 
+	\begin{proof}[Proof of claim\ifnum\c@claimcount<1 
 		\else
 			\:\theclaimcount 
 		\fi]
 }{%
-	\end{beweis}
+	\end{proof}
 	\renewcommand{\qedsymbol}{\square}
 }
 
@@ -196,6 +198,17 @@
 %-- Für hilfreiche Anmerkungen am Seitenrand
 \usepackage[obeyDraft,textsize=small]{todonotes}
 
+%-- Diagramme captionen
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup[figure]{skip=-2mm} % You can adjust the value (e.g., 5pt) as needed
+
+%-- commands zum captioning
+\newcommand{\refunitality}{\hyperref[sub@dia: unitality]{unitality} }
+\newcommand{\refassociativity}{\hyperref[sub@dia: associativity]{associativity} }
+
+%--damit das diagramm genau an der Stelle steht
+\usepackage{float}
 %-- Kopf- und Fußzeilen bearbeiten
 \usepackage[draft=false]{scrlayer-scrpage}
 \pagestyle{scrheadings}
@@ -237,7 +250,7 @@
 \declaretheoremstyle[%
 	headfont=\sffamily\bfseries,
 	notefont=\normalfont\sffamily,
-	bodyfont=\itshape, %in theoremen ist der text kursiv
+	bodyfont=\itshape, %in theoremen ist der text kursiv, vorher: \normalfont
 	headformat= \NAME \ \NUMBER\NOTE, %format des titels
 	headpunct={},
 	postheadspace=1ex,

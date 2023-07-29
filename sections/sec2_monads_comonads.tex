@@ -20,41 +20,50 @@ A \textit{monoid} is a set $M$ together with two functions
 \]
 such that the following diagrams commute: \\
 
-\begin{minipage}{0.4\linewidth}
+\begin{figure}[H]
     \centering
-    \begin{tikzcd}
-        M \times M \times M \ar[r,"\id \times \mu"] \ar[d,"\mu \times \id"] 
-          & M \times M \ar[d,"\mu"] \\
-        M \times M \ar[r,"\mu"]
-          & M
-    \end{tikzcd}
-    \end{minipage}
-    $\mathrm{and}$ 
-    \begin{minipage}{0.4\linewidth}
+    \begin{subfigure}{0.4\textwidth}
     \centering
-    \begin{tikzcd}
-        \pt \times M \ar[rd,"l"'] \ar[r, "e \times \id"] 
-        & M \times M \ar[d,"\mu"] 
-        & M \times \pt \ar[l,"\id \times e"'] \ar[ld,"r"]\\
-        & M
-    \end{tikzcd}
-    \end{minipage} \\
-    where $\id$ is the identity on m, and $l$ and $r$ are the canonical bijections
-    \begin{align*}
-        &l \colon \pt \times M \to M;\ l(\ast,m) = m \\
-        &r \colon M \times \pt \to M;\ r(m,\ast) = m.
-    \end{align*}
+    %\phantomsection\label{name1}
+        \begin{tikzcd}
+            M \times M \times M \ar[r,"\id \times \mu"] \ar[d,"\mu \times \id"] 
+              & M \times M \ar[d,"\mu"] \\
+            M \times M \ar[r,"\mu"]
+              & M
+        \end{tikzcd}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+        \begin{tikzcd}
+            \pt \times M \ar[rd,"l"'] \ar[r, "e \times \id"] 
+            & M \times M \ar[d,"\mu"] 
+            & M \times \pt \ar[l,"\id \times e"'] \ar[ld,"r"]\\
+            & M
+        \end{tikzcd}
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
+
+
+where $\id$ is the identity on m, and $l$ and $r$ are the canonical bijections
+\begin{align*}
+    &l \colon \pt \times M \to M;\ l(\ast,m) = m \\
+    &r \colon M \times \pt \to M;\ r(m,\ast) = m.
+\end{align*}
 
 Explicitly, the first diagram means that for all $a,b,c \in M$:
 \[
     (a \cdot b) \cdot c = a \cdot (b \cdot c) 
     \quad \text{for all} \ a,b,c \in M.
 \]
-which is verbatim the ~\ref{eq: associativity for a monoid} axiom, the second diagram means that for all $m \in M$:
+which is verbatim the~\ref{eq: associativity for a monoid} axiom, the second diagram means that for all $m \in M$:
 \[
   e(\ast) \cdot m = l(\ast,m) = m = r(m,\ast) = m \cdot e(\ast)  
 \]
-which is clearly the ~\ref{eq: identity element for a monoid} axiom 
+which is clearly the~\ref{eq: identity element for a monoid} axiom 
 for the element $e(\ast)$.
 This motivates the following definition: \todo{monoid/monad/ monoid object}
 \begin{definition}[Monad]
@@ -65,40 +74,65 @@ A \textit{Monad} $(T,\mu, \eta) $ in a category $\mathcal{X}$ consists of
     \item a natural transformation $\mu\colon T^2 \Rightarrow T $
 \end{itemize}  
 such that the following diagrams commute: \\
-\begin{equation} \label{eq: def monad}
-    \begin{tikzcd}
-        T^3 \ar[r,"T\mu",Rightarrow] \ar[d,"\mu T"',Rightarrow] 
-        & T^2 \ar[d,"\mu",Rightarrow] \\
-        T^2 \ar[r,"\mu",Rightarrow]
-        & T
-    \end{tikzcd}
-    \qqq 
-    \begin{tikzcd} %[row sep=20pt]
-        T \ar[rd,"\id_T"',Rightarrow] \ar[r, "\eta T",Rightarrow] 
+% der ' nach dem Text ändert die Position der Pfeil-Beschriftung
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \phantomsection\label{dia: unitality}
+        % Content of the first subfigure
+        \begin{tikzcd}
+            T^3 \ar[r,"T\mu",Rightarrow] \ar[d,"\mu T"',Rightarrow] 
+            & T^2 \ar[d,"\mu",Rightarrow] \\
+            T^2 \ar[r,"\mu",Rightarrow]
+            & T
+        \end{tikzcd}
+        \caption*{(unitality)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \phantomsection\label{dia: associativity}
+        \begin{tikzcd}
+            T \ar[rd,"\id_T"',Rightarrow] \ar[r, "\eta T",Rightarrow] 
         & T^2 \ar[d,"\mu",Rightarrow] 
         & T \ar[l,"T \eta"',Rightarrow] \ar[ld,"\id_T",Rightarrow]\\
         & T
-    \end{tikzcd}
-\end{equation}
-% der ' nach dem Text ändert die Position der Pfeil-Beschriftung
+        \end{tikzcd}
+        \caption*{(associativity)}
+    \end{subfigure} 
+\end{figure}
 
-In terms of components, this means that for every object $x$ of $\mathcal{X}$
+In terms of components,~\refunitality and~\refassociativity mean that for every object $x$ of $\mathcal{X}$
 the following diagrams commute:
-\begin{equation} \label{eq: def monad in components}
-    \begin{tikzcd}
-        T(T(Tx)) \ar[r,"T(\mu_x)"] \ar[d,"\mu_{Tx}"'] 
-        & T(Tx) \ar[d,"\mu_x"] \\
-        T(Tx) \ar[r,"\mu_x"]
-        & Tx
-    \end{tikzcd}
-    \qqq 
-    \begin{tikzcd}
-        Tx \ar[rd,"\id_{Tx}"'] \ar[r, "\eta_{Tx}"] 
-        & T(Tx) \ar[d,"\mu_x"] 
-        & Tx \ar[l,"T(\eta_x)"'] \ar[ld,"\id_{Tx}"]\\
-        & Tx
-    \end{tikzcd}
-\end{equation}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name1}
+\begin{tikzcd}
+    T(T(Tx)) \ar[r,"T(\mu_x)"] \ar[d,"\mu_{Tx}"'] 
+    & T(Tx) \ar[d,"\mu_x"] \\
+    T(Tx) \ar[r,"\mu_x"]
+    & Tx
+\end{tikzcd}
+\caption*{(unitality)}
+\end{subfigure}
+\hspace{2em}
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name2}
+\begin{tikzcd}
+    Tx \ar[rd,"\id_{Tx}"'] \ar[r, "\eta_{Tx}"] 
+    & T(Tx) \ar[d,"\mu_x"] 
+    & Tx \ar[l,"T(\eta_x)"'] \ar[ld,"\id_{Tx}"]\\
+    & Tx
+\end{tikzcd}
+\caption*{(associativity)}
+\end{subfigure}
+\end{figure}
+
 \end{definition}
 
 \begin{example}[preorder]
@@ -134,14 +168,24 @@ A \textit{Comonad} $(L,\eps, \omega) $ in a Category $\mathcal{A}$ consists of
     \item a natural transformation $\omega\colon L \Rightarrow L^2 $
 \end{itemize}  
 such that the following diagrams commute:
-\begin{equation} \label{eq: def comonad}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name1}
     \begin{tikzcd}
         L \ar[r,"L\omega",Rightarrow] \ar[d,"\omega L"',Rightarrow] 
             & L^2 \ar[d,"L\omega",Rightarrow] \\
         L^2 \ar[r,"\omega L",Rightarrow]
             & L^3
     \end{tikzcd}
-    \qqq 
+\caption*{(counitality)}
+\end{subfigure}
+\hspace{2em}
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name2}
     \begin{tikzcd} 
         & L \ar[ld,"\id_L"',Rightarrow] 
         \ar[rd,"\id_L",Rightarrow] \ar[d,"\omega",Rightarrow] & \\
@@ -149,18 +193,31 @@ such that the following diagrams commute:
         & L^2 \ar[l,"\eps L"',Rightarrow] \ar[r,"L \eps",Rightarrow] 
         & L
     \end{tikzcd}
-\end{equation}
+\caption*{(coassociativity)}
+\end{subfigure}
+\end{figure}
+
 
 In terms of components, this means that for every object $x$ of $\mathcal{A}$
 the following diagrams commute:
-\begin{equation} \label{eq: def comonad in components}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name1}
     \begin{tikzcd}
         Lx \ar[r,"L(\omega_x)"] \ar[d,"\omega_{Lx}"'] 
             & L(Lx) \ar[d,"L(\omega_x)"] \\
         L(Lx) \ar[r,"\omega_{Lx}"]
             & L(L(Lx))
     \end{tikzcd}
-    \qqq 
+\caption*{(counitality)}
+\end{subfigure}
+\hspace{2em}
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name2}
     \begin{tikzcd}
         & Lx \ar[ld,"\id_{Lx}"'] 
         \ar[rd,"\id_{Lx}"] \ar[d,"\omega_x"] & \\
@@ -168,7 +225,9 @@ the following diagrams commute:
         & L(Lx) \ar[l,"\eps_{Lx}"'] \ar[r,"L(\eps_x)"] 
         & Lx
     \end{tikzcd}
-\end{equation}
+\caption*{(coassociativity)}
+\end{subfigure}
+\end{figure}
 
 \end{definition}
 
@@ -188,27 +247,39 @@ the following diagrams commute:
     \]
 \end{lemma}
 \begin{beweis}
-    $\delta \colon T \Rightarrow T'$ is natural.
+    $\delta \colon T \Rightarrow T'$ is natural.\todo{finish proof}
 \end{beweis}
 \begin{definition}[Morphism of monads]
     Let $\mathcal{X}$ be a category, let $(T,\eta,\mu)$ and $(T',\eta',\mu')$ be monads in $\mathcal{X}$.
     We say that a natural transformation $\nat[\delta]{T}{T'}$ is a \textit{morphism of monads} if it preserves
     the unit and the multiplication, i.e. the following diagrams commute:
-    \[\begin{tikzcd}
-        \id_x \ar[rd,"\eta'_x"'] \ar[r, "\eta_x"] & Tx \ar[d,"\delta_x"] \\
-                                    & T'x
-    \end{tikzcd}
-        \]
-    \[\begin{tikzcd}
-        T^2x \ar[r,"\mu_x"] \ar[d,"\delta T' \circ T\delta"'] 
-          & Tx \ar[d,"\delta_x"] \\
-        T'^2x \ar[r,"\mu'_x"]
-          & T'x
-    \end{tikzcd}
-    \vadjust{\todo{show that the other composition is the same(siehe iPad)}} 
-    %vadjust allows todo in math-mode
-    \]   
+
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+        \begin{tikzcd}
+            \id_x \ar[rd,"\eta'_x"'] \ar[r, "\eta_x"] 
+            & Tx \ar[d,"\delta_x"] \\
+            & T'x
+        \end{tikzcd}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+        \begin{tikzcd}
+            T^2x \ar[r,"\mu_x"] \ar[d,"\delta T' \circ T\delta"'] 
+            & Tx \ar[d,"\delta_x"] \\
+            T'^2x \ar[r,"\mu'_x"]
+            & T'x
+        \end{tikzcd}
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
+    %vadjust allows todo in math-mode   
 \end{definition}
 \begin{definition}[Morphism of comonads]
-    \todo{definition}
 \end{definition}

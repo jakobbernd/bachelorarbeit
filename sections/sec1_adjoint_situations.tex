@@ -2,7 +2,8 @@
 \chapter{Adjoint situations}
 
 \todo{einleitender Satz}
-
+Moreover, adjunctions provide us with many (technically even all) 
+examples of monads and comonads, as we will later see.
 \begin{proposition}
     Given two functors
     \begin{tikzcd}
@@ -15,47 +16,107 @@
         \item $\exists \eta\colon \id_B \Rightarrow GF$ and $\eps\colon FG \Rightarrow \id_A$ 
         natural transformations such that $\forall a \in Ob(A), b \in Ob(B)$ 
         the following two diagrams commute:
-        \begin{equation}
+        \begin{equation}\label{eq:triangle identity of adjunction}
             \begin{tikzcd}\tag{triangle identity}
-                A \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & B \arrow[d,"\eps_{F(b)}"] \\
-                                            & C
+                F(b) \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & FGF(b) \arrow[d,"\eps_{F(b)}"] \\
+                                            & F(b)
             \end{tikzcd}
             \qqq
             \begin{tikzcd} 
-                A \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & B \arrow[d,"\eps_{F(b)}"] \\
-                                            & C
+        G(a) \arrow[rd,"id_{G(a)}"'] \arrow[r, "\eta_{G(a)}"] & GFG(a) \arrow[d,"G(\eps_a)"] \\
+                                            & G(a)
             \end{tikzcd}
         \end{equation}
         \item $\forall a \in Ob(A), b \in Ob(B)$ there is a bijection 
         \[
         \phi_{a,b}\colon\Hom[A](F(b),a)\to \Hom[B](b,G(a))
         \]
-        which is natural in a and b, i.e. for $p\colon a\to a':$
+        which is natural in a and b, which means that for $p\colon a\to a':$
         \[
             \begin{tikzcd}
-                \Hom[A](F(b),a) \arrow[r] \arrow[d] 
-                  & \Hom[B](b,G(a)) \arrow[d] \\
-                \Hom[A](F(b),a') \arrow[r]
+                \Hom[A](F(b),a) \arrow[r,"\phi_{a,b}"] \arrow[d,"p \circ \_"] 
+                  & \Hom[B](b,G(a)) \arrow[d,"G(p)\circ \_"] \\
+                \Hom[A](F(b),a') \arrow[r,"\phi_{a',b}"]
                   & \Hom[B](b,G(a'))
             \end{tikzcd}
         \]
         and for $q\colon b \to b':$
         \[
             \begin{tikzcd}
-                \Hom[A](F(b'),a) \arrow[r] \arrow[d] 
-                  & \Hom[B](b',G(a)) \arrow[d] \\
-                \Hom[A](F(b),a) \arrow[r]
+                \Hom[A](F(b'),a) \arrow[r,"\phi_{a,b'}"] \arrow[d,"\_ \circ F(q)"] 
+                  & \Hom[B](b',G(a)) \arrow[d,"\_ \circ q"] \\
+                \Hom[A](F(b),a) \arrow[r,"\phi_{a,b}"]
                   & \Hom[B](b,G(a))
             \end{tikzcd}
         \]
+    commute.
     \end{enumerate}
 \end{proposition}
-\begin{beweis}
+\begin{bigproof}
     $(a)\implies (b):$ \\
     define 
     \[
-        \phi_{a,b}\colon \Hom(F(b),a)\to \Hom(b,G(a))
-    \] by $g \mapsto G(g) \circ \eta_b $
-    for $g\colon F(b)\to a$
-\end{beweis}
+        \phi_{a,b}\colon \Hom[A](F(b),a)\to \Hom[B](b,G(a))
+    \] by 
+    \[
+       \phi_{a,b}(g) = G(g) \circ \eta_b 
+       \colon b \to G(a)
+    \]
+    for $g\colon F(b)\to a$ and define 
+    \[
+      \psi_{a,b} \colon \Hom[B](b,G(a)) \to \Hom[A](F(b),a)
+    \] by
+    \[
+       \psi_{a,b}(f) = \eps_a \circ F(f) 
+       \colon F(b) \to a
+    \]
+    for $f\colon b \to G(a).$
+\begin{claim}
+$\psi \circ \phi = id$
+\end{claim}
+\begin{smallproof}
+Let $f \colon b \to G(a)$.
+\begin{align*}
+    \phi(\psi(f)) &= \phi(\eps_a \circ F(f)) \tag{Definition of $\psi$} \\
+    &= G(\eps_a \circ F(f)) \circ \eta_b \tag{Definition of $\phi$}\\
+    &= G(\eps_a) \circ G(F(f)) \circ \eta_b \tag{Functoriality of $G$}\\
+    &= G(\eps_a) \circ \eta_{G(a)} \circ f \tag{Naturality of $\eta$} \\
+    &= \id_{G(a)} \circ f \tag{right~\ref{eq:triangle identity of adjunction}} \\
+    &= f
+\end{align*}
+\end{smallproof}
+\end{bigproof}
 
+\begin{remark}
+    Let $F \adj G$ be an adjoint situation, i.e. 
+    $F$ is left-adjoint to $G$ and $G$ is right-adjoint to $F$.
+    Then
+    \begin{enumerate}
+        \item G preserves limits
+        \item F preserves colimits.
+    \end{enumerate}
+\end{remark}
+
+\begin{example}[Galois connection]\todo{those are DUAL adjunctions!}
+    blablabla examples include:
+    \begin{enumerate}
+        \item (Fundamental theorem of Galois theory): 
+        this example.
+        \item  (Algebraic geometry):
+        that example.
+    \end{enumerate}
+
+\end{example}
+\begin{example}[Coproduct $\adj$ $\Delta$ $\adj$ Product]
+    this.
+\end{example}
+\begin{example}[free-forgetful adjunction]
+    that.
+\end{example}
+\begin{example}[Tensor-Hom-Adjunction]
+    There is a natural bijection
+    \[
+        \Hom[A](M \tensor_A N,P) \cong \Hom[A](M,\Hom[A](N,P))
+    \]
+    This implies that the tensor-product is right-exact, since it preserves cokernels.
+\end{example}

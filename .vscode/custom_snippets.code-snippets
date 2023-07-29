@@ -57,12 +57,31 @@
 			"prefix": ["side by side"],
 			"body": 
 			[   
-				"\\begin{tikzcd}",
-				"    ${1:A} \\ar[r,\"F\"] \\ar[rd,\"H\"']",
-				"    & ${2:B} \\ar[d,\"G\"] \\\\\\",
-				"    & ${3:C} ",
-				"\\end{tikzcd}"
+			"\\begin{figure}[H]",
+				"\\centering",
+				"\\begin{subfigure}{0.4\\textwidth}",
+				"\\centering",
+					"%\\phantomsection\\label{name1}",
+					"A",
+					"%\\caption*{(cap1)}",
+				"\\end{subfigure}",
+				"\\hspace{2em}",
+				"\\begin{subfigure}{0.4\\textwidth}",
+					"\\centering",
+					"%\\phantomsection\\label{name2}",
+					"B",
+					"%\\caption*{(cap2)}",
+				"\\end{subfigure}",
+			"\\end{figure}",
 			],
-			"description": "putting two tikzcd diagrams next to each other"
+			"description": "putting two tikzcd diagrams next to each other, with possibility to caption and ref them"
+		  },
+		  "Natural transformation in text": {
+			"prefix": ["natural transformation","nat","nattext"],
+			"body": 
+			[   
+				"$${1:\\eta} \\colon ${2:F} \\Rightarrow ${3:G}$",
+			],
+			"description": "natural transformation in text-form"
 		  },
 }
