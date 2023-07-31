@@ -32,9 +32,49 @@ is a ring homomorphism.
         w_n = \sum_{d \mid n} d a_d^{n/d}
     \]
 \end{definition}
+\begin{lemma}\label{lem: congruences}
+    Let $A$ be a ring, $a,b \in A$, $v \in \N$, and p a prime number. Then:
+    \[
+        a \equiv b \quad \text{mod } pA \implies a^{p^{v}} \equiv b^{p^{v}} \quad \text{mod } p^{v+1}A.
+    \]
+\end{lemma}
+\begin{bigproof}
+    We can write $a = b + p \eps$ for some $\eps \in A$,
+    then by the binomial theorem we get:
+    \[
+        a^{p^{v}} = (b+p\eps)^{p^v} = \sum_{i=0}^{p^v} \binom{p^v}{i}b^{p^v-i}(p\eps)^{i}
+        = b^{p^v} + \sum_{i=1}^{p^v} \binom{p^v}{i}b^{p^v-i}p^{i}\eps^{i}.
+    \]
+    \begin{claim*}
+    for every $1 \leq i \leq p^v$: $v_p\bigl(\binom{p^v}{i}\bigr) = v - v_p(i)$.
+    \end{claim*}
+    \begin{smallproof}
+        First, note that $v_p(p^v-i) = v - v_p(i).$
+        (Indeed: write $i = p^{v_p(i)} \cdot k$ for some $k \in \Z, p \nmid k$.
+        Then $p^v-i = p^v-p^{v_p(i)}\cdot k = p^{v_p(i)}\cdot (p^{v-v_p(i)}-k)$,
+        hence $p^{v_p(i)} \mid p^v-i$. But $p^{v_p(i)+1} \nmid p^v-i,$ since $p \nmid k$.)
+
+        Now we can apply the p-adic valuation to the following equality:
+        \begin{align*}
+            i! \cdot \binom{p^v}{i} &= p^v \cdot (p^v-1) \cdot \ldots \cdot (p^v-(i-1)) \\
+            \implies v_p \left( i! \cdot \binom{p^v}{i} \right) &= v_p(p^v \cdot (p^v-1) \cdot \ldots \cdot (p^v-(i-1))) \\
+            \iff v_p(i!)+ v_p\left(\binom{p^v}{i}\right) &= v_p(p^v) + v_p(p^v-1) + \ldots + v_p(p^v-(i-1)) \\
+            \iff v_p(i!)+ v_p\left(\binom{p^v}{i}\right) &= v + v_p((i-1)!) \\
+            \iff v_p\left(\binom{p^v}{i}\right) &= v + v_p((i-1)!) - v_p(i!) \\
+            \iff v_p\left(\binom{p^v}{i}\right) &= v + v_p\left(\frac{(i-1)!}{i!}\right) \\
+            \iff v_p\left(\binom{p^v}{i}\right) &= v - v_p(i)
+        \end{align*}
+        where we use the multiplicativity of the p-adic valuation.
+    \end{smallproof}
+        It follows that 
+        \begin{align*}
+            v_p\left(\binom{p^v}{i} \cdot p^{i}\right) = v - v_p(i) + i \geq v+1
+        \end{align*}
+        which means that those summands vanish mod $p^{v+1}A$.
+\end{bigproof}
 The core of the construction is contained in the following Lemma:
 \begin{lemma}[Dwork]\label{lem: dwork}
-    Suppose that for every prime number
+Suppose that for every prime number
 $p$ there exists a ring homomorphism $\phi_p \colon A \to A$ with
 the property that $\phi_p(a) \equiv a^p$ modulo $pA$. Then for every
 sequence $x = (x_n)_{n \in S}$, the following 
@@ -56,46 +96,109 @@ $$x_n \equiv \phi_p(x_{n/p}) \hskip8mm \text{modulo $p^{v_p(n)}A$.}$$
         \sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd}) 
     \] 
     since $\phi$ is a ring homomorphism and $d \in \N$.
-    \begin{claim}
-        \[
-        \sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd}) \equiv 
-        \sum_{d \mid n/p} d \cdot a_d^{n/d} \text{\hskip8mm mod} \  p^{v_p(n)}A.
-        \]
-    \end{claim}
-    \begin{smallproof}
-        \todo{}
-    \end{smallproof}
-    
-    \begin{claim}
-        \[
-        \sum_{d \mid n/p} d \cdot a_d^{n/d} \equiv 
-        \sum_{d \mid n} d \cdot a_d^{n/d} \text{\hskip8mm mod} \ p^{v_p(n)}A
-        \]
-    \end{claim} 
-    \begin{smallproof}
-        \todo{}
-    \end{smallproof}
+    Now
+    \begin{align*}
+        \sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd}) 
+        &\overset{(1)}{\equiv}
+        \sum_{d \mid n/p} d \cdot a_d^{n/d} &\text{\hskip8mm mod} \ p^{v_p(n)}A \\
+        &\overset{(2)}{\equiv} \sum_{d \mid n} d \cdot a_d^{n/d} &\text{\hskip8mm mod} \ p^{v_p(n)}A \\
+    \end{align*}
     so we get
     \[
-        \phi(x_{n/p}) \equiv \sum_{d \mid n} d \cdot a_d^{n/d} = w_n(a) = x_n \hskip8mm mod \ p^{v_p(n)}A.
+        \phi(x_{n/p}) \equiv \sum_{d \mid n} d \cdot a_d^{n/d} = w_n(a) = x_n \text{\hskip8mm mod} \ p^{v_p(n)}A.
         \]
+    \begin{proof}[Proof of (1)]
+    First, note that 
+    \begin{align}\label{eq: multiplication helps congruence} \tag{a}
+        x \equiv y \text{\hskip8mm mod }p^mA \implies dx \equiv dy \text{\hskip8mm mod } p^{m+v_p(d)}A
+    \end{align}
+    for all $m \in \N, d \in \Z$.
+    Now we can write $n/pd = p^{\alpha} \cdot N$ for some $N \in \Z$,
+    $p \nmid N$, $\alpha = v_p(n/pd)$. 
+    Now by the assumptions of the lemma we get that $\phi_p(a_d^N)
+    \equiv a_d^{p \cdot N} \text{mod }pA$, so we can calculate:
+    \[
+        \phi_p(a_d^{n/pd}) \overset{\mathrm{def.}}{=} \phi_p(a_d^{p^{\alpha} \cdot N})
+        = \phi_p(a_d^N)^{p^{\alpha}} \equiv a_d^{(p\cdot N)^{p^{\alpha}}} \text{\hskip8mm mod } p^{\alpha +1}A
+    \]
+    using Lemma~\ref{lem: congruences} for the last congruence. 
+    Now~(\ref{eq: multiplication helps congruence}) and the fact that
+    \[
+        a_d^{(p \cdot N)^{p^{\alpha}}} = a_d^{p \cdot N \cdot p^{\alpha}} 
+        \overset{\mathrm{def.}}{=}
+        a_d^{p \cdot n/pd} = a_d^{n/d} 
+    \]
+    gives us
+    \[
+        d \cdot \phi_p(a_d^{n/pd}) \equiv d \cdot a_d^{n/d} \text{\hskip8mm mod } p^{\alpha + 1 + v_p(d)}
+    \]
+    But 
+    \[
+        \alpha + 1 + v_p(d) \overset{\mathrm{def.}}{=} v_p(n/pd) + 1 + v_p(d)
+        = v_p(n/d) + v_p(d) = v_p(n)
+    \]
+    so it follows that for every d 
+    \[
+        d \cdot \phi_p(a_d^{n/pd}) \equiv d \cdot a_d^{n/d} \text{\hskip8mm mod } p^{v_p(n)}
+    \] 
+    which implies (1).
+    \end{proof}
+    \begin{proof}[Proof of (2)]
+        It suffices to show that if $d \mid n$, $d \nmid n/p$, the term 
+        $d \cdot a_d^{n/d}$ vanishes mod $p^{v_p(n)}A$.
+        But in this case, $v_p(d) = v_p(n)$, hence $d \equiv 0$ mod  $p^{v_p(n)}A$.
+    \end{proof} \todo{proof-umgebung} 
     
     $\rueck$ Let $(x_n)_{n \in S}$ be a sequence such that 
     $x_n \equiv \phi_p(x_{n/p}) \hskip8mm mod \ p^{v_p(n)}A \ \forall p\ $prime$, n\in S, v_p(n) \geqslant 1.$
-    Define $(a_n)_{n \in S}$ with $w_n(a) = x_n$ as follows:
+    Define $(a_n)_{n \in S}$ with $w_n((a_n)_{n \in S}) = x_n$ as follows:
     \[a_1 := x_1\]
     and if $a_d$ has been chosen for all $d \mid n$ such that $w_d(a) = x_d$ we see that
+    for every prime $p \mid n$:
     \begin{align*}
             x_n &\equiv \phi_p(x_{n/p}) \hskip8mm mod \ p^{v_p(n)}A \\
                 &= \phi_p(\sum_{d \mid n/p} d \cdot a_d^{n/pd}) \\
                 &= \sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd})
     \end{align*}
- \todo{finish proof}
+    because $\phi_p$ is a ring homomorphism. Using our previous calculations,
+    we see that
+    \begin{align*}
+        \sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd})
+        &\overset{(2)}{\equiv} \sum_{d \mid n/p} d \cdot a_d^{n/d} 
+        \text{\hskip8mm mod } p^{v_p(n)}A \\
+        &\overset{(3)}{\equiv} \sum_{d \mid n} d \cdot a_d^{n/d} 
+        \text{\hskip8mm mod } p^{v_p(n)}A \\
+        &\equiv \sum_{d \mid n,d \neq n} d \cdot a_d^{n/d} 
+        \text{\hskip8mm mod } p^{v_p(n)}A
+    \end{align*}
+    In conclusion: 
+    \[
+    p^{v_p(n)} \mid \left( x_n - \sum_{d \mid n,d \neq n} d \cdot a_d^{n/d} \right)
+    \]
+    for all $p \mid n$. But this implies that 
+    \[
+        n \mid \left( x_n - \sum_{d \mid n,d \neq n} d \cdot a_d^{n/d} \right)
+    \]
+    hence $\exists a_n \in A$ such that 
+    \[
+        x_n = \sum_{d \mid n,d \neq n} d \cdot a_d^{n/d} + n \cdot a_n
+        = \sum_{d \mid n} d \cdot a_d^{n/d}.
+    \]
 \end{bigproof}
 We will often need the following
 \begin{lemma} \label{lem: injective ghost map}
-    if $A$ is a torsion-free ring, the ghost map is injective.
+    If $A$ is a torsion-free ring, the ghost map is injective.
 \end{lemma}
+\begin{beweis}
+    Let $a = (a_n)_{n \in S}$ such that $w(a) = 0$. This means
+    $w_n = 0$ for all $n \in S$. We will prove by induction,
+    that $a_n = 0$ for all $n \in S$. First, $a_1 = w_1 = 0$.
+    And if $a_d = 0$ for all $d \in S, d < n$ we see that
+    \[
+        0 = w_n = \sum_{d \mid n} d \cdot a_d^{n/d} = n \cdot a_n 
+    \]
+    and since A is torsion-free, this implies $a_n = 0$.
+\end{beweis}
 Now we can finish the construction of the Witt vectors:
 \begin{theorem} \label{thm: existence of witt vectors}
     There exists a unique ring structure such that the ghost map 
