@@ -80,7 +80,7 @@ such that the following diagrams commute: \\
     \centering
     \begin{subfigure}{0.3\textwidth}
         \centering
-        \phantomsection\label{dia: unitality}
+        \phantomsection\label{dia: associativity}
         % Content of the first subfigure
         \begin{tikzcd}
             T^3 \ar[r,"T\mu",Rightarrow] \ar[d,"\mu T"',Rightarrow] 
@@ -88,23 +88,23 @@ such that the following diagrams commute: \\
             T^2 \ar[r,"\mu",Rightarrow]
             & T
         \end{tikzcd}
-        \caption*{(unitality)}
+        \caption*{(associativity)}
     \end{subfigure}
     \hspace{2em}
     \begin{subfigure}{0.3\textwidth}
         \centering
-        \phantomsection\label{dia: associativity}
+        \phantomsection\label{dia: unitality}
         \begin{tikzcd}
             T \ar[rd,"\id_T"',Rightarrow] \ar[r, "\eta T",Rightarrow] 
         & T^2 \ar[d,"\mu",Rightarrow] 
         & T \ar[l,"T \eta"',Rightarrow] \ar[ld,"\id_T",Rightarrow]\\
         & T
         \end{tikzcd}
-        \caption*{(associativity)}
+        \caption*{(unitality)}
     \end{subfigure} 
 \end{figure}
 
-In terms of components,~\refunitality and~\refassociativity mean that for every object $x$ of $\mathcal{X}$
+In terms of components,~\refassociativity and~\refunitality mean that for every object $x$ of $\mathcal{X}$
 the following diagrams commute:
 
 \begin{figure}[H]
@@ -118,7 +118,7 @@ the following diagrams commute:
     T(Tx) \ar[r,"\mu_x"]
     & Tx
 \end{tikzcd}
-\caption*{(unitality)}
+\caption*{(associativity)}
 \end{subfigure}
 \hspace{2em}
 \begin{subfigure}{0.4\textwidth}
@@ -130,7 +130,7 @@ the following diagrams commute:
     & Tx \ar[l,"T(\eta_x)"'] \ar[ld,"\id_{Tx}"]\\
     & Tx
 \end{tikzcd}
-\caption*{(associativity)}
+\caption*{(unitality)}
 \end{subfigure}
 \end{figure}
 
@@ -248,7 +248,8 @@ the following diagrams commute:
     \]
 \end{lemma}
 \begin{beweis}
-    $\delta \colon T \Rightarrow T'$ is natural.\todo{finish proof}
+    $\delta_x \colon Tx \to T'x$ is a ring homomorphism.
+    Since $\delta \colon T \Rightarrow T'$ is natural transformation, the square commutes.
 \end{beweis}
 \begin{definition}[Morphism of monads]
     Let $\mathcal{X}$ be a category, let $(T,\eta,\mu)$ and $(T',\eta',\mu')$ be monads in $\mathcal{X}$.
@@ -260,27 +261,314 @@ the following diagrams commute:
     \begin{subfigure}{0.4\textwidth}
     \centering
     %\phantomsection\label{name1}
-        \begin{tikzcd}
-            \id_x \ar[rd,"\eta'_x"'] \ar[r, "\eta_x"] 
-            & Tx \ar[d,"\delta_x"] \\
-            & T'x
-        \end{tikzcd}
+    \begin{tikzcd}
+        \id_T \ar[rd,"\eta'"',Rightarrow] \ar[r, "\eta",Rightarrow] 
+        & T \ar[d,"\delta",Rightarrow] \\
+        & T'
+    \end{tikzcd}
+    \caption*{(unit-preserving)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{tikzcd}
+        T^2 \ar[r,"\mu",Rightarrow] \ar[d,"\delta T' \circ T\delta"',Rightarrow] 
+        & T \ar[d,"\delta",Rightarrow] \\
+        T'^2 \ar[r,"\mu'",Rightarrow]
+        & T'
+    \end{tikzcd}
+    \caption*{(multiplication-preserving)}
+    \end{subfigure}
+    \end{figure}
+
+    %vadjust allows todo in math-mode   
+\end{definition}
+\begin{definition}[Morphism of comonads]
+    Let $\mathcal{A}$ be a category, let $(L,\eps,\omega)$ and $(L',\eps',\omega')$ be comonads in $\mathcal{A}$.
+    We say that a natural transformation $\nat[\delta]{L}{L'}$ is a \textit{morphism of monads} if it preserves
+    the counit and the comultiplication, i.e. the following diagrams commute:
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+    \begin{tikzcd}
+        L \ar[r,"\delta",Rightarrow] \ar[rd,"\eps"',Rightarrow]
+        & L' \ar[d,"\eps'",Rightarrow] \\
+        & \id_A 
+    \end{tikzcd}
+    \caption*{(counit-preserving)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{tikzcd}
+        L \arrow[r,"\omega",Rightarrow] \arrow[d,"\delta",Rightarrow] 
+          & L^2 \arrow[d,"\delta L' \circ L\delta",Rightarrow] \\
+        L' \arrow[r,"\omega'",Rightarrow]
+          & {L'}^2
+    \end{tikzcd}
+    \caption*{(comultiplication-preserving)}
+    \end{subfigure}
+    \end{figure}
+\end{definition}
+
+\section{The Eilenberg-Moore-Category of a Monad}
+This section will answer the question, whether every Monad is induced by an adjunction.
+
+\begin{definition}[Eilenberg-Moore-Category]
+    Let $T = (T,\eta,\mu)$ be a monad in a category $\cat{X}$.
+    A \textit{$T$-algebra} is a pair $(x,h)$ where $x$ is an object of $\cat{X}$ and $h \colon Tx \to x$ is 
+    an arrow such that the following diagrams commute:
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+    \begin{tikzcd}
+        T^2x \arrow[r,"Th"] \arrow[d,"\mu"] 
+          & Tx \arrow[d,"h"] \\
+        T \arrow[r,"h"]
+          & x
+    \end{tikzcd}
     %\caption*{(cap1)}
     \end{subfigure}
     \hspace{2em}
     \begin{subfigure}{0.4\textwidth}
     \centering
     %\phantomsection\label{name2}
-        \begin{tikzcd}
-            T^2x \ar[r,"\mu_x"] \ar[d,"\delta T' \circ T\delta"'] 
-            & Tx \ar[d,"\delta_x"] \\
-            T'^2x \ar[r,"\mu'_x"]
-            & T'x
-        \end{tikzcd}
+    \begin{tikzcd}
+        x \ar[r,"\eta_x"] \ar[rd,"id_x"']
+        & Tx \ar[d,"h"] \\
+        & x 
+    \end{tikzcd}
     %\caption*{(cap2)}
     \end{subfigure}
     \end{figure}
-    %vadjust allows todo in math-mode   
+    We call $h$ the \textit{stucture map} of $(x,h)$.
+    A \textit{morphism of $T$-algebras} $f \colon (x,h) \to (x',h')$ is an arrow
+    $f \colon x \to x'$ such that
+    \[
+        \begin{tikzcd}
+            Tx \arrow[r,"Tf"] \arrow[d,"h"] 
+            & Tx' \arrow[d,"h'"] \\
+            x \arrow[r,"f"]
+            & x'
+        \end{tikzcd}
+    \]
+    commutes.
+    The set of all $T$-algebras together with their morphisms form a category,
+    which is called the \textit{Eilenberg-Moore-Category} and denoted by $\cat{X}^T$.
 \end{definition}
-\begin{definition}[Morphism of comonads]
+\todo{Proof that this is indeed a category?}
+\begin{theorem}[Every monad is defined by its T-algebras]
+    Let $(T,\eta,\mu)$ be a monad in a category $\cat{X}$.
+    Then there is an adjunction $F^T \adj G^T$, where $F^T$ and $G^T$ are functors
+    \begin{tikzcd}
+        \cat{X^T} \ar[r,"G^T",shift left = .60ex]
+          & 
+        \cat{X} \ar[l,"F^T",shift left = .60ex]
+    \end{tikzcd}
+    such that the monad induced by this adjunction is $(T,\eta,\mu)$.
+\end{theorem}
+\begin{beweis}
+Define $F^T \colon \cat{X} \to \cat{X}^T$ by
+\[
+    \begin{tikzcd}
+        x \arrow[r,mapsto] \arrow[d,"f"]
+          & (Tx,\mu_x) \arrow[d,"Tf"] \\
+        x' \arrow[r,mapsto]
+          & (Tx',\mu_{x'})
+    \end{tikzcd}
+\]
+$(Tx,\mu_x)$ is indeed a $T$-algebra, since $\mu_x$ is an arrow $T^2x \to Tx$
+and the diagrams 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name1}
+\begin{tikzcd}
+    T^3x \arrow[r,"T(\mu_x)"] \arrow[d,"\mu_{Tx}"] 
+      & T^2x \arrow[d,"\mu_x"] \\
+    T^2x \arrow[r,"\mu_x"]
+      & Tx
+\end{tikzcd}
+%\caption*{(cap1)}
+\end{subfigure}
+\hspace{2em}
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name2}
+\begin{tikzcd}
+    Tx \ar[r,"\eta_{Tx}"] \ar[rd,"id_{Tx}"']
+    & T^x \ar[d,"\mu_x"] \\
+    & Tx 
+\end{tikzcd}
+%\caption*{(cap2)}
+\end{subfigure}
+\end{figure}
+are just the commuting diagrams for the~\refassociativity
+respectively left~\refunitality axioms from the definition of a Monad.
+
+$Tf \colon (Tx,\mu_x) \to (Tx',\mu_{x'})$ is indeed a morphism of $T$-algebras,
+since the commutativity of 
+\[
+  \begin{tikzcd}
+      T^2x \arrow[r,"T^2(f)"] \arrow[d,"\mu_x"] 
+        & T^2x' \arrow[d,"\mu_{x'}"] \\
+      Tx \arrow[r,"T(f)"]
+        & Tx'
+  \end{tikzcd}  
+\]
+is given by naturality of $\mu$. The functoriality of $F^T$ follows from the functoriality
+of $T$.
+
+Define $G^T \colon \cat{X^T} \to \cat{X}$ by
+\[
+    \begin{tikzcd}
+        (x,h) \arrow[r,mapsto] \arrow[d,"f"] 
+          & x \arrow[d,"f"] \\
+        (x',h') \arrow[r,mapsto]
+          & x'
+    \end{tikzcd}   
+\]
+so $G$ is just the forgetful functor.
+\begin{claim*}
+    $G^T \circ F^T = T$ and $F^TG^T(x,h) = (Tx,\mu_x$).
+\end{claim*}
+\begin{proof}[Proof of claim]
+    Let $x \in \cat{X}.$ Then $G^T(F^T(x)) = G^T(Tx,\mu_x) = Tx.$
+    Now let $f \colon x \to y$. Then $G^T(F^T(f))=G^t(Tf)=Tf.$
+    Finally, $F^TG^T(x,h) = F^T(x) = (Tx,\mu_x).$
+\end{proof}
+So we can set 
+\[
+  \eta^T := \eta \colon \id_{\cat{X}} \Rightarrow G^TF^T 
+\]
+as the unit and we can define $\eps^T \colon F^TG^T \to \id_{\cat{X}^T}$ by
+\[
+    \eps^T_{(x,h)} := h \colon (Tx,\mu_x) \to (x,h).
+\]
+$h$ is a morphism of $T$-algebras because $(x,h)$ is a $T$-algebra, since both statements
+mean that the diagram 
+\[
+    \begin{tikzcd}
+        T^2x \arrow[r,"Th"] \arrow[d,"\mu"] 
+          & Tx \arrow[d,"h"] \\
+        T \arrow[r,"h"]
+          & x
+    \end{tikzcd}
+\]
+commutes. $\eps^T$ is natural, because if $f \colon (x,h) \to (x',h')$
+is a morphism of $T$-algebras, naturality means that the diagram
+\[
+    \begin{tikzcd}
+        Tx \arrow[r,"Tf"] \arrow[d,"h"]
+          & Tx' \arrow[d,"h'"] \\
+        x \arrow[r,"f"]
+          & x'
+    \end{tikzcd}
+\]
+but this is exactly the definition of $f$ being a morphism of $T$-algebras.
+\todo{triangle identies and induces T}
+\end{beweis}
+\begin{theorem}[Comparison of adjunctions with algebras]
+
+\end{theorem}
+\section{The Kleisli category of a Monad}
+There is another way to induce a Monad by an adjunction:
+\begin{definition}[Kleisli category]
+    Let $\cat{X}$ be a category, $T = (T,\eta, \mu)$ be a monad in $\cat{X}$.
+    The \textit{Kleisli category $\cat{X}_T$} is defined by
+    \begin{itemize}
+        \item objects the same as in $\cat{X}$, but we relabel $x$ to $x_T$ for all $x \in \cat{X}$.
+        \item for $x_T, y_T \in \cat{X}_T$, $f\colon x \to Ty$ is a morphism which we
+        denote by $f^b \colon x_T \to y_T$.
+        \item composition will be denoted by $\bullet$ for distinction and is defined by
+        \[
+            g^b \bullet f^b := (\mu_z \circ Tg \circ f)^b \colon x_T \to z_T
+        \]
+        for $f^b \colon x_T \to y_T$, $g^b \colon y_T \to z_T$. 
+        This is indeed again a morphism:
+        \begin{tikzcd}
+            x \arrow[r,"f"]
+              & Ty \arrow[r,"Tg"]
+                & T^2z \arrow[r,"\mu_z"]
+                  & Tz
+        \end{tikzcd}
+    \end{itemize}
+\begin{claim*}
+    This defines a category.
+\end{claim*}
+\begin{proof}[Proof of claim]
+\underline{associativity}: Let
+\begin{tikzcd}
+    x_T \arrow[r,"f^b"]
+      & y_T \arrow[r,"g^b"]
+        & z_T \arrow[r,"h^b"]
+          & w_T
+\end{tikzcd}
+be objects and morphisms in the Kleisli category.
+\begin{align*}
+    (h^b \bullet g^b) \bullet f^b &= (\mu_w \circ Th \circ g)^b \bullet f^b \\
+    &= (\mu_w \circ T(\mu_w \circ Th \circ g) \circ f)^b \\
+    &= (\mu_w \circ T\mu_w \circ T^2h \circ Tg \circ f)^b.
+\end{align*}
+Now the~\refassociativity axiom for the Monad T states that
+\[
+    \begin{tikzcd}
+        T(T(Tw)) \ar[r,"T(\mu_w)"] \ar[d,"\mu_{Tw}"'] 
+        & T(Tw) \ar[d,"\mu_w"] \\
+        T(Tw) \ar[r,"\mu_w"]
+        & Tw 
+    \end{tikzcd}
+\]
+commutes, hence 
+\[
+    (\mu_w \circ T\mu_w \circ T^2h \circ Tg \circ f)^b
+    = (\mu_w \circ \mu_{Tw} \circ T^2h \circ Tg \circ f)^b
+\]
+By naturality of $\mu$, the diagram
+\[
+    \begin{tikzcd}
+        T^2z \arrow[r] \arrow[d] 
+          & T^3w \arrow[d] \\
+        Tz \arrow[r]
+          & T^2w
+    \end{tikzcd}
+\]
+commutes, so it follows that
+\begin{align*}
+    (\mu_w \circ \mu_{Tw} \circ T^2h \circ Tg \circ f)^b
+    &= (\mu_w \circ Th \circ \mu_z \circ Tg \circ f)^b \\
+    &= h^b \bullet (g^b \bullet f^b) \\
+\end{align*}
+\underline{identity axiom}: Let $f^b \colon x_T \to y_T$ be a morphism.
+\begin{align*}
+    f^b \bullet (\eta_x)^b = (\mu_x \circ Tf \circ \eta_x)^b
+    = (\mu_x \circ \eta_{Ty} \circ f)^b
+    = (\id_{Ty} \circ f)^b = f^b
+\end{align*}
+where the second equality follows from the naturality of $\eta$ and 
+the third equality is due to the left~\refunitality law for T.
+\begin{align*}
+    (\eta_y)^b \bullet f^b = (\mu_y \circ T\eta_y \circ f)^b
+    =(id_{Ty}\circ f)^b = f^b
+\end{align*}
+where the second equality is due to the right~\refunitality law for T.
+This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
+\in \Hom[\cat{X}_T](x_T,x_T)$
+\end{proof}
+\begin{theorem}
+    There is an adjoint situation $F_T \adj G_T \colon$ 
+    \begin{tikzcd}
+        \cat{X_T} \ar[r,,shift left = .60ex]
+          & 
+        \cat{X} \ar[l,,shift left = .60ex]
+    \end{tikzcd}
+    such that $T$ is the induced monad by this adjunction.
+\end{theorem}
 \end{definition}
