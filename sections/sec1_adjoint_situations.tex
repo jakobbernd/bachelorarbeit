@@ -4,75 +4,82 @@
 \todo{einleitender Satz}
 Moreover, adjunctions provide us with many (technically even all) 
 examples of monads and comonads, as we will later see.
-\begin{proposition}
+\begin{proposition} \label{prop: equiv def of adj}
     Given two functors
     \begin{tikzcd}
-        \cat{A} \ar[r,"G",shift left = .60ex]
+        \cat{B} \ar[r,"F",shift left = .60ex]
           & 
-        \cat{B} \ar[l,"F",shift left = .60ex]
+        \cat{A} \ar[l,"G",shift left = .60ex]
     \end{tikzcd}
     the following are equivalent: 
     \begin{enumerate}[(a)]
-        \item $\exists \eta\colon \id_B \Rightarrow GF$ and $\eps\colon FG \Rightarrow \id_A$ 
-        natural transformations such that $\forall a \in Ob(A), b \in Ob(B)$ 
-        the following two diagrams commute:
-        \begin{equation}\label{eq:triangle identity of adjunction}
-            \begin{tikzcd}\tag{triangle identity}
-                F(b) \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & FGF(b) \arrow[d,"\eps_{F(b)}"] \\
-                                            & F(b)
-            \end{tikzcd}
-            \qqq
-            \begin{tikzcd} 
-        G(a) \arrow[rd,"id_{G(a)}"'] \arrow[r, "\eta_{G(a)}"] & GFG(a) \arrow[d,"G(\eps_a)"] \\
-                                            & G(a)
-            \end{tikzcd}
-        \end{equation}
-        \item $\forall a \in Ob(A), b \in Ob(B)$ there is a bijection 
-        \[
-        \phi_{a,b}\colon\Hom[A](F(b),a)\to \Hom[B](b,G(a))
-        \]
-        which is natural in a and b, which means that for $p\colon a\to a':$
-        \[
-            \begin{tikzcd}
-                \Hom[A](F(b),a) \arrow[r,"\phi_{a,b}"] \arrow[d,"p \circ \_"] 
-                  & \Hom[B](b,G(a)) \arrow[d,"G(p)\circ \_"] \\
-                \Hom[A](F(b),a') \arrow[r,"\phi_{a',b}"]
-                  & \Hom[B](b,G(a'))
-            \end{tikzcd}
-        \]
-        and for $q\colon b \to b':$
-        \[
-            \begin{tikzcd}
-                \Hom[A](F(b'),a) \arrow[r,"\phi_{a,b'}"] \arrow[d,"\_ \circ F(q)"] 
-                  & \Hom[B](b',G(a)) \arrow[d,"\_ \circ q"] \\
-                \Hom[A](F(b),a) \arrow[r,"\phi_{a,b}"]
-                  & \Hom[B](b,G(a))
-            \end{tikzcd}
-        \]
-    commute.
+    \item There are natural transformations $\eta\colon \id_B \Rightarrow GF$ and $\eps\colon FG \Rightarrow \id_A$ 
+    such that for all objects $a$ of $\cat{A}$, $b$ of $\cat{B}$
+    the following two diagrams commute:
+    \begin{equation}\label{eq:triangle identity of adjunction}
+        \begin{tikzcd}\tag{triangle identity}
+            F(b) \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & FGF(b) \arrow[d,"\eps_{F(b)}"] \\
+                                        & F(b)
+        \end{tikzcd}
+        \qqq
+        \begin{tikzcd} 
+    G(a) \arrow[rd,"id_{G(a)}"'] \arrow[r, "\eta_{G(a)}"] & GFG(a) \arrow[d,"G(\eps_a)"] \\
+                                        & G(a)
+        \end{tikzcd}
+    \end{equation}
+    \item There is a bijection 
+    \[
+    \phi_{a,b}\colon\Hom[A](F(b),a)\cong \Hom[B](b,G(a))
+    \]
+    for all objects $a$ of $\cat{A}$ and $b$ of $\cat{B}$, which is natural in $a$ and $b$.
     \end{enumerate}
 \end{proposition}
+Naturality here means that 
+for $p\colon a\to a'$ and for $q\colon b \to b'$ the following two diagrams commute:
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name1}
+\begin{tikzcd}
+    \Hom[A](F(b),a) \arrow[r,"\phi_{a,b}"] \arrow[d,"p \circ \_"] 
+      & \Hom[B](b,G(a)) \arrow[d,"G(p)\circ \_"] \\
+    \Hom[A](F(b),a') \arrow[r,"\phi_{a',b}"]
+      & \Hom[B](b,G(a'))
+\end{tikzcd}
+%\caption*{(cap1)}
+\end{subfigure}
+\hspace{2em}
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name2}
+\begin{tikzcd}
+    \Hom[A](F(b'),a) \arrow[r,"\phi_{a,b'}"] \arrow[d,"\_ \circ F(q)"] 
+      & \Hom[B](b',G(a)) \arrow[d,"\_ \circ q"] \\
+    \Hom[A](F(b),a) \arrow[r,"\phi_{a,b}"]
+      & \Hom[B](b,G(a))
+\end{tikzcd}
+%\caption*{(cap2)}
+\end{subfigure}
+\end{figure}
+
+
 \begin{bigproof}
     $(a)\implies (b):$ \\
     define 
     \[
-        \phi_{a,b}\colon \Hom[A](F(b),a)\to \Hom[B](b,G(a))
-    \] by 
-    \[
-       \phi_{a,b}(g) = G(g) \circ \eta_b 
-       \colon b \to G(a)
+        \phi_{a,b}\colon \Hom[A](F(b),a)\to \Hom[B](b,G(a)) 
+        \quad \text{ by } \quad \phi_{a,b}(g) = G(g) \circ \eta_b 
+        \colon b \to G(a)
     \]
-    for $g\colon F(b)\to a$ and define 
     \[
-      \psi_{a,b} \colon \Hom[B](b,G(a)) \to \Hom[A](F(b),a)
-    \] by
-    \[
-       \psi_{a,b}(f) = \eps_a \circ F(f) 
-       \colon F(b) \to a
+        \psi_{a,b} \colon \Hom[B](b,G(a)) \to \Hom[A](F(b),a)
+        \quad \text{ by } \quad \psi_{a,b}(f) = \eps_a \circ F(f) 
+        \colon F(b) \to a
     \]
-    for $f\colon b \to G(a).$
+    for $g\colon F(b)\to a$, $f\colon b \to G(a)$.
 \begin{claim}
-$\psi \circ \phi = id$
+$\phi \circ \psi = \id$
 \end{claim}
 \begin{smallproof}
 Let $f \colon b \to G(a)$.
@@ -81,15 +88,105 @@ Let $f \colon b \to G(a)$.
     &= G(\eps_a \circ F(f)) \circ \eta_b \tag{Definition of $\phi$}\\
     &= G(\eps_a) \circ G(F(f)) \circ \eta_b \tag{Functoriality of $G$}\\
     &= G(\eps_a) \circ \eta_{G(a)} \circ f \tag{Naturality of $\eta$} \\
-    &= \id_{G(a)} \circ f \tag{right~\ref{eq:triangle identity of adjunction}} \\
-    &= f
+    &= \id_{G(a)} \circ f = f \tag{right~\ref{eq:triangle identity of adjunction}}
 \end{align*}
 \end{smallproof}
+\begin{claim}
+    $\psi \circ \phi = \id$
+\end{claim}
+\begin{smallproof}
+\begin{align*}
+        \psi(\phi(g)) &= \psi (G(g) \circ \eta_b) \tag{Definition of $\phi$}\\
+        &= \eps_a \circ F(G(g) \circ \eta_b) \tag{Definition of $\psi$}\\
+        &= \eps_a \circ F(G(g)) \circ F(\eta_b) \tag{Functoriality of $F$}\\
+        &= g \circ \eps_{F(b)} \circ F(\eta_b) \tag{Naturality of $\eps$}\\
+        &= g \circ \id_{F(b)} = g \tag{left~\ref{eq:triangle identity of adjunction}}
+\end{align*}
+\end{smallproof}
+\begin{claim}
+    $\phi_{a,b}$ is natural in $a$.
+\end{claim}
+\begin{smallproof}
+    Let $p \colon a \to a'$. Then by functoriality of $G$ we have:
+    \[
+       G(p) \circ G(g) \circ \eta_b = G(p \circ g) \circ \eta_b.
+    \]
+\end{smallproof}
+\begin{claim}
+    $\phi_{a,b}$ is natural in $b$.
+\end{claim}
+\begin{smallproof}
+    Let $q \colon b \to b'$. Then by functoriality of $G$ and naturality of $\eta$ we have: 
+    \[
+       G(g \circ F(q)) \circ \eta_b = G(g) \circ GF(q) \circ \eta_b
+       = G(g) \circ \eta_{b'} \circ q
+     \]
+\end{smallproof}
+$(a)\Longleftarrow (b):$ Define 
+\[
+    \eta \colon id_{\cat{B}} \Rightarrow GF \quad \text{ by } \quad \eta_b := \phi_{F(b),b}(\id_{F(b)})
+    \colon b \to GF(b) \\
+\]
+\[
+    \eps \colon FG \Rightarrow id_{\cat{A}} \quad \text{ by } \quad \eps_a := \psi_{a,G(a)}(\id_{G(a)})
+    \colon FG(a) \to a
+\]
+\begin{claim}
+    $\eta$ is a natural transformation.
+\end{claim}
+\begin{smallproof}
+    For $p \colon b \to b'$ we need to show that 
+    \[
+        \begin{tikzcd}
+            b \arrow[r,"q"] \arrow[d,"\eta_b"] 
+              & b' \arrow[d,"\eta_{b'}"] \\
+            GF(b) \arrow[r,"GF(q)"]
+              & GF(b')
+        \end{tikzcd}
+    \]
+    commutes, which means $\phi_{F(b),b}(\id_{F(b)}) \circ p 
+    = GF(p) \circ \phi_{F(b'),b'}(\id_{F(b')})$. \todo{?}
+    But 
+    \[
+        \phi(\id) \circ p = \phi(F(p)) = GF(p) \circ \phi
+    \]
+\end{smallproof}
+\begin{claim}
+    $\eps$ is a natural transformation.
+\end{claim}
+\begin{smallproof}
+    \todo{?}
+\end{smallproof}
+\begin{claim} 
+    $\eta$ and $\eps$ satisfy the triangle identities.
+\end{claim}
+\begin{smallproof}
+    \[
+        \id_{F(b)} = \psi(\phi(\id_{F(b)})) = \psi(\eta_b) 
+        = \psi(\eta_b \circ \id_b) = \eps_{F(b)} \circ F(\eta_b)
+    \]
+    \[
+       \id_{G(a)} = \phi(\psi(\id_{G(a)})) = \phi(\eps_a) = \phi(id_a) 
+    \]
+\end{smallproof}
 \end{bigproof}
+\begin{definition}[Adjunction]
+    Let $\cat{A}$ and $\cat{B}$ be categories. 
+    We say that functors
+    $F \colon \cat{B} \to \cat{A}$, $G \colon \cat{A} \to \cat{B}$
+    form an \textit{adjunction between $\cat{A}$ and $\cat{B}$},
+    if $F$ and $G$ satisfy the equivalent conditions of~\ref{prop: equiv def of adj}. 
+    We then say that $F$ is \textit{left-adjoint} to $G$ and $G$ is \textit{right-adjoint}
+    to $F$.
+\end{definition}
+\begin{remark}
+    We will denote the adjunction either by $F \! \adj_{\phi}\!\! G \colon \adjar{B}{A}$ or by 
+    $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{B}{A}$,
+    sometimes even just $F \adj G$, depending on the context.
+\end{remark}
 
 \begin{remark}
-    Let $F \adj G$ be an adjoint situation, i.e. 
-    $F$ is left-adjoint to $G$ and $G$ is right-adjoint to $F$.
+    Let $F \adj G$ be an adjunction.
     Then
     \begin{enumerate}
         \item G preserves limits

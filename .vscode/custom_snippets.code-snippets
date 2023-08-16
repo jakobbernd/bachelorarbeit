@@ -16,17 +16,21 @@
 	// 	"description": "Log output to console"
 	// }
 
-		 "Adjoint situation": {
-			"prefix": ["adjoint"],
+		 "Hom-adjunction": {
+			"prefix": ["adjhom"],
 			"body": 
 			[   
-				"\\begin{tikzcd}",
-				"    ${1:\\cat{A}} \\ar[r,\"G\",shift left = .60ex]",
-				"      & ",
-				"    ${2:\\cat{B}} \\ar[l,\"F\",shift left = .60ex]",
-				"\\end{tikzcd}"
+				"F \\! \\adj_{\\phi}\\!\\! G"
 			],
-			"description": "An adjoint situation"
+			"description": "F is adjoint to G via phi"
+		  },
+		  "unit-adjunction": {
+			"prefix": ["adjunit"],
+			"body": 
+			[   
+				"F {\\ }_{\\eps}^{\\text{\\tiny{$\\eta$}}}\\!\\!\\!\\!\\adj G"
+			],
+			"description": "F is adjoint to G via eta and eps"
 		  },
 
 		  "Upper triangle": {

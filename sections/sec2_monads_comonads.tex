@@ -68,10 +68,10 @@ which is clearly the~\ref{eq: identity element for a monoid} axiom
 for the element $e(\ast)$.
 This motivates the following definition: \todo{monoid/monad/ monoid object}
 \begin{definition}[Monad]
-A \textit{Monad} $(T,\mu, \eta) $ in a category $\mathcal{X}$ consists of
+A \textit{Monad} $(T,\mu, \eta) $ in a category $\cat{X}$ consists of
 \begin{itemize}
-    \item an endofunctor $T\colon \mathcal{X} \to \mathcal{X}$
-    \item a natural transformation $\eta \colon \id_\mathcal{X} \Rightarrow T$ 
+    \item an endofunctor $T\colon \cat{X} \to \cat{X}$
+    \item a natural transformation $\eta \colon \id_\cat{X} \Rightarrow T$ 
     \item a natural transformation $\mu\colon T^2 \Rightarrow T $
 \end{itemize}  
 such that the following diagrams commute: \\
@@ -104,7 +104,7 @@ such that the following diagrams commute: \\
     \end{subfigure} 
 \end{figure}
 
-In terms of components,~\refassociativity and~\refunitality mean that for every object $x$ of $\mathcal{X}$
+In terms of components,~\refassociativity and~\refunitality mean that for every object $x$ of $\cat{X}$
 the following diagrams commute:
 
 \begin{figure}[H]
@@ -137,35 +137,94 @@ the following diagrams commute:
 \end{definition}
 
 \begin{example}[preorder]
-Recall: A \textit{preorder} $(\mathcal{P},\le)$ is a category with $\mathcal{P}$ as objects and 
+Recall: A \textit{preorder} $(\cat{P},\le)$ is a category with $\cat{P}$ as objects and 
 a morphism between $X$ and $Y$ iff $X \le Y$.
-A functor $T\colon \mathcal{P} \to \mathcal{P}$ is thus a monotonic function $\mathcal{P}\to \mathcal{P}$
+A functor $T\colon \cat{P} \to \cat{P}$ is thus a monotonic function $\cat{P}\to \cat{P}$
 ($x \le y \implies Tx\le Ty$).
 The existence of the natural transformations $\eta$ is equivalent to
-\[x \le Tx \ \forall x \in \mathcal{P}\]
+\[x \le Tx \ \forall x \in \cat{P}\]
 and the existence of $\mu$ is equivalent to
-\[T(Tx) \le Tx \ \forall x \in \mathcal{P}\] 
+\[T(Tx) \le Tx \ \forall x \in \cat{P}\] 
 because there is at most one morphism $x \to y$, so the neccessary diagrams commute trivially.\\
-Now suppose $\mathcal{P}$ is a \textit{partial order}, i.e. $x \le y \le x \implies x = y \ \forall x,y \in \mathcal{P}$. \\
+Now suppose $\cat{P}$ is a \textit{partial order}, i.e. $x \le y \le x \implies x = y \ \forall x,y \in \cat{P}$. \\
 Then:
 \begin{align*}
     x \le Tx \implies Tx \le T(Tx) \\
     T(Tx) \le Tx \implies Tx = T(Tx)
 \end{align*}
-so a Monad $T$ in a partial order $\mathcal{P}$ is a \textit{closure operation} in $\mathcal{P}$, i.e. 
-a monotonic function $T \colon \mathcal{P} \to \mathcal{P}$ 
-with $x \le Tx$ and $T(Tx)=Tx \ \forall x \in \mathcal{P}.$ \\
-Now every topological space $X$ induces a partial order $\mathcal{P} = (\mathscr{P}(X),\subseteq)$.
+so a Monad $T$ in a partial order $\cat{P}$ is a \textit{closure operation} in $\cat{P}$, i.e. 
+a monotonic function $T \colon \cat{P} \to \cat{P}$ 
+with $x \le Tx$ and $T(Tx)=Tx \ \forall x \in \cat{P}.$ \\
+Now every topological space $X$ induces a partial order $\cat{P} = (\mathscr{P}(X),\subseteq)$.
 Here an example for a closure operation is taking the topological closure $A \mapsto \overline{A}$,
 since it holds for all $A \subseteq X$ that $A \subseteq \overline{A}$ and
 $\overline{\overline{A}} = \overline{A}$.
 \end{example}
 
+\begin{example}[M-action Monad]
+    Let $(M,\cdot,1)$ be a monoid. Then for each set $X$ we can form the set $X \times M$ and 
+    for a map $f \colon X \to Y$ we have a map $f \times \id_M \colon X \times M \to Y \times M;
+    (x,m) \mapsto (f(x),m)$. This is functorial and the functor canonically has the structure of 
+    a Monad, induced by the monoid structure of M. 
+    \begin{itemize}
+        \item The unit $\eta$ is defined by
+            $\eta_X \colon X \to X \times M;
+            x \mapsto (x,1)$
+        \item The multiplication $\mu$ is defined by 
+           $ \mu_X \colon X \times M \times M \to X \times M;
+            (x,m,n) \mapsto (x,m \cdot n)$
+    \end{itemize}
+    These are clearly natural maps and the Monad axioms follow directly from the monoid axioms for $M$,
+    if we look at the corresponding diagrams:
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering 
+    %\phantomsection\label{name1}
+    \begin{tikzcd}
+        X \times M \times M \times M \arrow[r,"\mu_x \times \id_M"]  \arrow[d,"\mu_{X \times M}"] 
+            & X \times M \times M \arrow[d,"\mu_X"] \\
+        X \times M \times M \arrow[r,"\mu_X"]
+            & X \times M
+    \end{tikzcd}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{tikzcd}
+        X \times M \ar[rd,"\id_{X \times M}"'] \ar[r, "\eta_X \times M"] 
+        & X \times M \times M \ar[d,"\mu_X"] 
+        & X \times M \ar[l,"\eta_x \times \id_M"'] \ar[ld,"\id_{X \times M}"]\\
+        & X \times M
+    \end{tikzcd}
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
+    The~\refassociativity axiom means that $(m \cdot n) \cdot k = m \cdot (n \cdot k)$ 
+    which is just the~\ref{eq: associativity for a monoid} axiom for the monoid M,
+    while~\refunitality means that $1\cdot m = m = m \cdot 1$ which holds by
+    the~\ref{eq: identity element for a monoid} axiom for $M$.
+    We will call this Monad on $\cat{Set}$ the \textit{M-action Monad}, the reason for this name will
+    be clear once we look at it's algebras, see Section~\ref{sec: Eilenberg-Moore-Category}.
+\end{example}
+\begin{example}[Maybe monad]
+    The \textit{Maybe Monad} $Y \colon \cat{Set} \to \cat{Set}$ is defined by
+    $X \mapsto X \cup \pt$ where $f \colon X \to Y$ gets mapped to the function
+    $Y(f) \colon X \cup \pt \to Y \cup \pt$ which maps $x$ to $f(x)$ and $\ast$ to $\ast$. 
+    \begin{itemize}
+        \item $\eta_X \colon X \to X \cup \pt; x \mapsto x$
+        \item $\mu_X \colon X \cup \{\ast_1\}  \cup \{\ast_2\} \to X \cup \pt; x \mapsto x, 
+        \ast_1 \mapsto \ast, \ast_2 \mapsto \ast$
+    \end{itemize}
+\end{example}
+
 \begin{definition}[Comonad]
-A \textit{Comonad} $(L,\eps, \omega) $ in a Category $\mathcal{A}$ consists of
+A \textit{Comonad} $(L,\eps, \omega) $ in a Category $\cat{A}$ consists of
 \begin{itemize}
-    \item an endofunctor $L\colon \mathcal{A} \to \mathcal{A}$
-    \item a natural transformation $\eps \colon L \Rightarrow \id_{\mathcal{A}}$ 
+    \item an endofunctor $L\colon \cat{A} \to \cat{A}$
+    \item a natural transformation $\eps \colon L \Rightarrow \id_{\cat{A}}$ 
     \item a natural transformation $\omega\colon L \Rightarrow L^2 $
 \end{itemize}  
 such that the following diagrams commute:
@@ -176,12 +235,12 @@ such that the following diagrams commute:
 \centering
 %\phantomsection\label{name1}
     \begin{tikzcd}
-        L \ar[r,"L\omega",Rightarrow] \ar[d,"\omega L"',Rightarrow] 
+        L \ar[r,"\omega",Rightarrow] \ar[d,"\omega"',Rightarrow] 
             & L^2 \ar[d,"L\omega",Rightarrow] \\
         L^2 \ar[r,"\omega L",Rightarrow]
             & L^3
     \end{tikzcd}
-\caption*{(counitality)}
+\caption*{(coassociativity)}
 \end{subfigure}
 \hspace{2em}
 \begin{subfigure}{0.4\textwidth}
@@ -194,12 +253,12 @@ such that the following diagrams commute:
         & L^2 \ar[l,"\eps L"',Rightarrow] \ar[r,"L \eps",Rightarrow] 
         & L
     \end{tikzcd}
-\caption*{(coassociativity)}
+\caption*{(counitality)}
 \end{subfigure}
 \end{figure}
 
 
-In terms of components, this means that for every object $x$ of $\mathcal{A}$
+In terms of components, this means that for every object $x$ of $\cat{A}$
 the following diagrams commute:
 
 \begin{figure}[H]
@@ -208,12 +267,12 @@ the following diagrams commute:
 \centering
 %\phantomsection\label{name1}
     \begin{tikzcd}
-        Lx \ar[r,"L(\omega_x)"] \ar[d,"\omega_{Lx}"'] 
+        Lx \ar[r,"\omega_x"] \ar[d,"\omega_x"'] 
             & L(Lx) \ar[d,"L(\omega_x)"] \\
         L(Lx) \ar[r,"\omega_{Lx}"]
-            & L(L(Lx))
+            & L(L(Lx)) 
     \end{tikzcd}
-\caption*{(counitality)}
+\caption*{(coassociativity)}
 \end{subfigure}
 \hspace{2em}
 \begin{subfigure}{0.4\textwidth}
@@ -226,14 +285,187 @@ the following diagrams commute:
         & L(Lx) \ar[l,"\eps_{Lx}"'] \ar[r,"L(\eps_x)"] 
         & Lx
     \end{tikzcd}
-\caption*{(coassociativity)}
+\caption*{(counitality)}
 \end{subfigure}
 \end{figure}
 
 \end{definition}
+\begin{example}[Reader Comonad]
+    Let $E$ be a set. Define a functor $C_E \colon \cat{Set} \to \cat{Set}$ by
+    $C_E(X)=X \times E$ and, given $f \colon X \to Y,$ $C_E(f) = f \times \id_E
+    \colon X \times E \to Y \times E.$
+    We can view $E$ as \dq extra information\dq{} and give $C_E$ a comonadic structure as follows:
+    \begin{itemize}
+        \item the counit $\eps_X \colon X \times E \to X; (x,e)\mapsto x$ 
+         "forgets the extra information"
+        \item the comultiplication $\omega_X \colon X \times E \to X \times E \times E;
+        (x,e)\mapsto (x,e,e)$ 
+        "copies the extra information".
+    \end{itemize}
+    Now the comonad axioms say that the following diagrams have to commute:
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+    \begin{tikzcd}
+        X \times E \arrow[r,"\omega_X"] \arrow[d,"\omega_X"] 
+          & X \times E \times E \arrow[d,"\omega_X \times \id_E"] \\
+        X \times E \times E \arrow[r,"\omega_{X \times E}"]
+          & X \times E \times E \times E
+    \end{tikzcd}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{tikzcd}
+        & X \times E \ar[ld,"\id_{X \times E}"'] 
+        \ar[rd,"\id_{X \times E}"] \ar[d,"\omega_X"] & \\
+        X \times E 
+        & X \times E \times E \ar[l,"\eps_{X \times E}"'] \ar[r,"\eps_X \times \id_E"] 
+        & X \times E
+    \end{tikzcd}
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
+    The first diagram commutes, because for a tuple $(x,e,e)$, copying the second or 
+    third element produces the same tuple. The second diagram commutes, because copying 
+    the extra information and the deleting either one of the copies gives the same result.
+    The resulting comonad $(C_E,\eps,\omega)$ on $\cat{Set}$ is called the \textit{reader comonad}.
+    Note that as a functor, it is almost the same as the \textit{writer comonad}, but we gave it
+    kind of a dual structure.
+\end{example}
+
+
+We now consider another example of a comonad; the \textit{free monoid comonad}.
+\todo{maybe ins Kapitel Comonaden als Beispiel schieben}
+\begin{definition}[monoid ring]
+    Let $R$ be a ring and let $G$ be a monoid.
+    The \textit{monoid ring} of $G$ over $R$, denoted $R[G]$ or $RG$
+    is the set of formal finite sums $\sum_{g \in G}r_g \cdot g$
+    with addition and multiplication defined by:
+    \begin{align*}
+        \big(\sum_{g \in G}r_g \cdot g \big) + \big(\sum_{g \in G}s_g \cdot g \big)
+        & := \sum_{g \in G}(r_g + s_g)\cdot g \\
+        \big(\sum_{g \in G}r_g \cdot g \big) \cdot \big(\sum_{g \in G}s_g \cdot g\big)
+        & := \sum_{g \in G}(\sum_{k \cdot l = g} r_k \cdot s_l)\cdot g 
+    \end{align*}
+\end{definition}
+\begin{example}
+    $R = \R, G = \{x^n \mid n \in \N\} \implies RG = \R[X]$
+\end{example}
+\begin{remark} \label{rem: universal property of monoid ring}
+$R[G]$ together with the ring homomorphism $\alpha \colon R \to R[G]$;
+$r \mapsto r \cdot 1$ and the monoid homomorphism $\beta \colon 
+G \to R[G]$; $g \mapsto 1 \cdot g$ 
+enjoys the following universal property:
+\[
+  \alpha(r) \cdot \beta(g) = \beta(g) \cdot \alpha(r)
+   \quad \forall r \in R, g \in G
+\]
+and if $(S,\alpha',\beta')$ is another such triple with
+$\alpha'(r) \cdot \beta'(g) = \beta'(g) \cdot \alpha'(r)
+   \quad \forall r \in R, g \in G$,
+there is a unique monoid homomorphism $\gamma \colon R[G] \to S$
+such that the following diagram commutes:
+\[
+    \begin{tikzcd}
+        & S \\
+        R \arrow[r,"\alpha"'] \arrow[ur,"\alpha'"] 
+        & R[G] \arrow[u,"\gamma",dotted] 
+        & G \arrow[l,"\beta"] \arrow[ul,"\beta'"']
+    \end{tikzcd}
+\]
+Here, $\gamma$ is defined by 
+$\sum_{g \in G}r_g \cdot g \mapsto \sum_{g \in G}\alpha'(r_g) \cdot \beta'(g)$.
+\end{remark}
+\begin{example}
+    Let $S$ be a ring, $G$ be a monoid.
+    Since there is a unique ring homomorphism $\Z \to S$, 
+    each monoid homomorphism $G \to S$ induces a unique ring homomorphism
+    $\Z G \to S$ such that the following commutes:
+    \[
+      \begin{tikzcd}
+        G \arrow[r] \arrow[rd] 
+        &S \\
+        & \Z G \arrow[u]
+      \end{tikzcd}
+    \]
+    Now if $H$ is another monoid and $f \colon G \to H$ a monoid morphism,
+    $G \xrightarrow{f} H \to \Z H$ is a monoid homomorphism,
+    hence it extends uniquely to $f \colon \Z G \to \Z H$,
+    $\sum_{g \in G}r_g \cdot g \mapsto \sum_{g \in G}r_g \cdot f(g)$.\\ 
+    In this way, the free monoid ring construction over $\Z$ is functorial.
+\end{example}
+
+Let $G \colon \cat{CRing} \to \cat{CMon}$, $(R,+,\cdot) \mapsto (R,\cdot)$
+be the forgetful functor and
+let $F \colon \cat{CMon} \to \cat{CRing}$ be the functor
+$G \mapsto \Z G$. Then the composition $\Z[\_] := F \circ G \colon \cat{CRing} \to \cat{CRing}$
+is the functor $R \mapsto \Z R$, which we call the \textit{free monoid ring functor}.
+\begin{claim*}
+    $\Z[\_]$ is a comonad on $\cat{CRing}$.
+\end{claim*}
+\begin{beweis}
+    Define the counit and comultiplication by
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+    \begin{align*}
+    \eps_R \colon \Z R &\to R \\
+    \sum_{r \in R} a_r \cdot [r] &\mapsto  \sum_{r \in R} a_r \cdot r
+    \end{align*}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{align*}
+    \omega_R \colon \Z R &\to \Z \Z R \\
+    \sum_{r \in R} a_r \cdot [r] &\mapsto \big[\sum_{r \in R} a_r \cdot [r]\big]
+    \end{align*}
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
+    those are clearly natural and the following diagrams commute:
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name1}
+            \begin{tikzcd}
+                \Z R \ar[r,"\omega_x"] \ar[d,"\omega_x"'] 
+                    & \Z \Z R \ar[d,"L(\omega_x)"] \\
+                \Z \Z R \ar[r,"\omega_{Lx}"]
+                    & \Z \Z \Z R
+            \end{tikzcd}
+        \end{subfigure}
+        \hspace{2em}
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name2}
+            \begin{tikzcd}
+                & \Z R \ar[ld,"\id_{Lx}"'] 
+                \ar[rd,"\id_{Lx}"] \ar[d,"\omega_x"] & \\
+                \Z R 
+                & \Z \Z R \ar[l,"\eps_{Lx}"'] \ar[r,"L(\eps_x)"] 
+                & \Z R 
+            \end{tikzcd}
+        \end{subfigure}
+        \end{figure}
+\end{beweis}
+\begin{remark}
+   We can define a variation of this, by setting $\underline{\Z}R := \faktor{\Z R}{(0)}$
+   where $(0) = \set{r \cdot 0 \mid r \in \Z R }$ is the ideal generated by $0 \in R$.
+\end{remark}
 
 \begin{lemma}
-    For every object $x$ in $\mathcal{X}$, the following diagram commutes:
+    For every object $x$ in $\cat{X}$, the following diagram commutes:
     \[
       \begin{tikzcd}
         T(Tx) \arrow[r,"T(\delta_x)"] \arrow[d,"\delta_{Tx}"] 
@@ -246,13 +478,15 @@ the following diagrams commute:
         \delta T' \circ T \delta = T' \delta \circ \delta T
         \colon T^2 \Rightarrow (T')^2.
     \]
+    We denote this natural transformation by $\delta \otimes \delta$, since this is
+    actually the monoidal product of morphisms in the monoidal category of endofunctors on $\cat{X}$.
 \end{lemma}
 \begin{beweis}
     $\delta_x \colon Tx \to T'x$ is a ring homomorphism.
     Since $\delta \colon T \Rightarrow T'$ is natural transformation, the square commutes.
 \end{beweis}
 \begin{definition}[Morphism of monads]
-    Let $\mathcal{X}$ be a category, let $(T,\eta,\mu)$ and $(T',\eta',\mu')$ be monads in $\mathcal{X}$.
+    Let $\cat{X}$ be a category, let $(T,\eta,\mu)$ and $(T',\eta',\mu')$ be monads in $\cat{X}$.
     We say that a natural transformation $\nat[\delta]{T}{T'}$ is a \textit{morphism of monads} if it preserves
     the unit and the multiplication, i.e. the following diagrams commute:
 
@@ -273,7 +507,7 @@ the following diagrams commute:
     \centering
     %\phantomsection\label{name2}
     \begin{tikzcd}
-        T^2 \ar[r,"\mu",Rightarrow] \ar[d,"\delta T' \circ T\delta"',Rightarrow] 
+        T^2 \ar[r,"\mu",Rightarrow] \ar[d,"\delta \otimes \delta"',Rightarrow] 
         & T \ar[d,"\delta",Rightarrow] \\
         T'^2 \ar[r,"\mu'",Rightarrow]
         & T'
@@ -285,7 +519,7 @@ the following diagrams commute:
     %vadjust allows todo in math-mode   
 \end{definition}
 \begin{definition}[Morphism of comonads]
-    Let $\mathcal{A}$ be a category, let $(L,\eps,\omega)$ and $(L',\eps',\omega')$ be comonads in $\mathcal{A}$.
+    Let $\cat{A}$ be a category, let $(L,\eps,\omega)$ and $(L',\eps',\omega')$ be comonads in $\cat{A}$.
     We say that a natural transformation $\nat[\delta]{L}{L'}$ is a \textit{morphism of monads} if it preserves
     the counit and the comultiplication, i.e. the following diagrams commute:
     \begin{figure}[H]
@@ -306,17 +540,94 @@ the following diagrams commute:
     %\phantomsection\label{name2}
     \begin{tikzcd}
         L \arrow[r,"\omega",Rightarrow] \arrow[d,"\delta",Rightarrow] 
-          & L^2 \arrow[d,"\delta L' \circ L\delta",Rightarrow] \\
+          & L^2 \arrow[d,"\delta \otimes \delta",Rightarrow] \\
         L' \arrow[r,"\omega'",Rightarrow]
           & {L'}^2
     \end{tikzcd}
     \caption*{(comultiplication-preserving)}
     \end{subfigure}
-    \end{figure}
+    \end{figure} 
 \end{definition}
+\begin{example}
+    Consider the \textit{subsingletons Monad} $\P^1 \colon \cat{Set} \to \cat{Set}$, which
+    assigns to each set $X$ the set of subsets of $X$ containing \textit{at most} one element, so
+    an element of $\P^1(X)$ is either $\emptyset$ or a singleton $\{x\}$. For a function 
+    $f \colon X \to Y$, the induced function maps $\emptyset$ to $\emptyset$ and $\{x\}$ to 
+    $\{f(x)\}$, compare this to the power set functor. If we define the unit $\eta'$ by
+    \[
+        \eta'_X \colon X \to \P^1(X); x \mapsto \{x\}
+    \]
+    and the multiplication $\mu'$ by 
+    \[
+        \mu'_X \colon \P^1(\P^1(X)) \to \P^1(X); \{\{x\}\} \mapsto \{x\},
+        \{\emptyset\} \mapsto \emptyset, \emptyset \mapsto \emptyset
+    \]
+    then the resulting monad looks really similar to the \textit{Maybe Monad}. 
+    This is not a coincidence: the map
+    \[
+        \delta_X \colon X \cup \pt \to \P^1(X); x \mapsto \{x\}, \ast \mapsto \emptyset
+    \]
+    gives a natural isomorphism $Y \Rightarrow \P^1$ which is indeed an isomorphism of Monads.
+    \todo{ausrechnen}
 
+
+\end{example}
+
+\begin{theorem}[Every adjunction induces a Monad and a Comonad]
+    Let $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{B}{A}$
+    be an adjunction. Then $(GF,\eta,G\eps F)$ is a Monad on $B$ and $(FG,\eps,F\eta G)$ is a Comonad on $A$, which we
+    call the Monad respectively Comonad induced by the adjunction.
+\end{theorem}
+\begin{beweis}
+    We have to show that the first of the following diagrams commutes, but
+    by removing $G$ from the left and $F$ from the right, it suffices to show that the
+    right diagram commutes.
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+    \begin{tikzcd}
+            GFGFGF \arrow[r,"GFG\eps F",Rightarrow] \arrow[d,"G \eps FGF",Rightarrow] 
+              & GFGF \arrow[d,"G \eps F",Rightarrow] \\
+            GFGF \arrow[r,"G \eps F",Rightarrow]
+              & GF
+    \end{tikzcd}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{tikzcd}
+        FGFG \arrow[r,"FG\eps ",Rightarrow] \arrow[d,"\eps FG",Rightarrow] 
+          & FG \arrow[d,"\eps",Rightarrow] \\
+        FG \arrow[r,"\eps",Rightarrow]
+          & \id_{B}
+    \end{tikzcd}
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
+    The second diagram now commutes by the interchange law for natural transformations.
+    To show~\refunitality we need to show that the following diagram commutes.
+    \[
+        \begin{tikzcd}
+            GF \ar[rd,"\id_{GF}"',Rightarrow] \ar[r, "\eta GF",Rightarrow] 
+        & GFGF \ar[d,"G \eps F",Rightarrow] 
+        & GF \ar[l,"GF \eta"',Rightarrow] \ar[ld,"\id_{GF}",Rightarrow]\\
+        & GF
+        \end{tikzcd}    
+    \]
+    but this is essentially the diagrams stating the left and right~\ref{eq:triangle identity of adjunction}
+    for the adjunction after applying $F$ respectively $G$.
+    The proof that $(FG,\eps,F \eta G)$ is a Comonad on $A$ is dual.
+\end{beweis}
+Now that we know that every adjunction induces a Monad, one may ask, if the converse is true,
+that is if every Monad is induced by an adjunction. We will see that this is the case and there are even 
+multiple ways to induce a given Monad $T$. The first one is a construction called the \textit{Eilenberg-Moore-Category}
+which is not only useful for forming the adjunction.
 \section{The Eilenberg-Moore-Category of a Monad}
-This section will answer the question, whether every Monad is induced by an adjunction.
+\label{sec: Eilenberg-Moore-Category}
 
 \begin{definition}[Eilenberg-Moore-Category]
     Let $T = (T,\eta,\mu)$ be a monad in a category $\cat{X}$.
@@ -328,9 +639,9 @@ This section will answer the question, whether every Monad is induced by an adju
     \centering
     %\phantomsection\label{name1}
     \begin{tikzcd}
-        T^2x \arrow[r,"Th"] \arrow[d,"\mu"] 
+        T^2x \arrow[r,"Th"] \arrow[d,"\mu_x"] 
           & Tx \arrow[d,"h"] \\
-        T \arrow[r,"h"]
+        Tx \arrow[r,"h"]
           & x
     \end{tikzcd}
     %\caption*{(cap1)}
@@ -363,6 +674,41 @@ This section will answer the question, whether every Monad is induced by an adju
     which is called the \textit{Eilenberg-Moore-Category} and denoted by $\cat{X}^T$.
 \end{definition}
 \todo{Proof that this is indeed a category?}
+
+\begin{example}[M-action Monad]
+    A $T_M$-algebra is a set $X$ together with a map $h \colon X \times M \to X$
+    such that 
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name1}
+        \begin{tikzcd}
+            X \times M \times M \arrow[r,"h \times \id_M"] \arrow[d,"\mu_X"] 
+              & X \times M \arrow[d,"h"] \\
+            X \times M \arrow[r,"h"]
+              & X
+        \end{tikzcd}
+        %\caption*{(cap1)}
+        \end{subfigure}
+        \hspace{2em}
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name2}
+        \begin{tikzcd}
+            X \ar[r,"\eta_x"] \ar[rd,"id_x"']
+            & X \times M \ar[d,"h"] \\
+            & X 
+        \end{tikzcd}
+        %\caption*{(cap2)}
+        \end{subfigure}
+        \end{figure}
+        commute. If we denote $h(x,m)$ by $(x . m)$, this means that
+        $(x . m) . n = x . (m \cdot n)$ and $x . 1 = 1$.
+        So $T_M$-algebras are nothing but sets equipped with a right $M$-action.
+        In particular, if $M$ is a group, the $T_M$-algebras are just right $M$-sets.
+        \todo{all correct? right/left?}
+\end{example}
 \begin{theorem}[Every monad is defined by its T-algebras]
     Let $(T,\eta,\mu)$ be a monad in a category $\cat{X}$.
     Then there is an adjunction $F^T \adj G^T$, where $F^T$ and $G^T$ are functors
@@ -473,7 +819,7 @@ is a morphism of $T$-algebras, naturality means that the diagram
     \end{tikzcd}
 \]
 but this is exactly the definition of $f$ being a morphism of $T$-algebras.
-\todo{triangle identies and induces T}
+\todo{triangle identities and induces T}
 \end{beweis}
 \begin{theorem}[Comparison of adjunctions with algebras]
 

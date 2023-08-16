@@ -51,11 +51,33 @@
 \newcommand{\qqq}{\qquad \qquad \qquad}
 
 \usepackage{subcaption}
-\setlength\parindent{0pt} %entfernt die Latex-Absatz-Einrückung
+%-- entfernt die Latex-Absatz-Einrückung
+\setlength\parindent{0pt} 
+
+%left sub- or superscripts
+\usepackage{leftidx}
+
+%-- Quotienten-objekte
+\usepackage{faktor}
+
+%--\adj gibt das symbol für eine adjunction
+\DeclareRobustCommand{\xjoinrel}{\mathrel{\mkern-3.5mu}}
+\newcommand{\adj}{%
+  \mathrel{-}
+  \xjoinrel
+  \mathrel{|}
+}
+
+%--um B doppelpfeil A darzustellen
+\newcommand{\adjar}[2]{\begin{tikzcd}[cramped,column sep = small,ampersand replacement=\&]
+	\cat{#1} \ar[r,shift left = .60ex]
+	  \& 
+	\cat{#2} \ar[l,shift left = .60ex]
+\end{tikzcd}}
 
 %-- Mathematikpakete und Einstellungen
 \mathtoolsset{centercolon} % sorgt dafür dass := und =: besser aussehen
-\usepackage{mathdots} % sorgt dafür, dass Punte wie zB \ddots besser aussehen
+\usepackage{mathdots} % sorgt dafür, dass Punkte wie zB \ddots besser aussehen
 \newcommand{\Underbrace}[2]{{\underbrace{#1}_{#2}}} % Underbrace als Befehl in LaTeX-Syntax (und ohne Spacing-Probleme mit nachfolgenden Operatoren...)
 %\renewcommand{\le}{\leqslant} % ich finde Kleinergleich mit schrägen Strich schöner
 %\renewcommand{\ge}{\geqslant}
@@ -109,11 +131,11 @@
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\Fp}{\mathbb{F}_p}
 \newcommand{\W}{\mathbb{W}}
+\renewcommand{\P}{\mathbb{P}}
 
 \newcommand{\hin}{(\Rightarrow)}
 \newcommand{\rueck}{(\Leftarrow)}
 
-\newcommand{\adj}{\dashv}
 
 \newcommand{\cat}[1]{
   \mathbf{#1}
@@ -122,7 +144,7 @@
 
 \newcommand{\pt}{\{\ast\}} %one-point-set
 
-\newcommand{\tensor}{\otimes}
+\newcommand{\tensor}{\otimes} %tensor product
 
 % Steffen's line break
 \newcommand{\sectiondone}{\hfill \break \rightline{\mbox{\rotatebox{145}{${\|}$}}}}
@@ -178,16 +200,16 @@
 \usetikzlibrary{quotes,babel}
 
 %-- Für Literaturangaben, hier wird NICHT das total veraltete bibtex benutzt!
-%\usepackage[%
-%	backend=biber,
-%	sortlocale=auto,
-%	natbib,
-%	hyperref,
-%	backref,
-%	style=alphabetic % eine unvollständige Auswahl von Styles: ieee, numeric, apa
-%	]%
-%{biblatex}
-%\addbibresource{./config/quellen.bib} % Literaturdatei einlesen
+% \usepackage[%
+% 	backend=biber,
+% 	sortlocale=auto,
+% 	natbib,
+% 	hyperref,
+% 	backref,
+% 	style=alphabetic % eine unvollständige Auswahl von Styles: ieee, numeric, apa
+% 	]%
+% {biblatex}
+% \addbibresource{./config/quellen.bib} % Literaturdatei einlesen
 
 % -- Konfiguration von Hyperref (sorgt für anklickbare Links und ein PDF-Inhaltsverzeichnis)
 \usepackage[hidelinks, pdfpagelabels, bookmarksopen=true, bookmarksnumbered=true, linkcolor=black, urlcolor=SkyBlue2, plainpages=false,pagebackref, citecolor=black, hypertexnames=true, pdfborderstyle={/S/U}, linkbordercolor=SkyBlue2, colorlinks=false, backref=false]{hyperref}
@@ -207,8 +229,8 @@
 \captionsetup[figure]{skip=-2mm} % You can adjust the value (e.g., 5pt) as needed
 
 %-- commands zum captioning
-\newcommand{\refunitality}{\hyperref[sub@dia: unitality]{unitality} }
-\newcommand{\refassociativity}{\hyperref[sub@dia: associativity]{associativity} }
+\newcommand{\refunitality}{\hyperref[dia: unitality]{unitality} }
+\newcommand{\refassociativity}{\hyperref[dia: associativity]{associativity} }
 
 %--damit das diagramm genau an der Stelle steht
 \usepackage{float}
@@ -222,7 +244,7 @@
 \ifoot[Monads, Comonads and Witt Vectors]{Monads, Comonads and Witt Vectors}
 \renewcommand*{\pnumfont}{\LARGE\sffamily} % Seitenzahlen in groß und serifenlos
 \renewcommand*{\footfont}{\large\sffamily\color{gray}}
-% \renewcommand*{\headfont}{\normalfont}
+\renewcommand*{\headfont}{\normalfont}
 
 
 
