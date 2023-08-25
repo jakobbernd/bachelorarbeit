@@ -1,8 +1,21 @@
 \chapter{Monads and Comonads}
-\section{Definition of Monads and Comonads}
+Monads were first introduced in 1958 under the name \textit{standard construction} or \textit{construction fondamentale} 
+by Roger Godement in \cite[Appendix,3.]{godement}, where he used them for applications in sheaf cohomology. 
+They were also used in algebraic topology and homotopy theory, for example in \cite{huber}.
+In the early category theory-literature monads were called \textit{triples}, other names were
+\textit{monoid, dual standard construction} and \textit{triad}.
+The name \textit{monad} first appeared in \cite{benabou}, the exact reason for this name being unclear today,
+although it surely inspired by \textit{monoids}, which monads are related to.
+Monads are closely connected to adjunctions, as we will explore in this chapter, besides giving lots of examples, 
+with many interesting examples coming from \cite{perrone}.
+In computer science, monads play an important role in functional programming.
+This chapter is based on \cite[Chapter VI]{maclane}, which is
+the standard resource for first learning about monads and comonads. Some of the proofs are
+taken from \cite[Chapter II.3]{monoidaltopology} instead. Another great exposition is
+\cite[Chapter 5]{perrone}.
+\section{Definition of monads and comonads}
 A central notion in algebra is that of a \textit{monoid},
 that is, a set $M$ equipped with a map 
-\todo{definitionen nicht nummerieren?}
 $\mu \colon M \times M \to M$; $(a,b) \mapsto a \cdot b$ 
 (often called \textit{multiplication}) and an element $e \in M$
 such that the following two axioms hold:
@@ -67,8 +80,8 @@ which is verbatim the~\ref{eq: associativity for a monoid} axiom, the second dia
 which is clearly the~\ref{eq: identity element for a monoid} axiom 
 for the element $e(\ast)$.
 This motivates the following definition: \todo{monoid/monad/ monoid object}
-\begin{definition}[Monad]
-A \textit{Monad} $(T,\mu, \eta) $ in a category $\cat{X}$ consists of
+\begin{definition}[monad]
+A \textit{monad} $(T,\mu, \eta) $ in a category $\cat{X}$ consists of
 \begin{itemize}
     \item an endofunctor $T\colon \cat{X} \to \cat{X}$
     \item a natural transformation $\eta \colon \id_\cat{X} \Rightarrow T$ 
@@ -152,7 +165,7 @@ Then:
     x \le Tx \implies Tx \le T(Tx) \\
     T(Tx) \le Tx \implies Tx = T(Tx)
 \end{align*}
-so a Monad $T$ in a partial order $\cat{P}$ is a \textit{closure operation} in $\cat{P}$, i.e. 
+so a monad $T$ in a partial order $\cat{P}$ is a \textit{closure operation} in $\cat{P}$, i.e. 
 a monotonic function $T \colon \cat{P} \to \cat{P}$ 
 with $x \le Tx$ and $T(Tx)=Tx \ \forall x \in \cat{P}.$ \\
 Now every topological space $X$ induces a partial order $\cat{P} = (\mathscr{P}(X),\subseteq)$.
@@ -161,11 +174,11 @@ since it holds for all $A \subseteq X$ that $A \subseteq \overline{A}$ and
 $\overline{\overline{A}} = \overline{A}$.
 \end{example}
 
-\begin{example}[M-action Monad]
+\begin{example}[M-action monad]
     Let $(M,\cdot,1)$ be a monoid. Then for each set $X$ we can form the set $X \times M$ and 
     for a map $f \colon X \to Y$ we have a map $f \times \id_M \colon X \times M \to Y \times M;
     (x,m) \mapsto (f(x),m)$. This is functorial and the functor canonically has the structure of 
-    a Monad, induced by the monoid structure of M. 
+    a monad, induced by the monoid structure of M. 
     \begin{itemize}
         \item The unit $\eta$ is defined by
             $\eta_X \colon X \to X \times M;
@@ -174,7 +187,7 @@ $\overline{\overline{A}} = \overline{A}$.
            $ \mu_X \colon X \times M \times M \to X \times M;
             (x,m,n) \mapsto (x,m \cdot n)$
     \end{itemize}
-    These are clearly natural maps and the Monad axioms follow directly from the monoid axioms for $M$,
+    These are clearly natural maps and the monad axioms follow directly from the monoid axioms for $M$,
     if we look at the corresponding diagrams:
     \begin{figure}[H]
     \centering
@@ -206,11 +219,11 @@ $\overline{\overline{A}} = \overline{A}$.
     which is just the~\ref{eq: associativity for a monoid} axiom for the monoid M,
     while~\refunitality means that $1\cdot m = m = m \cdot 1$ which holds by
     the~\ref{eq: identity element for a monoid} axiom for $M$.
-    We will call this Monad on $\cat{Set}$ the \textit{M-action Monad}, the reason for this name will
+    We will call this monad on $\cat{Set}$ the \textit{M-action monad}, the reason for this name will
     be clear once we look at it's algebras, see Section~\ref{sec: Eilenberg-Moore-Category}.
 \end{example}
 \begin{example}[Maybe monad]
-    The \textit{Maybe Monad} $Y \colon \cat{Set} \to \cat{Set}$ is defined by
+    The \textit{Maybe monad} $Y \colon \cat{Set} \to \cat{Set}$ is defined by
     $X \mapsto X \cup \pt$ where $f \colon X \to Y$ gets mapped to the function
     $Y(f) \colon X \cup \pt \to Y \cup \pt$ which maps $x$ to $f(x)$ and $\ast$ to $\ast$. 
     \begin{itemize}
@@ -218,10 +231,11 @@ $\overline{\overline{A}} = \overline{A}$.
         \item $\mu_X \colon X \cup \{\ast_1\}  \cup \{\ast_2\} \to X \cup \pt; x \mapsto x, 
         \ast_1 \mapsto \ast, \ast_2 \mapsto \ast$
     \end{itemize}
+    \todo{finish}
 \end{example}
 
-\begin{definition}[Comonad]
-A \textit{Comonad} $(L,\eps, \omega) $ in a Category $\cat{A}$ consists of
+\begin{definition}[comonad]
+A \textit{comonad} $(L,\eps, \omega) $ in a Category $\cat{A}$ consists of
 \begin{itemize}
     \item an endofunctor $L\colon \cat{A} \to \cat{A}$
     \item a natural transformation $\eps \colon L \Rightarrow \id_{\cat{A}}$ 
@@ -290,7 +304,7 @@ the following diagrams commute:
 \end{figure}
 
 \end{definition}
-\begin{example}[Reader Comonad]
+\begin{example}[Reader comonad]
     Let $E$ be a set. Define a functor $C_E \colon \cat{Set} \to \cat{Set}$ by
     $C_E(X)=X \times E$ and, given $f \colon X \to Y,$ $C_E(f) = f \times \id_E
     \colon X \times E \to Y \times E.$
@@ -340,7 +354,6 @@ the following diagrams commute:
 
 
 We now consider another example of a comonad; the \textit{free monoid comonad}.
-\todo{maybe ins Kapitel Comonaden als Beispiel schieben}
 \begin{definition}[monoid ring]
     Let $R$ be a ring and let $G$ be a monoid.
     The \textit{monoid ring} of $G$ over $R$, denoted $R[G]$ or $RG$
@@ -464,7 +477,7 @@ is the functor $R \mapsto \Z R$, which we call the \textit{free monoid ring func
    where $(0) = \set{r \cdot 0 \mid r \in \Z R }$ is the ideal generated by $0 \in R$.
 \end{remark}
 
-\begin{lemma}
+\begin{lemma} \label{lem: interchange law}
     For every object $x$ in $\cat{X}$, the following diagram commutes:
     \[
       \begin{tikzcd}
@@ -549,7 +562,7 @@ is the functor $R \mapsto \Z R$, which we call the \textit{free monoid ring func
     \end{figure} 
 \end{definition}
 \begin{example}
-    Consider the \textit{subsingletons Monad} $\P^1 \colon \cat{Set} \to \cat{Set}$, which
+    Consider the \textit{subsingletons monad} $\P^1 \colon \cat{Set} \to \cat{Set}$, which
     assigns to each set $X$ the set of subsets of $X$ containing \textit{at most} one element, so
     an element of $\P^1(X)$ is either $\emptyset$ or a singleton $\{x\}$. For a function 
     $f \colon X \to Y$, the induced function maps $\emptyset$ to $\emptyset$ and $\{x\}$ to 
@@ -562,21 +575,22 @@ is the functor $R \mapsto \Z R$, which we call the \textit{free monoid ring func
         \mu'_X \colon \P^1(\P^1(X)) \to \P^1(X); \{\{x\}\} \mapsto \{x\},
         \{\emptyset\} \mapsto \emptyset, \emptyset \mapsto \emptyset
     \]
-    then the resulting monad looks really similar to the \textit{Maybe Monad}. 
+    then the resulting monad looks really similar to the \textit{Maybe monad}. 
     This is not a coincidence: the map
     \[
         \delta_X \colon X \cup \pt \to \P^1(X); x \mapsto \{x\}, \ast \mapsto \emptyset
     \]
-    gives a natural isomorphism $Y \Rightarrow \P^1$ which is indeed an isomorphism of Monads.
+    gives a natural isomorphism $Y \Rightarrow \P^1$ which is indeed an isomorphism of monads.
     \todo{ausrechnen}
 
 
 \end{example}
-
-\begin{theorem}[Every adjunction induces a Monad and a Comonad]
+The following theorem gives us a way to create many examples of monads and comonads.
+It was first proven in \cite{huber}.
+\begin{theorem}[Every adjunction induces a monad and a comonad]
     Let $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{B}{A}$
-    be an adjunction. Then $(GF,\eta,G\eps F)$ is a Monad on $B$ and $(FG,\eps,F\eta G)$ is a Comonad on $A$, which we
-    call the Monad respectively Comonad induced by the adjunction.
+    be an adjunction. Then $(GF,\eta,G\eps F)$ is a monad on $B$ and $(FG,\eps,F\eta G)$ is a comonad on $A$, which we
+    call the monad respectively comonad induced by the adjunction.
 \end{theorem}
 \begin{beweis}
     We have to show that the first of the following diagrams commutes, but
@@ -618,15 +632,16 @@ is the functor $R \mapsto \Z R$, which we call the \textit{free monoid ring func
         & GF
         \end{tikzcd}    
     \]
-    but this is essentially the diagrams stating the left and right~\ref{eq:triangle identity of adjunction}
+    but this is essentially the diagrams stating the left and right~\ref{eq: triangle identity of adjunction}
     for the adjunction after applying $F$ respectively $G$.
-    The proof that $(FG,\eps,F \eta G)$ is a Comonad on $A$ is dual.
+    The proof that $(FG,\eps,F \eta G)$ is a comonad on $A$ is dual.
 \end{beweis}
-Now that we know that every adjunction induces a Monad, one may ask, if the converse is true,
-that is if every Monad is induced by an adjunction. We will see that this is the case and there are even 
-multiple ways to induce a given Monad $T$. The first one is a construction called the \textit{Eilenberg-Moore-Category}
+Now that we know that every adjunction induces a monad, one may ask, if the converse is true,
+that is if every monad is induced by an adjunction. We will see that this is the case and there are even 
+multiple ways to induce a given monad $T$. The first one is a construction called the \textit{Eilenberg-Moore-Category}
+due to S. Eilenberg and J. Moore in \cite{eilenbergmoore}.
 which is not only useful for forming the adjunction.
-\section{The Eilenberg-Moore-Category of a Monad}
+\section{The Eilenberg-Moore-Category of a monad}
 \label{sec: Eilenberg-Moore-Category}
 
 \begin{definition}[Eilenberg-Moore-Category]
@@ -675,7 +690,7 @@ which is not only useful for forming the adjunction.
 \end{definition}
 \todo{Proof that this is indeed a category?}
 
-\begin{example}[M-action Monad]
+\begin{example}[M-action monad]
     A $T_M$-algebra is a set $X$ together with a map $h \colon X \times M \to X$
     such that 
     \begin{figure}[H]
@@ -709,17 +724,45 @@ which is not only useful for forming the adjunction.
         In particular, if $M$ is a group, the $T_M$-algebras are just right $M$-sets.
         \todo{all correct? right/left?}
 \end{example}
+\begin{example}[preorder]
+    If $T \colon \cat{P} \to \cat{P}$ is a monotonic function viewed as a monad, then a $T$-algebra is
+    an object $x \in \cat{P}$ with $Tx \leq x$. Since $x \leq Tx$, it follows that $x = Tx$, which means that
+    a $T$-algebra is just a \textit{closed element} in $\cat{P}$.
+    In particular, if we consider $A \mapsto \overline{A}$ in a topological space,
+    the $T$-algebras are exactly the closed sets.
+\end{example}
+
+\begin{example}[Maybe monad]
+    The category of $Y$-algebras is isomorphic to the category of pointed spaces $\ptspaces$.
+    Indeed: by definition, a $Y$-algebra is a pair $(X,h)$ where $h \colon X \cup \pt \to X$
+    and since 
+    \[
+     \begin{tikzcd}
+         X \ar[r,"\eta_X"] \ar[rd,"\id_X"']
+         & X \cup \pt \ar[d,"h"] \\
+         & X 
+     \end{tikzcd}
+    \]
+    commutes, $h\arrowvert_X = \id_X$. Now define $F \colon \cat{Set}^Y \to \ptspaces$ by 
+    \begin{align*}
+        (X,h) &\mapsto (X,h(\ast)) \\
+        f \colon (X,h) \to (Y,i) &\mapsto f \colon (X,h(\ast)) \to (Y,i(\ast))
+    \end{align*}
+    and define $G \colon \ptspaces \to \cat{Set}^Y$ by 
+    \begin{align*}
+        (X,x) &\mapsto (X, \id_{X}^x) \\
+        f \colon (X,x) \to (Y,y) &\mapsto f \colon (X,\id_{X}^x) \to (Y,\id_Y^y)
+    \end{align*}
+    where $\id_X^x \colon X \cup \pt \to X$ is the identity on X and maps $\ast$ to $x$.
+\end{example}
 \begin{theorem}[Every monad is defined by its T-algebras]
     Let $(T,\eta,\mu)$ be a monad in a category $\cat{X}$.
-    Then there is an adjunction $F^T \adj G^T$, where $F^T$ and $G^T$ are functors
-    \begin{tikzcd}
-        \cat{X^T} \ar[r,"G^T",shift left = .60ex]
-          & 
-        \cat{X} \ar[l,"F^T",shift left = .60ex]
-    \end{tikzcd}
+    Then there is an adjunction $F^T \! \! \adj G^T \colon \adjar{X}{X^T}$
     such that the monad induced by this adjunction is $(T,\eta,\mu)$.
 \end{theorem}
 \begin{beweis}
+\begin{itemize1}     
+\item
 Define $F^T \colon \cat{X} \to \cat{X}^T$ by
 \[
     \begin{tikzcd}
@@ -757,7 +800,7 @@ and the diagrams
 \end{subfigure}
 \end{figure}
 are just the commuting diagrams for the~\refassociativity
-respectively left~\refunitality axioms from the definition of a Monad.
+respectively left~\refunitality axioms from the definition of a monad.
 
 $Tf \colon (Tx,\mu_x) \to (Tx',\mu_{x'})$ is indeed a morphism of $T$-algebras,
 since the commutativity of 
@@ -771,7 +814,7 @@ since the commutativity of
 \]
 is given by naturality of $\mu$. The functoriality of $F^T$ follows from the functoriality
 of $T$.
-
+\item
 Define $G^T \colon \cat{X^T} \to \cat{X}$ by
 \[
     \begin{tikzcd}
@@ -790,11 +833,12 @@ so $G$ is just the forgetful functor.
     Now let $f \colon x \to y$. Then $G^T(F^T(f))=G^t(Tf)=Tf.$
     Finally, $F^TG^T(x,h) = F^T(x) = (Tx,\mu_x).$
 \end{proof}
+\item
 So we can set 
 \[
   \eta^T := \eta \colon \id_{\cat{X}} \Rightarrow G^TF^T 
 \]
-as the unit and we can define $\eps^T \colon F^TG^T \to \id_{\cat{X}^T}$ by
+as the unit and we can define the counit $\eps^T \colon F^TG^T \Rightarrow \id_{\cat{X}^T}$ by
 \[
     \eps^T_{(x,h)} := h \colon (Tx,\mu_x) \to (x,h).
 \]
@@ -819,13 +863,172 @@ is a morphism of $T$-algebras, naturality means that the diagram
     \end{tikzcd}
 \]
 but this is exactly the definition of $f$ being a morphism of $T$-algebras.
-\todo{triangle identities and induces T}
+\item To show the~\ref{eq: triangle identity of adjunction}, we have to show that 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name1}
+\begin{tikzcd}
+    Tx \ar[r,"T\eta_x"] \ar[rd,"\id_{Tx}"']
+    & T^2x \ar[d,"\mu_x"] \\
+    & Tx 
+\end{tikzcd}
+%\caption*{(cap1)}
+\end{subfigure}
+\hspace{2em}
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name2}
+\begin{tikzcd}
+    x \ar[r,"\eta_x"] \ar[rd,"\id_x"']
+    & Tx \ar[d,"h"] \\
+    & x 
+\end{tikzcd}
+%\caption*{(cap2)}
+\end{subfigure}
+\end{figure}
+commute, but the first diagram commutes by the right~\refunitality law for the monad $T$, the
+second one commutes, since $(x,h)$ is a $T$-algebra.
+\item The induced monad of the adjunction now has unit $\eta^T$ and multiplication
+$\mu^T = G^T \eps^T F^T$. But $G^TF^T = T$ and $\eta^T = \eta$ is already shown and
+$\mu^T_x = (G^T\eps^{T})_{F^Tx} = (G^T\eps^T)_{(Tx,\mu_x)} = G^T(\mu_x) = \mu_x$.
+\end{itemize1}
 \end{beweis}
 \begin{theorem}[Comparison of adjunctions with algebras]
-
+    Let $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{X}{A}$ be an adjunction,
+    $T = (GF,\eta,G\eta F)$ the monad it defines in $\cat{X}$. Then there is unique functor
+    $K \colon \cat{A} \to \cat{X^T}$ such that the following diagrams commute:
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+    \begin{tikzcd}
+        \cat{A} \ar[d,"G"'] \ar[rd,"K",dotted] \\
+        \cat{X} 
+        & \cat{X^T} \ar[l,"G^T"]
+    \end{tikzcd}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{tikzcd}
+        \cat{A} \ar[rd,"K",dotted]  \\ %pfeil umdrehen: from=uu?
+        \cat{X} \ar[u,"F"] \ar[r,"F^T"'] 
+        & \cat{X^T}
+    \end{tikzcd}
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
 \end{theorem}
-\section{The Kleisli category of a Monad}
-There is another way to induce a Monad by an adjunction:
+\begin{beweis}   
+    Existence: For $f \colon a \to a'$ in $A$ we define $K$ by:
+    \begin{align*}
+        Ka &= (Ga,G(\eps_a)) \\
+        Kf &= Gf \colon (Ga,G(\eps_a)) \to (Ga',G(\eps_{a'}))
+    \end{align*}
+    We have to show that this is well-defined.
+    \begin{claim}
+        $Ka$ is a $T$-algebra.
+    \end{claim}
+    \begin{smallproof}
+        $Ka$ is the arrow $GFGFa \overset{G(\eps_a)}{\to} Ga$ and we need to show that 
+        the following diagrams commute:
+        \begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name1}
+        \begin{tikzcd}
+            GFGFGa \arrow[r,"GFG(\eps_a)"] \arrow[d,"G(\eps_{FGa})"] 
+              & GFGa \arrow[d,"G(\eps_a)"] \\
+            GFGa \arrow[r,"G(\eps_a)"]
+              & Ga
+        \end{tikzcd}
+        %\caption*{(cap1)}
+        \end{subfigure}
+        \hspace{2em}
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name2}
+        \begin{tikzcd}
+            Ga \ar[r,"\eta_{Ga}"] \ar[rd,"\id_{Ga}"']
+            & GFGa \ar[d,"G(\eps_a)"] \\
+            & Ga 
+        \end{tikzcd}
+        %\caption*{(cap2)}
+        \end{subfigure}
+        \end{figure}
+    The second diagram is just one of the~\ref{eq: triangle identity of adjunction}
+    for the adjunction. The first diagram is the image under G of:
+    \[
+    \begin{tikzcd}
+        FGFGa \arrow[r,"FG(\eps_a)"] \arrow[d,"\eps_{FGa}"] 
+          & FGa \arrow[d,"\eps_a"] \\
+        FGa \arrow[r,"\eps_a"]
+          & a
+    \end{tikzcd}
+    \]
+    which commutes by~\ref{lem: interchange law}. 
+    \end{smallproof}
+    \begin{claim}
+        $Kf$ is a morphism of $T$-algebras.
+    \end{claim}
+    \begin{smallproof}
+        We have to show that the first of the following two diagrams commutes:
+        \begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name1}
+        \begin{tikzcd}
+            GFGa \arrow[r,"G(\eps_a)"] \arrow[d,"GFG(f)"] 
+                & Ga \arrow[d,"G(f)"] \\
+              GFGa' \arrow[r,"G(\eps_{a'})"]
+                & Ga'
+        \end{tikzcd}
+        %\caption*{(cap1)}
+        \end{subfigure}
+        \hspace{2em}
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name2}
+        \begin{tikzcd}
+            FGa \arrow[r,"\eps_a"] \arrow[d,"FG(f)"] 
+                & a \arrow[d,"f"] \\
+              FGa' \arrow[r,"\eps_{a'}"]
+                & a'
+        \end{tikzcd}
+        %\caption*{(cap2)}
+        \end{subfigure}
+        \end{figure}
+        but the first diagram is the image of the second diagram under $G$,
+        which commutes by naturality of $\eps \colon FG \Rightarrow \id_A$.
+    \end{smallproof}
+    Functoriality of $K$ follows from the Functoriality of $G$.
+    For the commutativity of the two diagrams, let $f \colon a \to a'$ and $g \colon x \to x'$ 
+    be morphisms. Then the first diagram commutes, since we have:
+    \begin{align*}
+        G^TKa = G^T(Ga,G(\eps_a)) = Ga \\
+        G^TK(f) = G^T(Gf) = Gf
+    \end{align*}
+    and for the second diagram we compute:
+    \begin{align*}
+        KFx = (Gfx,G(\eps_{Fx})) = (Tx,\mu_x) = F^Tx \\
+        KF(g) = GF(g) = T(g) = F^T(g)
+    \end{align*}
+    \begin{claim}
+       $K$ is unique.
+    \end{claim}
+    \begin{smallproof}
+        \todo{finish,v}
+    \end{smallproof}
+\end{beweis}
+\section{The Kleisli category of a monad}
+There is another way to induce a monad by an adjunction, which was introduced by H.Kleisli in \cite{kleisli}:
 \begin{definition}[Kleisli category]
     Let $\cat{X}$ be a category, $T = (T,\eta, \mu)$ be a monad in $\cat{X}$.
     The \textit{Kleisli category $\cat{X}_T$} is defined by
@@ -846,6 +1049,7 @@ There is another way to induce a Monad by an adjunction:
                   & Tz
         \end{tikzcd}
     \end{itemize}
+\end{definition}
 \begin{claim*}
     This defines a category.
 \end{claim*}
@@ -863,7 +1067,7 @@ be objects and morphisms in the Kleisli category.
     &= (\mu_w \circ T(\mu_w \circ Th \circ g) \circ f)^b \\
     &= (\mu_w \circ T\mu_w \circ T^2h \circ Tg \circ f)^b.
 \end{align*}
-Now the~\refassociativity axiom for the Monad T states that
+Now the~\refassociativity axiom for the monad T states that
 \[
     \begin{tikzcd}
         T(T(Tw)) \ar[r,"T(\mu_w)"] \ar[d,"\mu_{Tw}"'] 
@@ -909,12 +1113,186 @@ This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
 \in \Hom[\cat{X}_T](x_T,x_T)$
 \end{proof}
 \begin{theorem}
-    There is an adjoint situation $F_T \adj G_T \colon$ 
-    \begin{tikzcd}
-        \cat{X_T} \ar[r,,shift left = .60ex]
-          & 
-        \cat{X} \ar[l,,shift left = .60ex]
-    \end{tikzcd}
-    such that $T$ is the induced monad by this adjunction.
+    Let $(T,\eta,\mu)$ be a monad in a category $\cat{X}$.
+    Then there is an adjunction $F_T \! \! \adj G_T \colon \adjar{X}{X_T}$
+    such that the monad induced by this adjunction is $(T,\eta,\mu)$.
 \end{theorem}
-\end{definition}
+\begin{beweis}
+    \begin{itemize1}
+    \item Define $F_T \colon \cat{X} \to \cat{X_T}$ by 
+    \begin{align*}
+        x &\mapsto x_T \\
+        f \colon x \to y &\mapsto (Tf \circ \eta_x)^b \colon x_T \to y_T
+    \end{align*}
+    Then $F_T(\id_x) = (\eta_x)^b$, which is the identity on $x_T$. Now
+    \[
+        F_T(g \circ f) = (T(g \circ f) \circ \eta_x)^b = (Tg \circ Tf \circ \eta_x)^b
+    \]
+    \begin{align*}
+        F_T(g) \bullet F_T(f) &= (Tg \circ \eta_y)^b \bullet (Tf \circ \eta_x)^b 
+        \tag{Definition of $F^T$}\\
+        &= (\mu_z \circ T(Tg \circ \eta_y) \circ Tf \circ \eta_x)^b 
+        \tag{Definition of Kleisli composition}\\
+        &= (\mu_z \circ T^2g \circ T\eta_y \circ Tf \circ \eta_x)^b 
+        \tag{Functoriality of T}\\
+        &= (Tg \circ \mu_z \circ T\eta_y \circ Tf \circ \eta_x)^b 
+        \tag{Naturality of $\mu$}\\
+        &= (Tg \circ Tf \circ \eta_x)^b \tag{right~\refunitality law for $T$}
+    \end{align*}
+    This proves that $F_T$ is a functor.
+    \item Define $G_T \colon \cat{X_T} \to \cat{X}$ by
+    \begin{align*}
+        x_T &\mapsto Tx \\
+        f^b \colon x_T \to y_T &\mapsto \mu_y \circ Tf \colon Tx \to Ty
+    \end{align*}
+    Then $G_T(\id_{x_T}) = G_T(\eta_x^b) = \mu_x \circ T\eta_x = \id_x$ by the right~\refunitality law for T.
+    Now we compute that
+    \begin{align*}
+        G_T(g^b \bullet f^b) = G_T((\mu_z \circ Tg \circ f)^b) &=
+        \mu_z \circ T \mu_z \circ T^2g \circ Tf \\
+        G_T(g^b) \circ G_T(f^b) &= \mu_z \circ Tg \circ \mu_z \circ Tf 
+    \end{align*}
+    so it suffices to show that the following diagram commutes:
+    \begin{tikzcd}
+        Tx \ar[r,"Tf"] \ar[d,"Tf"] & T^2y \ar[r,"T^2g"] & T^3z \ar[r,"T\mu_z"] & T^2z \ar[d,"\mu_z"] \\
+        T^2y \ar[r,"\mu_y"] & Ty \ar[r,"Tg"] & T^2z \ar[r,"\mu_z"] & Tz
+    \end{tikzcd}
+    But we can fill it in to get the following:
+    \[
+        \begin{tikzcd}
+            Tx \ar[rd,"(1)" description,phantom] \ar[r,"Tf"] \ar[d,"Tf"] & T^2y \ar[r,"T^2g"]
+            \ar[rd,"(2)" description,phantom]\ar[d,"\mu_y",dotted]
+            & T^3z \ar[rd,"(3)" description, phantom]\ar[r,"T\mu_z"] \ar[d,"\mu_{Tz}",dotted] & T^2z \ar[d,"\mu_z"] \\
+            T^2y \ar[r,"\mu_y"] & Ty \ar[r,"Tg"] 
+            & T^2z \ar[r,"\mu_z"] & Tz
+        \end{tikzcd}
+    \]
+    where (1) commutes trivially, (2) by naturality of $\mu$ and (3) by the~\refassociativity of T.
+    \begin{claim*}
+        $G_T F_T =T$.
+    \end{claim*}
+    \begin{smallproof}
+    \begin{align*}
+        G_T(F_T(x)) &= G_T(x_T) = Tx \\
+        G_T(F_T(f)) &= G_T((Tf \circ \eta_x)^b) = \mu_y \circ T^2f \circ T\eta_x \\
+        &= \mu_y \circ T\eta_y \circ Tf \tag{naturality of $\eta$}\\
+        &= Tf \tag{\refunitality of $T$}
+    \end{align*}
+    \end{smallproof}
+    \item We now set the unit and counit to be \todo{def. of eps?}
+    \begin{align*}
+        &\eta_x \colon x \to Tx\\
+        &\eps_x = \id_{Tx}^b \colon (Tx)_T \to x_T
+    \end{align*}
+    We need to show that $\eta$ and $\eps$ satisfy the triangle identities:
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+    \begin{tikzcd}
+        F_Tx \ar[r,"F_T(\eta_x)"] \ar[rd,"\id_{F_Tx}"']
+        & F_TG_TF_Tx \ar[d,"\eps_{F_Tx}"] \\
+        & F_Tx 
+    \end{tikzcd}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{tikzcd}
+        G_Tx \ar[r,"\eta_{G_Tx}"] \ar[rd,"\id_{G_Tx}"']
+        & G_TF_TG_Tx \ar[d,"G_T(\eps_x)"] \\
+        & G_Tx
+    \end{tikzcd}
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
+    the left diagram commutes, since we have
+    \begin{align*}
+        \eps_{F_Tx} \bullet F_T(\eta_x) &= (\id_{Tx})^b \bullet (T\eta_x \circ \eta_x)^b 
+        = (\mu_x \circ T(\id_{Tx}) \circ T\eta_x \circ \eta_x)^b \\
+        &= (\mu_x \circ T\eta_x \circ \eta_x)^b  
+        = (\eta_x)^b = \id_{F_Tx}
+    \end{align*}
+    using the right~\refunitality of $T$.
+    The right diagram commutes, since we have
+    \begin{align*}
+        G_T(\eps_x) \circ \eta_{G_Tx} = \mu_x \circ T(\id_{Tx}) \circ \eta_{Tx}
+        = \mu_x \circ \eta_{Tx} = \id_{Tx}
+    \end{align*}
+    using the left~\refunitality of $T$. The only thing left to show is that
+    $\mu = G_T \eps F_T$:
+    \begin{align*}
+        G_T(\eps_{F_Tx}) = G_T(\eps_{x_T}) = G_T(\id_{Tx}^b) = \mu_x \circ T(\id_{Tx}) = \mu_x
+    \end{align*}
+    \end{itemize1}
+\end{beweis}
+\begin{theorem}[Comparison of adjunctions with the Kleisli-construction]
+    Let $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{X}{A}$ be an adjunction,
+    $T = (GF,\eta,G\eta F)$ the monad it defines in $\cat{X}$. Then there is a unique functor
+    $L \colon \cat{X_T} \to \cat{A}$ such that the following diagrams commute:
+\end{theorem}
+\begin{beweis}
+    \begin{itemize1}
+    \item 
+    Define $L$ by 
+    \begin{align*}
+        x_T &\mapsto Fx \\
+        f^b \colon x_t \to y_t &\mapsto \eps_{Fy} \circ F(f) \colon Fx \to FGFy \to Fy \\
+    \end{align*}
+    \item $L(\id_{x_t}) = L(\eta_x^b) = \eps_{Fx} \circ F(\eta_x) = \id_{Fx}$ 
+    by the~\ref{eq: triangle identity of adjunction} of the adjunction.
+    \item Let \begin{tikzcd}[cramped] x_T \ar[r,"f"] & y_T \ar[r,"g"] & z_T \end{tikzcd}.
+    \begin{align*}
+    L(g \bullet f) &= \eps_{Fz} \circ F(\mu_z \circ GF(g) \circ f) 
+    = \eps_{Fz} \circ F(\mu_z) \circ FGF(g) \circ F(f) \\
+    L(g) \circ L(f) &= \eps_{Fz} \circ Fg \circ \eps_{Fy} \circ F(f)
+    \end{align*}
+    so we have to show that the following diagram commutes:
+    \[
+       \begin{tikzcd}
+        Fx \ar[d,"F(f)"] \ar[r,"F(f)"] & FGFy \ar[r,"FGF(g)"] & FGFGFz \ar[r,"F(\mu_z)"] & FGFz \ar[d,"\eps_{Fz}"] \\
+        FGFy \ar[r,"\eps_{Fy}"] & Fy \ar[r,"F(g)"] & FGFz \ar[r,"\eps_{Fz}"] & Fz
+       \end{tikzcd}
+    \]
+    but we can fill in the counit morphisms: 
+    \[
+        \begin{tikzcd}
+            Fx \ar[rd,"(1)" description,phantom] \ar[r,"F(f)"] \ar[d,"F(f)"] & FGFy \ar[r,"FGF(g)"]
+            \ar[rd,"(2)" description,phantom]\ar[d,"\eps_{Fy}",dotted]
+            & FGFGFz \ar[rd,"(3)" description, phantom]\ar[r,"F(\mu_z)"] \ar[d,"\eps_{FGFz}",dotted] & FGFz \ar[d,"\eps_{Fz}"] \\
+            FGFy \ar[r,"\eps_{Fy}"] & Fy \ar[r,"F(g)"] 
+            & FGFz \ar[r,"\eps_{Fz}"] & Fz
+        \end{tikzcd}
+    \]
+    and now (1) commutes trivially, while (2) and (3) commute by naturality of $\eps$ since $\mu_z = G(\eps_{Fz})$.
+    \item Commutativity of the diagrams: Let $f \colon x \to y$.
+    \begin{align*}
+        &GLx_T &&= GFx = Tx = G_Tx_T \\
+        &GL(f^b) &&= G(\eps_{Fy} \circ F(f)) = G(\eps_{Fy}) \circ GF(f) = \mu_y \circ T(f) = G_T(F^b) \\
+        &LF_Tx &&= Lx_T = Fx \\
+        &LF_T(f) &&= L((T(f) \circ \eta_x)^b) 
+        = \eps_{Fy} \circ F(T(f) \circ \eta_x) = \eps_{Fy} \circ FGF(f) \circ F(\eta_x) \\
+        &&&= F(f) \circ \eps_{Fx} \circ F(\eta_x) \tag{naturality of $\eps$} \\
+        &&&= F(f) \circ \id_{Fx} = F(f) \tag{\ref{eq: triangle identity of adjunction}}
+    \end{align*}
+    \item Uniqueness: Let $L'$ be another functor making the diagrams commute.
+    Then since $F_T$ is surjective on objects we have
+    \[
+        L'F_T = F \Rightarrow L'x_T = Fx = Lx_T \text{ for all objects } x_T
+    \]
+    and for $f^b \colon x_T \to y_T$ we can precompose with the identity to see that 
+    \begin{align*}
+        L'(f^b) = L'(f^b) \circ \id_{L'x} &= L'(f^b) \circ \eps_{Fx} \circ F(\eta_x) \tag{\ref{eq: triangle identity of adjunction}} \\
+        &= \eps_{Fy} \circ FGL'(f^b) \circ F(\eta_x) 
+        = \eps_{Fy} \circ FG_T(f^b) \circ F(\eta_x) \\
+        &= \eps_{Fy} \circ F(\mu_y \circ T(f)) \circ F(\eta_x) 
+        = \eps_{Fy} \circ F(\mu_y) \circ FGF(f) \circ F(\eta_x) \\
+        &= \eps_{Fy} \circ F(\mu_y) \circ F(\eta_{GFy}) \circ F(f) \tag{naturality of $\eta$} \\
+        &= \eps_{Fy} \circ F(\mu_y \circ \eta_{GFy}) F(f) \\
+        &= \eps_{Fy} \circ F(f) = L(f^b) \tag{\ref{eq: triangle identity of adjunction}}
+    \end{align*}  
+    \end{itemize1}
+\end{beweis}

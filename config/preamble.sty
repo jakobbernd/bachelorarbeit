@@ -5,6 +5,12 @@
 \usepackage[usenames,x11names]{xcolor} % Die Optionen definieren zusätzliche Farben (siehe Dokumentation)
 \usepackage[final]{graphicx}
 
+\definecolor{dark_gray}{gray}{0.45}
+\definecolor{light_gray}{gray}{0.6}
+\definecolor{fb10_blue}{cmyk}{0.8,0.4,0.13,0.07}
+\definecolor{DarkBlue}{RGB}{18,50,105}
+
+
 %-- typografische Verbesserungen, Codierungskram, Schriftwahl und erste Mathepakete
 \usepackage[utf8]{inputenc}
 \usepackage[lining,semibold]{libertine}
@@ -37,6 +43,7 @@
 % \setsansfont{LinBiolinum}[Scale=MatchUppercase, Extension=.otf, UprightFont=*_R, BoldFont=*_RB, ItalicFont=*_RI,BoldItalicFont=*_RBO]
 % \setmonofont{Inconsolatazi4}[Scale=MatchUppercase,Extension=.otf,UprightFont=*-Regular,BoldFont=*-Bold,StylisticSet=1]
 % \usepackage[final]{microtype}
+
 
 
 %-- Zeilenabstand einstellen
@@ -144,6 +151,8 @@
 
 \newcommand{\pt}{\{\ast\}} %one-point-set
 
+\newcommand{\ptspaces}{\cat{Set_{\ast}}} %category of pointed spaces
+
 \newcommand{\tensor}{\otimes} %tensor product
 
 % Steffen's line break
@@ -200,16 +209,17 @@
 \usetikzlibrary{quotes,babel}
 
 %-- Für Literaturangaben, hier wird NICHT das total veraltete bibtex benutzt!
-% \usepackage[%
-% 	backend=biber,
-% 	sortlocale=auto,
-% 	natbib,
-% 	hyperref,
-% 	backref,
-% 	style=alphabetic % eine unvollständige Auswahl von Styles: ieee, numeric, apa
-% 	]%
-% {biblatex}
-% \addbibresource{./config/quellen.bib} % Literaturdatei einlesen
+\usepackage[%
+	backend=biber,
+	sortlocale=auto,
+	natbib,
+	hyperref,
+	backref,
+	style=alphabetic % eine unvollständige Auswahl von Styles: ieee, numeric, apa
+	]%
+{biblatex}
+\addbibresource{./config/quellen.bib} % Literaturdatei einlesen
+
 
 % -- Konfiguration von Hyperref (sorgt für anklickbare Links und ein PDF-Inhaltsverzeichnis)
 \usepackage[hidelinks, pdfpagelabels, bookmarksopen=true, bookmarksnumbered=true, linkcolor=black, urlcolor=SkyBlue2, plainpages=false,pagebackref, citecolor=black, hypertexnames=true, pdfborderstyle={/S/U}, linkbordercolor=SkyBlue2, colorlinks=false, backref=false]{hyperref}
@@ -219,9 +229,14 @@
 \usepackage[shortlabels]{enumitem} % durch die Option ist die gleiche Syntax wie zB mit dem Paket paralist möglich
 \setlist[enumerate,description]{font=\sffamily\bfseries} % sorgt dafür, dass die Labels bei enumerate und description fett sind
 \usepackage[german=quotes]{csquotes}
-
+% \setlist[itemize]{noitemsep, topsep=0pt} setzt global alle listen schmal
 %-- Für hilfreiche Anmerkungen am Seitenrand
 \usepackage[obeyDraft,textsize=small]{todonotes}
+
+\newenvironment{itemize1}{
+  \begin{itemize}[noitemsep,topsep=0pt,leftmargin=*,itemindent=0pt]{
+      }}{\end{itemize}}
+
 
 %-- Diagramme captionen
 \usepackage{caption}
@@ -279,6 +294,7 @@
 	headformat= \NAME \ \NUMBER\NOTE, %format des titels
 	headpunct={},
 	postheadspace=1ex,
+	% shaded={bgcolor=light_gray!20}, %farbiger kasten
 	postheadhook=\theorembookmark,
 	spaceabove=15pt,spacebelow=10pt,]%
 {mainstyle}
@@ -290,8 +306,8 @@
 	spacebelow=12pt,spaceabove=2pt,
 	qed=\qedsymbol]%
 {beweise}
-
-\declaretheorem[name=Definition,parent=chapter,style=definition]{definition}
+%
+\declaretheorem[name=Definition,parent=chapter,style=definition,shaded={bgcolor=fb10_blue!10}]{definition}
 \declaretheorem[name=Theorem,sharenumber=definition,style=mainstyle]{theorem}
 \declaretheorem[name=Corollary,sharenumber=definition,style=mainstyle]{cor}
 \declaretheorem[name=Lemma,sharenumber=definition,style=mainstyle]{lemma}
@@ -301,3 +317,38 @@
 
 \declaretheorem[name=Proof,numbered=no,style=beweise]{beweis}
 \declaretheorem[name=Example,numbered=yes,style=definition]{example}
+
+% Customize environments
+\RequirePackage{mdframed}
+\newmdenv[
+	topline=false,
+	bottomline=false,
+	rightline=false,
+	innertopmargin=-10pt,
+	innerbottommargin=0pt,
+	innerrightmargin=0pt,
+	rightmargin=0pt,
+	linecolor=DarkBlue,
+	linewidth=2pt
+]{bluetheoremline}
+\newmdenv[
+	topline=false,
+	bottomline=false,
+	rightline=false,
+	innertopmargin=-10pt,
+	innerbottommargin=0pt,
+	innerrightmargin=0pt,
+	rightmargin=0pt,
+	linecolor=light_gray,
+	linewidth=2pt
+]{graytheoremline}
+\RequirePackage{etoolbox}
+
+\BeforeBeginEnvironment{theorem}{\begin{bluetheoremline}}
+\AfterEndEnvironment{theorem}{\end{bluetheoremline}}
+\BeforeBeginEnvironment{lemma}{\begin{graytheoremline}}
+\AfterEndEnvironment{lemma}{\end{graytheoremline}}
+\BeforeBeginEnvironment{proposition}{\begin{graytheoremline}}
+\AfterEndEnvironment{proposition}{\end{graytheoremline}}
+\BeforeBeginEnvironment{cor}{\begin{graytheoremline}}
+\AfterEndEnvironment{cor}{\end{graytheoremline}}

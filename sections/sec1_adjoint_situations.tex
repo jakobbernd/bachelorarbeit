@@ -1,9 +1,47 @@
+\chapter{Adjunctions}
+Let $\cat{A}, \cat{B}$ be two categories. We say that $\cat{A}$ and $\cat{B}$ are \textit{isomorphic},
+denoted $\cat{A} \cong \cat{B}$, if there exist functors $G \colon \cat{A} \to \cat{B},
+F \colon \cat{B} \to \cat{A}$ with $FG = \id_A, GF = \id_B$. This condition is too strict to provide us
+with many examples, which is why there is a different notion: We say that $\cat{A}$ and $\cat{B}$ 
+are \textit{equivalent},
+denoted $\cat{A} \simeq \cat{B}$, if $FG \cong \id_A, GF \cong \id_B$ via natural isomorphisms
+$\alpha \colon FG \to \id_A$, $\beta \colon GF \to \id_B$. Equivalent categories are essentially the same,
+all categorical properties, like for example initial objects are preserved under equivalence. 
+But there is an even less strict relation between categories, which was first introduced by Daniel Kan in 
+\cite{kan} and which is a powerful concept, because it arises so often:
+Consider the categories $\cat{Set}$ and $\cat{Vect_K}$ for a fixed field $K$.
+The two categories can't be equivalent, since $\cat{Vect_K}$ has a zero object while
+$\cat{Set}$ doesn't. But there still is a connection between them:
 
-\chapter{Adjoint situations}
+A vector space is a set with additional structure and linear maps are maps of sets which 
+respect these structures. A different way to say this is that there is a forgetful functor 
+$U \colon \cat{Vect_K} \to \cat{Set}.$ We can also go in the opposite direction, because
+there is a "natural" way to make a set $X$ into a vector space:
+\begin{itemize}
+    \item We form the set $FX$ of all formal linear combinations of elements of $X$, i.e. 
+    all elements of the form $\sum_{i=1}^{n}a_ix_i$
+    \item we define addition and scalar multiplication by: 
+    \[
+        \lambda \cdot \bigl(\sum_{i=1}^{n}a_ix_i \bigr) := \sum_{i=1}^{n}(\lambda \cdot a_i) \cdot x_i
+    \]
+    \[
+        \sum_{i=1}^{n}a_ix_i + \sum_{i=1}^{n}b_ix_i := \sum_{i=1}^{n}(a_i + b_i)x_i
+    \]
+(note that we can assume linear combinations in $FX$ to have the same length, since we can just add 0.)
+\end{itemize}
+This gives a vector space which has $X$ as a basis. Now the universal property of a vector space states that
+each map $X \to U(W)$ extends uniquely to a map $F(X) \to W$ and every map $F(X) \to W$ gives a map 
+$X \to U(W)$ by restriction. This amounts to a bijection
+\[
+    \Hom[Vect_K](F(X),W) \cong \Hom[Set](X,U(W))
+\]
+which is also natural in a sense we will discuss later. The functors $F$ and $U$ form what is called
+a \textit{free-forgetful adjunction}, which is the first example of an adjunction.
 
-\todo{einleitender Satz}
-Moreover, adjunctions provide us with many (technically even all) 
-examples of monads and comonads, as we will later see.
+\section{Definition of adjunctions}
+We will start by giving two equivalent definitions of an adjunction, where the first one is especially useful 
+when it comes to monads, while the second, more standard one, is easier to find examples.
+\newpage
 \begin{proposition} \label{prop: equiv def of adj}
     Given two functors
     \begin{tikzcd}
@@ -16,7 +54,7 @@ examples of monads and comonads, as we will later see.
     \item There are natural transformations $\eta\colon \id_B \Rightarrow GF$ and $\eps\colon FG \Rightarrow \id_A$ 
     such that for all objects $a$ of $\cat{A}$, $b$ of $\cat{B}$
     the following two diagrams commute:
-    \begin{equation}\label{eq:triangle identity of adjunction}
+    \begin{equation}\label{eq: triangle identity of adjunction}
         \begin{tikzcd}\tag{triangle identity}
             F(b) \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & FGF(b) \arrow[d,"\eps_{F(b)}"] \\
                                         & F(b)
@@ -88,7 +126,7 @@ Let $f \colon b \to G(a)$.
     &= G(\eps_a \circ F(f)) \circ \eta_b \tag{Definition of $\phi$}\\
     &= G(\eps_a) \circ G(F(f)) \circ \eta_b \tag{Functoriality of $G$}\\
     &= G(\eps_a) \circ \eta_{G(a)} \circ f \tag{Naturality of $\eta$} \\
-    &= \id_{G(a)} \circ f = f \tag{right~\ref{eq:triangle identity of adjunction}}
+    &= \id_{G(a)} \circ f = f \tag{right~\ref{eq: triangle identity of adjunction}}
 \end{align*}
 \end{smallproof}
 \begin{claim}
@@ -100,7 +138,7 @@ Let $f \colon b \to G(a)$.
         &= \eps_a \circ F(G(g) \circ \eta_b) \tag{Definition of $\psi$}\\
         &= \eps_a \circ F(G(g)) \circ F(\eta_b) \tag{Functoriality of $F$}\\
         &= g \circ \eps_{F(b)} \circ F(\eta_b) \tag{Naturality of $\eps$}\\
-        &= g \circ \id_{F(b)} = g \tag{left~\ref{eq:triangle identity of adjunction}}
+        &= g \circ \id_{F(b)} = g \tag{left~\ref{eq: triangle identity of adjunction}}
 \end{align*}
 \end{smallproof}
 \begin{claim}
@@ -145,7 +183,7 @@ $(a)\Longleftarrow (b):$ Define
         \end{tikzcd}
     \]
     commutes, which means $\phi_{F(b),b}(\id_{F(b)}) \circ p 
-    = GF(p) \circ \phi_{F(b'),b'}(\id_{F(b')})$. \todo{?}
+    = GF(p) \circ \phi_{F(b'),b'}(\id_{F(b')})$. \todo{finish}
     But 
     \[
         \phi(\id) \circ p = \phi(F(p)) = GF(p) \circ \phi
@@ -155,7 +193,7 @@ $(a)\Longleftarrow (b):$ Define
     $\eps$ is a natural transformation.
 \end{claim}
 \begin{smallproof}
-    \todo{?}
+    \todo{finish}
 \end{smallproof}
 \begin{claim} 
     $\eta$ and $\eps$ satisfy the triangle identities.
@@ -170,6 +208,7 @@ $(a)\Longleftarrow (b):$ Define
     \]
 \end{smallproof}
 \end{bigproof}
+\todo{or yoneda lemma, see p.193 Brandenburg}
 \begin{definition}[Adjunction]
     Let $\cat{A}$ and $\cat{B}$ be categories. 
     We say that functors
@@ -185,7 +224,7 @@ $(a)\Longleftarrow (b):$ Define
     sometimes even just $F \adj G$, depending on the context.
 \end{remark}
 
-\begin{remark}
+\begin{remark}[{proven for example in \cite[{Chapter 4.5}]{riehl}}]
     Let $F \adj G$ be an adjunction.
     Then
     \begin{enumerate}
@@ -194,26 +233,31 @@ $(a)\Longleftarrow (b):$ Define
     \end{enumerate}
 \end{remark}
 
-\begin{example}[Galois connection]\todo{those are DUAL adjunctions!}
-    blablabla examples include:
-    \begin{enumerate}
-        \item (Fundamental theorem of Galois theory): 
-        this example.
-        \item  (Algebraic geometry):
-        that example.
-    \end{enumerate}
+\section{Examples}
+Examples for adjunctions can be found all over mathematics.
+Here are a few: \todo{finish}
 
-\end{example}
 \begin{example}[Coproduct $\adj$ $\Delta$ $\adj$ Product]
-    this.
+    TODO
 \end{example}
 \begin{example}[free-forgetful adjunction]
-    that.
+    TODO free group
 \end{example}
 \begin{example}[Tensor-Hom-Adjunction]
     There is a natural bijection
     \[
         \Hom[A](M \tensor_A N,P) \cong \Hom[A](M,\Hom[A](N,P))
     \]
-    This implies that the tensor-product is right-exact, since it preserves cokernels.
+    This implies that the tensor-product is right-exact, since it preserves cokernels. 
+\end{example}
+\begin{example}[Galois connection]
+    monotone and antitone galois connections, examples are:
+    \begin{enumerate}
+        \item (Convex sets): TODO
+        \item (Fundamental theorem of Galois theory): 
+        TODO
+        \item  (Algebraic geometry):
+        TODO
+    \end{enumerate}
+
 \end{example}
