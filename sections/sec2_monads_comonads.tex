@@ -36,7 +36,7 @@ such that the following diagrams commute: \\
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{0.4\textwidth}
+    \begin{subfigure}{0.46\textwidth}
     \centering
     %\phantomsection\label{name1}
         \begin{tikzcd}
@@ -48,7 +48,7 @@ such that the following diagrams commute: \\
     %\caption*{(cap1)}
     \end{subfigure}
     \hspace{2em}
-    \begin{subfigure}{0.4\textwidth}
+    \begin{subfigure}{0.47\textwidth}
     \centering
     %\phantomsection\label{name2}
         \begin{tikzcd}
@@ -79,7 +79,7 @@ which is verbatim the~\ref{eq: associativity for a monoid} axiom, the second dia
 \]
 which is clearly the~\ref{eq: identity element for a monoid} axiom 
 for the element $e(\ast)$.
-This motivates the following definition: \todo{monoid/monad/ monoid object}
+This motivates the following definition:
 \begin{definition}[monad]
 A \textit{monad} $(T,\mu, \eta) $ in a category $\cat{X}$ consists of
 \begin{itemize}
@@ -87,7 +87,7 @@ A \textit{monad} $(T,\mu, \eta) $ in a category $\cat{X}$ consists of
     \item a natural transformation $\eta \colon \id_\cat{X} \Rightarrow T$ 
     \item a natural transformation $\mu\colon T^2 \Rightarrow T $
 \end{itemize}  
-such that the following diagrams commute: \\
+such that the following diagrams commute:
 % der ' nach dem Text ändert die Position der Pfeil-Beschriftung
 \begin{figure}[H]
     \centering
@@ -190,8 +190,9 @@ $\overline{\overline{A}} = \overline{A}$.
     These are clearly natural maps and the monad axioms follow directly from the monoid axioms for $M$,
     if we look at the corresponding diagrams:
     \begin{figure}[H]
+    \small
     \centering
-    \begin{subfigure}{0.4\textwidth}
+    \begin{subfigure}{0.46\textwidth}
     \centering 
     %\phantomsection\label{name1}
     \begin{tikzcd}
@@ -203,7 +204,7 @@ $\overline{\overline{A}} = \overline{A}$.
     %\caption*{(cap1)}
     \end{subfigure}
     \hspace{2em}
-    \begin{subfigure}{0.4\textwidth}
+    \begin{subfigure}{0.47\textwidth}
     \centering
     %\phantomsection\label{name2}
     \begin{tikzcd}
@@ -318,8 +319,9 @@ the following diagrams commute:
     \end{itemize}
     Now the comonad axioms say that the following diagrams have to commute:
     \begin{figure}[H]
+        \small
     \centering
-    \begin{subfigure}{0.4\textwidth}
+    \begin{subfigure}{0.45\textwidth}
     \centering
     %\phantomsection\label{name1}
     \begin{tikzcd}
@@ -331,7 +333,7 @@ the following diagrams commute:
     %\caption*{(cap1)}
     \end{subfigure}
     \hspace{2em}
-    \begin{subfigure}{0.4\textwidth}
+    \begin{subfigure}{0.46\textwidth}
     \centering
     %\phantomsection\label{name2}
     \begin{tikzcd}
@@ -641,9 +643,8 @@ that is if every monad is induced by an adjunction. We will see that this is the
 multiple ways to induce a given monad $T$. The first one is a construction called the \textit{Eilenberg-Moore-Category}
 due to S. Eilenberg and J. Moore in \cite{eilenbergmoore}.
 which is not only useful for forming the adjunction.
-\section{The Eilenberg-Moore-Category of a monad}
-\label{sec: Eilenberg-Moore-Category}
-
+\vfill \todo{vfill am besten weg}
+\section{The Eilenberg-Moore-Category of a monad}\label{sec: Eilenberg-Moore-Category}%
 \begin{definition}[Eilenberg-Moore-Category]
     Let $T = (T,\eta,\mu)$ be a monad in a category $\cat{X}$.
     A \textit{$T$-algebra} is a pair $(x,h)$ where $x$ is an object of $\cat{X}$ and $h \colon Tx \to x$ is 
@@ -1153,10 +1154,12 @@ This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
         G_T(g^b) \circ G_T(f^b) &= \mu_z \circ Tg \circ \mu_z \circ Tf 
     \end{align*}
     so it suffices to show that the following diagram commutes:
+    \[
     \begin{tikzcd}
         Tx \ar[r,"Tf"] \ar[d,"Tf"] & T^2y \ar[r,"T^2g"] & T^3z \ar[r,"T\mu_z"] & T^2z \ar[d,"\mu_z"] \\
         T^2y \ar[r,"\mu_y"] & Ty \ar[r,"Tg"] & T^2z \ar[r,"\mu_z"] & Tz
     \end{tikzcd}
+    \]
     But we can fill it in to get the following:
     \[
         \begin{tikzcd}

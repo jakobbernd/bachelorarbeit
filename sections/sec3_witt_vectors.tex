@@ -251,7 +251,7 @@ Now we can finish the construction of the Witt vectors:
            w_n(a)\cdot w_n(b) &\equiv \phi_p(w_{n/p}(a) \cdot w_{n/p}(b)) &\text{\hskip8mm mod } p^{v_p(n)}A \\
            -w_n(a) &\equiv \phi_p(-w_{n/p}(a)) &\text{\hskip8mm mod } p^{v_p(n)}A
         \end{align*} 
-        but since $w_n(a), w_n(b)$ are in the image of the ghost map, we know that
+        but since $w_n(a)$ and $w_n(b)$ are both in the image of the ghost map, we know that
         $w_n(a) \equiv \phi_p(w_{n/p}(a))$ mod $p^{v_p(n)}A$ and 
         $w_n(b) \equiv \phi_p(w_{n/p}(b))$ mod $p^{v_p(n)}A$.
         The claim now follows using the fact that $\phi_p$ is a ring homomorphism and 
@@ -310,7 +310,8 @@ Naturality: let $f \colon A \to B$.
 commutes because $f$ is a ring homomorphism, hence commutes with the integer polynomials $w_n$.
 Let $a',b' \in \W_S(A)$. Then: 
 \begin{align*}
-    w(a'+b') = w(\W_S(f)(S)) = f(w(s)) = f(w(a)+w(b)) = f(w(a)) + f(w(b)) = w(a') +w(b')
+    w(a'+b') &= w(\W_S(f)(S)) = f(w(s)) = f(w(a)+w(b)) \\
+    &= f(w(a)) + f(w(b)) = w(a') +w(b')
 \end{align*}
 \todo{finish}
 \end{bigproof}
@@ -791,7 +792,9 @@ we want to use Lemma~\ref{lem: dwork} again. Hence we first show:
         \text{ mod }p^{v_p(n)+1}A
     \]
     which proves the claim. Now in the general case, let $a' \in \W(A')$.
-    Then $F_p(a') = \W g (F_p(a)) = \W g(a^p + p \cdot r) = a'^p + p \cdot \W g(r)$
+    Then \[
+        F_p(a') = \W g (F_p(a)) = \W g(a^p + p \cdot r) = a'^p + p \cdot \W g(r)
+    \]
     for some $r \in A$.
 \end{beweis}
 
@@ -820,9 +823,9 @@ for all $p$ prime, $n \in p\N$. But this immediately follows from
 Lemma~\ref{lem: F_n after F_m is F_{nm}}, so there is a unique $\Delta(a)
 \in \W(\W(A))$ such that $w_n(\Delta(a)) = F_n(a)$.
 \end{beweis}
-Recall that by ~\ref{cor: ghost components are nat trafos},
+Recall that by~\ref{cor: ghost components are nat trafos},
 $w_1 \colon \W(A) \to A$; $(a_n)_{n \in \N} \mapsto a_1$
-is a natural transformation $\W \Rightarrow \id_{\cat{CRing}}$.
+is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
 \begin{theorem} \label{thm: comonad structure}
     The functor $\W(\_) \colon \cat{CRing} \to \cat{CRing}$ together with the
     natural transformations $\Delta \colon \W \Rightarrow \W^2,$ $w_1 \colon 
@@ -869,27 +872,37 @@ is a natural transformation $\W \Rightarrow \id_{\cat{CRing}}$.
                   & \W(\W(A))^{\N}
             \end{tikzcd}  
         \]
-        which by Proposition~\ref{prop: existence of diagonal} simplifies to
-        \[
-            \begin{tikzcd}
-                \W(A) \arrow[r,"F_A"] \arrow[d,"\Delta_A"] 
-                 & \W(A)^{\N} \arrow[d,"\Delta_A^{\N}"] \\
-                \W(\W(A)) \arrow[r,"F_{\W(A)}"]
-                  & \W(\W(A))^{\N}
-            \end{tikzcd}
-        \]
-        now it suffices to show for an arbitrary n that the following diagram commutes:
-        \[
-            \begin{tikzcd}
-                \W(A) \arrow[r,"(F_n)_A"] \arrow[d,"\Delta_A"] 
-                 & \W(A) \arrow[d,"\Delta_A"] \\
-                \W(\W(A)) \arrow[r,"(F_n)_{\W(A)}"]
-                  & \W(\W(A))
-            \end{tikzcd}
-        \]
+        which by Proposition~\ref{prop: existence of diagonal} simplifies to the left of the
+        following diagrams, now it suffices to show for an arbitrary n that the right diagram commutes.
+        \begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name1}
+        \begin{tikzcd}
+            \W(A) \arrow[r,"F_A"] \arrow[d,"\Delta_A"] 
+             & \W(A)^{\N} \arrow[d,"\Delta_A^{\N}"] \\
+            \W(\W(A)) \arrow[r,"F_{\W(A)}"]
+              & \W(\W(A))^{\N}
+        \end{tikzcd}
+        %\caption*{(cap1)}
+        \end{subfigure}
+        \hspace{2em}
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name2}
+        \begin{tikzcd}
+            \W(A) \arrow[r,"(F_n)_A"] \arrow[d,"\Delta_A"] 
+             & \W(A) \arrow[d,"\Delta_A"] \\
+            \W(\W(A)) \arrow[r,"(F_n)_{\W(A)}"]
+              & \W(\W(A))
+        \end{tikzcd}
+        %\caption*{(cap2)}
+        \end{subfigure}
+        \end{figure}
         evaluating the ghost coordinates again, keeping in mind that 
         by~\ref{cor: A torsion-free implies W(A) torsion-free}
-        and~\ref{lem: injective ghost map}, 
+        and~\ref{lem: injective ghost map}, the map
         $w \colon \W(\W(A)) \to \W(A)^{\N}$ is injective as well, we get
         \[
             \begin{tikzcd}
@@ -907,24 +920,34 @@ is a natural transformation $\W \Rightarrow \id_{\cat{CRing}}$.
             \W(A)^{\N} \arrow[r,"(\widetilde{F}_n)_{\W(A)}",dotted]
             & \W(A)^{\N}
         \end{tikzcd}
-        commutes, we can simplify the situation to
-        \[
-            \begin{tikzcd}
+        commutes, we can simplify the situation to the left of the following two diagrams
+        which can again be simplified to the right diagram for every $n$.
+        \begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name1}
+        \begin{tikzcd}
             \W(A) \arrow[r,"F_n"] \arrow[d,"\Delta_A"] \arrow[rd,"F_{nm}",dotted]
                  & \W(A) \arrow[d,"F_m"] \\
                 \W(\W(A)) \arrow[r,"w_{nm}"] 
-                  & \W(A) \\
-            \end{tikzcd}
-        \]
-        which can again be simplified to
-        \[
-            \begin{tikzcd}
-                \W(A) \arrow[r,"F_n"] \arrow[rd,"F_{nm}"']
-                & \W(A) \arrow[d,"F_m"]\\
-                & \W(A)
-            \end{tikzcd}
-        \]
-        now this commutes by Lemma~\ref{lem: F_n after F_m is F_{nm}}, hence we are finished.
+                  & \W(A)
+        \end{tikzcd}
+        %\caption*{(cap1)}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\phantomsection\label{name2}
+        \begin{tikzcd}
+            \W(A) \arrow[r,"F_n"] \arrow[rd,"F_{nm}"']
+            & \W(A) \arrow[d,"F_m"]\\
+            & \W(A)
+        \end{tikzcd}
+        %\caption*{(cap2)}
+        \end{subfigure}
+        \end{figure}
+        Now this commutes by Lemma~\ref{lem: F_n after F_m is F_{nm}}, hence we are finished.
     \end{smallproof}
     \begin{claim*}
         \begin{tikzcd}
@@ -946,23 +969,33 @@ is a natural transformation $\W \Rightarrow \id_{\cat{CRing}}$.
                 & A^{\N}
             \end{tikzcd}
         \]
-    we can then simplify to
-    \[
-        \begin{tikzcd}
-            \W(A) \arrow[d,"F"'] \arrow[rd,"w"] \\
-            \W(A)^{\N} \arrow[r,"w_1^{\N}"'] 
-            & A^{\N}
-        \end{tikzcd}
-    \]
-    now it suffices to show for all $n$ that 
-    \[
-      \begin{tikzcd}
+    we can then simplify to the left of the following diagrams.
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+    \begin{tikzcd}
+        \W(A) \arrow[d,"F"'] \arrow[rd,"w"] \\
+        \W(A)^{\N} \arrow[r,"w_1^{\N}"'] 
+        & A^{\N}
+    \end{tikzcd}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{tikzcd}
         \W(A) \arrow[d,"F_n"'] \arrow[dr,"w_n"]\\
         \W(A) \arrow[r,"w_1"'] 
         & A
       \end{tikzcd}
-    \]
-    commutes, which is true by Lemma~\ref{lem: frobenius}.
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
+    Again it suffices to show that
+    for all $n$ the right of the two diagrams commutes, which is true by Lemma~\ref{lem: frobenius}.
     \end{smallproof}
     \begin{claim*}
         \begin{tikzcd}

@@ -41,7 +41,6 @@ a \textit{free-forgetful adjunction}, which is the first example of an adjunctio
 \section{Definition of adjunctions}
 We will start by giving two equivalent definitions of an adjunction, where the first one is especially useful 
 when it comes to monads, while the second, more standard one, is easier to find examples.
-\newpage
 \begin{proposition} \label{prop: equiv def of adj}
     Given two functors
     \begin{tikzcd}
@@ -59,7 +58,7 @@ when it comes to monads, while the second, more standard one, is easier to find 
             F(b) \arrow[rd,"\id_{F(b)}"'] \arrow[r, "F(\eta_b)"] & FGF(b) \arrow[d,"\eps_{F(b)}"] \\
                                         & F(b)
         \end{tikzcd}
-        \qqq
+        \qquad
         \begin{tikzcd} 
     G(a) \arrow[rd,"id_{G(a)}"'] \arrow[r, "\eta_{G(a)}"] & GFG(a) \arrow[d,"G(\eps_a)"] \\
                                         & G(a)
@@ -75,8 +74,8 @@ when it comes to monads, while the second, more standard one, is easier to find 
 Naturality here means that 
 for $p\colon a\to a'$ and for $q\colon b \to b'$ the following two diagrams commute:
 \begin{figure}[H]
-\centering
-\begin{subfigure}{0.4\textwidth}
+\mbox{}\hfill 
+\begin{subfigure}{0.47\textwidth}
 \centering
 %\phantomsection\label{name1}
 \begin{tikzcd}
@@ -87,8 +86,8 @@ for $p\colon a\to a'$ and for $q\colon b \to b'$ the following two diagrams comm
 \end{tikzcd}
 %\caption*{(cap1)}
 \end{subfigure}
-\hspace{2em}
-\begin{subfigure}{0.4\textwidth}
+\hfill
+\begin{subfigure}{0.47\textwidth}
 \centering
 %\phantomsection\label{name2}
 \begin{tikzcd}
@@ -99,6 +98,7 @@ for $p\colon a\to a'$ and for $q\colon b \to b'$ the following two diagrams comm
 \end{tikzcd}
 %\caption*{(cap2)}
 \end{subfigure}
+\hfill \mbox{}
 \end{figure}
 
 
