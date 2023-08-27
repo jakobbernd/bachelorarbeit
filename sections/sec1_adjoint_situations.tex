@@ -221,7 +221,13 @@ $(a)\Longleftarrow (b):$ Define
 \begin{remark}
     We will denote the adjunction either by $F \! \adj_{\phi}\!\! G \colon \adjar{B}{A}$ or by 
     $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{B}{A}$,
-    sometimes even just $F \adj G$, depending on the context.
+    sometimes even just $F \adj G$ or 
+    \begin{tikzcd}
+        \cat{B}
+            \arrow[r, bend left = 25, "F"{name=D}]
+            \ar[r,"\bot",phantom,description]
+          & \cat{A} \arrow[l ,bend left = 25,"G"{name=C}]
+    \end{tikzcd}, depending on the context.
 \end{remark}
 
 \begin{remark}[{proven for example in \cite[{Chapter 4.5}]{riehl}}]

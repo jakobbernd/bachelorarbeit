@@ -208,9 +208,9 @@ $\overline{\overline{A}} = \overline{A}$.
     \centering
     %\phantomsection\label{name2}
     \begin{tikzcd}
-        X \times M \ar[rd,"\id_{X \times M}"'] \ar[r, "\eta_X \times M"] 
+        X \times M \ar[rd,"\id_{X \times M}"',sloped] \ar[r, "\eta_X \times M"] 
         & X \times M \times M \ar[d,"\mu_X"] 
-        & X \times M \ar[l,"\eta_x \times \id_M"'] \ar[ld,"\id_{X \times M}"]\\
+        & X \times M \ar[l,"\eta_x \times \id_M"'] \ar[ld,"\id_{X \times M}"',sloped]\\
         & X \times M
     \end{tikzcd}
     %\caption*{(cap2)}
@@ -337,8 +337,8 @@ the following diagrams commute:
     \centering
     %\phantomsection\label{name2}
     \begin{tikzcd}
-        & X \times E \ar[ld,"\id_{X \times E}"'] 
-        \ar[rd,"\id_{X \times E}"] \ar[d,"\omega_X"] & \\
+        & X \times E \ar[ld,"\id_{X \times E}",sloped] 
+        \ar[rd,"\id_{X \times E}",sloped] \ar[d,"\omega_X"] & \\
         X \times E 
         & X \times E \times E \ar[l,"\eps_{X \times E}"'] \ar[r,"\eps_X \times \id_E"] 
         & X \times E
@@ -639,11 +639,35 @@ It was first proven in \cite{huber}.
     The proof that $(FG,\eps,F \eta G)$ is a comonad on $A$ is dual.
 \end{beweis}
 Now that we know that every adjunction induces a monad, one may ask, if the converse is true,
-that is if every monad is induced by an adjunction. We will see that this is the case and there are even 
+that is if every monad is induced by an adjunction.This can be reformulated to asking if the following category is non-empty: 
+
+\begin{definition}[Category of $T$-inducing adjunctions]
+    Let $\cat{X}$ be a category, $T = (T,\eta,\mu)$ a monad on $X$. The \textit{category of T-inducing adjunctions},
+    denoted $Adj(T)$, has as objects adjunctions $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{X}{Y}$
+    for some category $\cat{Y}$ (Note that the unit $\eta$ is fixed for every adjunction).
+    A morphism between two adjunctions 
+    $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{X}{Y}$
+    and 
+    $F' {\ }_{\eps'}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G' \colon \adjar{X}{Y'}$
+    is a functor $H \colon \cat{Y} \to \cat{Y'}$ making the following diagram commute:
+    \[
+        \begin{tikzcd}[column sep = 4em]
+            & Y \ar[ld,bend left=20,"G"',shorten=2mm,sloped] \ar[dd,"H"] \\
+            X \ar[ru,bend left = 20,"F",shorten=2mm,sloped,pos=0.48] \ar[rd,bend left = 20,"F'",shorten=2mm,sloped,pos=0.55]
+            \ar[ru,"\bot",phantom,description,sloped] \ar[rd,"\bot",phantom,description,sloped]
+            & \\
+            & Y' \ar[lu,bend left = 20,"G'"',shorten=2mm,sloped]
+        \end{tikzcd}
+    \]
+    where a diagram of this form is said to commute if the $F$-diagram and the $G$-diagram commute,
+    i.e. we have $HF = F'$ and $G'H = G$.
+\end{definition}
+We will see that indeed there exists objects in this category and there are even 
 multiple ways to induce a given monad $T$. The first one is a construction called the \textit{Eilenberg-Moore-Category}
 due to S. Eilenberg and J. Moore in \cite{eilenbergmoore}.
 which is not only useful for forming the adjunction.
-\vfill \todo{vfill am besten weg}
+
+
 \section{The Eilenberg-Moore-Category of a monad}\label{sec: Eilenberg-Moore-Category}%
 \begin{definition}[Eilenberg-Moore-Category]
     Let $T = (T,\eta,\mu)$ be a monad in a category $\cat{X}$.
@@ -686,11 +710,9 @@ which is not only useful for forming the adjunction.
         \end{tikzcd}
     \]
     commutes.
-    The set of all $T$-algebras together with their morphisms form a category,
+    The set of all $T$-algebras together with their morphisms clearly  form a category,
     which is called the \textit{Eilenberg-Moore-Category} and denoted by $\cat{X}^T$.
 \end{definition}
-\todo{Proof that this is indeed a category?}
-
 \begin{example}[M-action monad]
     A $T_M$-algebra is a set $X$ together with a map $h \colon X \times M \to X$
     such that 
@@ -755,11 +777,13 @@ which is not only useful for forming the adjunction.
         f \colon (X,x) \to (Y,y) &\mapsto f \colon (X,\id_{X}^x) \to (Y,\id_Y^y)
     \end{align*}
     where $\id_X^x \colon X \cup \pt \to X$ is the identity on X and maps $\ast$ to $x$.
+    \todo{finish}
 \end{example}
 \begin{theorem}[Every monad is defined by its T-algebras]
     Let $(T,\eta,\mu)$ be a monad in a category $\cat{X}$.
     Then there is an adjunction $F^T \! \! \adj G^T \colon \adjar{X}{X^T}$
-    such that the monad induced by this adjunction is $(T,\eta,\mu)$.
+    such that the monad induced by this adjunction is $(T,\eta,\mu)$. We call this
+    the Eilenberg-Moore-adjunction.
 \end{theorem}
 \begin{beweis}
 \begin{itemize1}     
@@ -793,7 +817,7 @@ and the diagrams
 \centering
 %\phantomsection\label{name2}
 \begin{tikzcd}
-    Tx \ar[r,"\eta_{Tx}"] \ar[rd,"id_{Tx}"']
+    Tx \ar[r,"\eta_{Tx}"] \ar[rd,"id_{Tx}"',sloped]
     & T^x \ar[d,"\mu_x"] \\
     & Tx 
 \end{tikzcd}
@@ -844,25 +868,35 @@ as the unit and we can define the counit $\eps^T \colon F^TG^T \Rightarrow \id_{
     \eps^T_{(x,h)} := h \colon (Tx,\mu_x) \to (x,h).
 \]
 $h$ is a morphism of $T$-algebras because $(x,h)$ is a $T$-algebra, since both statements
-mean that the diagram 
-\[
-    \begin{tikzcd}
-        T^2x \arrow[r,"Th"] \arrow[d,"\mu"] 
-          & Tx \arrow[d,"h"] \\
-        T \arrow[r,"h"]
-          & x
-    \end{tikzcd}
-\]
-commutes. $\eps^T$ is natural, because if $f \colon (x,h) \to (x',h')$
-is a morphism of $T$-algebras, naturality means that the diagram
-\[
-    \begin{tikzcd}
-        Tx \arrow[r,"Tf"] \arrow[d,"h"]
-          & Tx' \arrow[d,"h'"] \\
-        x \arrow[r,"f"]
-          & x'
-    \end{tikzcd}
-\]
+mean that the left of the following two diagrams commutes.
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name1}
+\begin{tikzcd}
+    T^2x \arrow[r,"Th"] \arrow[d,"\mu"] 
+      & Tx \arrow[d,"h"] \\
+    T \arrow[r,"h"]
+      & x
+\end{tikzcd}
+%\caption*{(cap1)}
+\end{subfigure}
+\hspace{2em}
+\begin{subfigure}{0.4\textwidth}
+\centering
+%\phantomsection\label{name2}
+\begin{tikzcd}
+    Tx \arrow[r,"Tf"] \arrow[d,"h"]
+      & Tx' \arrow[d,"h'"] \\
+    x \arrow[r,"f"]
+      & x'
+\end{tikzcd}
+%\caption*{(cap2)}
+\end{subfigure}
+\end{figure}
+$\eps^T$ is natural, because if $f \colon (x,h) \to (x',h')$
+is a morphism of $T$-algebras, naturality means that the right diagram above commutes,
 but this is exactly the definition of $f$ being a morphism of $T$-algebras.
 \item To show the~\ref{eq: triangle identity of adjunction}, we have to show that 
 \begin{figure}[H]
@@ -899,31 +933,17 @@ $\mu^T_x = (G^T\eps^{T})_{F^Tx} = (G^T\eps^T)_{(Tx,\mu_x)} = G^T(\mu_x) = \mu_x$
 \begin{theorem}[Comparison of adjunctions with algebras]
     Let $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{X}{A}$ be an adjunction,
     $T = (GF,\eta,G\eta F)$ the monad it defines in $\cat{X}$. Then there is unique functor
-    $K \colon \cat{A} \to \cat{X^T}$ such that the following diagrams commute:
-    \begin{figure}[H]
-    \centering
-    \begin{subfigure}{0.4\textwidth}
-    \centering
-    %\phantomsection\label{name1}
-    \begin{tikzcd}
-        \cat{A} \ar[d,"G"'] \ar[rd,"K",dotted] \\
-        \cat{X} 
-        & \cat{X^T} \ar[l,"G^T"]
-    \end{tikzcd}
-    %\caption*{(cap1)}
-    \end{subfigure}
-    \hspace{2em}
-    \begin{subfigure}{0.4\textwidth}
-    \centering
-    %\phantomsection\label{name2}
-    \begin{tikzcd}
-        \cat{A} \ar[rd,"K",dotted]  \\ %pfeil umdrehen: from=uu?
-        \cat{X} \ar[u,"F"] \ar[r,"F^T"'] 
-        & \cat{X^T}
-    \end{tikzcd}
-    %\caption*{(cap2)}
-    \end{subfigure}
-    \end{figure}
+    $K \colon \cat{A} \to \cat{X^T}$ such that the following diagram commutes:
+    \[
+        \begin{tikzcd}[column sep = 4em]
+            & \cat{A} \ar[ld,bend left=20,"G"',shorten=2mm,sloped] \ar[dd,"K"] \\
+            \cat{X} \ar[ru,bend left = 20,"F",shorten=2mm,sloped,pos=0.48] \ar[rd,bend left = 20,"F^T",shorten=2mm,sloped,pos=0.55]
+            \ar[ru,"\bot",phantom,description,sloped] \ar[rd,"\bot",phantom,description,sloped]
+            & \\
+            & \cat{X^T} \ar[lu,bend left = 20,"G^T"',shorten=2mm,sloped]
+        \end{tikzcd}
+    \]
+    In other words, the Eilenberg-Moore-adjunction $F^T \! \! \adj G^T \colon \adjar{X}{X^T}$ is a terminal object in $Adj(T)$.
 \end{theorem}
 \begin{beweis}   
     Existence: For $f \colon a \to a'$ in $A$ we define $K$ by:
@@ -1010,26 +1030,69 @@ $\mu^T_x = (G^T\eps^{T})_{F^Tx} = (G^T\eps^T)_{(Tx,\mu_x)} = G^T(\mu_x) = \mu_x$
         which commutes by naturality of $\eps \colon FG \Rightarrow \id_A$.
     \end{smallproof}
     Functoriality of $K$ follows from the Functoriality of $G$.
-    For the commutativity of the two diagrams, let $f \colon a \to a'$ and $g \colon x \to x'$ 
-    be morphisms. Then the first diagram commutes, since we have:
+    For the commutativity of the diagram in the statement, let $f \colon a \to a'$ and $g \colon x \to x'$ 
+    be morphisms. Then the $G$-diagram commutes, since we have:
     \begin{align*}
         G^TKa = G^T(Ga,G(\eps_a)) = Ga \\
         G^TK(f) = G^T(Gf) = Gf
     \end{align*}
-    and for the second diagram we compute:
+    and for the $F$-diagram we compute:
     \begin{align*}
         KFx = (Gfx,G(\eps_{Fx})) = (Tx,\mu_x) = F^Tx \\
         KF(g) = GF(g) = T(g) = F^T(g)
     \end{align*}
+    Uniqueness: $G^TK = G \implies$ for $f \colon a \to a'$, $K(f) = G(f)$ and $Ka$ has to be of the
+    form $(Ga,h)$ for some structure map $h$. We will show that the commutativity of the
+    two diagrams implies $h = G(\eps_a)$.
+    For that we need the following
     \begin{claim}
-       $K$ is unique.
+        $K(\eps_a) = \eps^T_{Ka}$ for all $a \in \cat{A}$.
     \end{claim}
     \begin{smallproof}
-        \todo{finish,v}
+        Denote by $\phi,\psi,\phi^T,\psi^T$ the natural $\Hom$-isomorphisms from the adjunctions $F \! \adj \! G$ respectively
+        $F^T \!\! \adj \! G^T$.
+        The left of the following diagrams commutes, since going the upper way maps $g$
+        to $G(g) \circ \eta_x$, while going the lower way maps it to $GK(g) \circ \eta^T_x = G(g) \circ \eta_x$.
+        \begin{figure}[H]
+            \small
+        \centering
+        \begin{subfigure}{0.46\textwidth}
+        \centering
+        %\phantomsection\label{name1}
+        \begin{tikzcd}[row sep=0mm]
+            \Hom[A](Fx,a) \ar[r,"\phi_{a,x}","\cong"'] \ar[d,"K"] 
+            & \Hom[X](x,Ga) \ar[dd,equal] \\[8mm]
+            \Hom[X^T](KFx,Ka)  \ar[d,equal] & \\[2mm]
+            \Hom[X^T](F^Tx,Ka) \ar[r,"\phi^T_{Ka,x}","\cong"']
+            & \Hom[X](x,G^TKa)
+        \end{tikzcd}
+        %\caption*{(cap1)}
+        \end{subfigure}
+        \hspace{2em}
+        \begin{subfigure}{0.46\textwidth}
+        \centering
+        %\phantomsection\label{name2}
+        \begin{tikzcd}[row sep=0mm]
+            \Hom[A](Fx,a) \ar[from=r,"\psi_{a,x}"',"\cong"] \ar[d,"K"] 
+            & \Hom[X](x,Ga) \ar[dd,equal] \\[8mm]
+            \Hom[X^T](KFx,Ka)  \ar[d,equal] & \\[2mm]
+            \Hom[X^T](F^Tx,Ka) \ar[from=r,"\psi^T_{Ka,x}"',"\cong"]
+            & \Hom[X](x,G^TKa)
+        \end{tikzcd}
+        %\caption*{(cap2)}
+        \end{subfigure}
+        \end{figure}
+        This means that the right diagram, which is just the inverses, commutes as well.
+        Now let $x := Ga$ and chase $\id_{Ga}$ in the the right diagram to see that 
+        $K(\eps_a) = \eps^T_{Ka}$.
     \end{smallproof}
+    By definition of $\eps^T$, it follows that 
+    \[
+        G(\eps_a) = K(\eps_a) = \eps^T_{Ka} = h.
+    \]
 \end{beweis}
 \section{The Kleisli category of a monad}
-There is another way to induce a monad by an adjunction, which was introduced by H.Kleisli in \cite{kleisli}:
+There is another way to induce a monad by an adjunction, which was introduced by Heinrich Kleisli in \cite{kleisli}:
 \begin{definition}[Kleisli category]
     Let $\cat{X}$ be a category, $T = (T,\eta, \mu)$ be a monad in $\cat{X}$.
     The \textit{Kleisli category $\cat{X}_T$} is defined by
@@ -1041,7 +1104,7 @@ There is another way to induce a monad by an adjunction, which was introduced by
         \[
             g^b \bullet f^b := (\mu_z \circ Tg \circ f)^b \colon x_T \to z_T
         \]
-        for $f^b \colon x_T \to y_T$, $g^b \colon y_T \to z_T$. 
+        for $f^b \colon x_T \to y_T$, $g^b \colon y_T \to z_T$. \\
         This is indeed again a morphism:
         \begin{tikzcd}
             x \arrow[r,"f"]
@@ -1113,10 +1176,12 @@ where the second equality is due to the right~\refunitality law for T.
 This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
 \in \Hom[\cat{X}_T](x_T,x_T)$
 \end{proof}
+\todo{beispiel}
 \begin{theorem}
     Let $(T,\eta,\mu)$ be a monad in a category $\cat{X}$.
     Then there is an adjunction $F_T \! \! \adj G_T \colon \adjar{X}{X_T}$
     such that the monad induced by this adjunction is $(T,\eta,\mu)$.
+    We call this the Kleisli-adjunction.
 \end{theorem}
 \begin{beweis}
     \begin{itemize1}
@@ -1182,7 +1247,7 @@ This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
         &= Tf \tag{\refunitality of $T$}
     \end{align*}
     \end{smallproof}
-    \item We now set the unit and counit to be \todo{def. of eps?}
+    \item We now set the unit and counit to be 
     \begin{align*}
         &\eta_x \colon x \to Tx\\
         &\eps_x = \id_{Tx}^b \colon (Tx)_T \to x_T
@@ -1205,10 +1270,10 @@ This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
     \centering
     %\phantomsection\label{name2}
     \begin{tikzcd}
-        G_Tx \ar[r,"\eta_{G_Tx}"] \ar[rd,"\id_{G_Tx}"']
-        & G_TF_TG_Tx \ar[d,"G_T(\eps_x)"] \\
-        & G_Tx
-    \end{tikzcd}
+        G_Tx_T \ar[r,"\eta_{G_Tx_T}"] \ar[rd,"\id_{G_Tx_T}"']
+        & G_TF_TG_Tx_T \ar[d,"G_T(\eps_x)"] \\
+        & G_Tx_T
+    \end{tikzcd} 
     %\caption*{(cap2)}
     \end{subfigure}
     \end{figure}
@@ -1222,7 +1287,7 @@ This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
     using the right~\refunitality of $T$.
     The right diagram commutes, since we have
     \begin{align*}
-        G_T(\eps_x) \circ \eta_{G_Tx} = \mu_x \circ T(\id_{Tx}) \circ \eta_{Tx}
+        G_T(\eps_x) \circ \eta_{G_Tx_T} = \mu_x \circ T(\id_{Tx}) \circ \eta_{Tx}
         = \mu_x \circ \eta_{Tx} = \id_{Tx}
     \end{align*}
     using the left~\refunitality of $T$. The only thing left to show is that
@@ -1235,7 +1300,17 @@ This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
 \begin{theorem}[Comparison of adjunctions with the Kleisli-construction]
     Let $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{X}{A}$ be an adjunction,
     $T = (GF,\eta,G\eta F)$ the monad it defines in $\cat{X}$. Then there is a unique functor
-    $L \colon \cat{X_T} \to \cat{A}$ such that the following diagrams commute:
+    $L \colon \cat{X_T} \to \cat{A}$ such that the following diagram commutes:
+    \[
+        \begin{tikzcd}[column sep = 4em]
+            & \cat{X_T} \ar[ld,bend left=20,"G_T"',shorten=2mm,sloped] \ar[dd,"L"] \\
+            \cat{X} \ar[ru,bend left = 20,"F_T",shorten=2mm,sloped,pos=0.48] \ar[rd,bend left = 20,"F",shorten=2mm,sloped,pos=0.55]
+            \ar[ru,"\bot",phantom,description,sloped] \ar[rd,"\bot",phantom,description,sloped]
+            & \\
+            & \cat{A} \ar[lu,bend left = 20,"G"',shorten=2mm,sloped]
+        \end{tikzcd}
+    \]
+    In other words, the Kleisli-adjunction $F_T \! \! \adj G_T \colon \adjar{X}{X_T}$ is an initial object in $Adj(T)$.
 \end{theorem}
 \begin{beweis}
     \begin{itemize1}
