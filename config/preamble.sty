@@ -21,7 +21,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm} % Verbesserung von amsmath (die amsmath selbst lädt)
 \usepackage[libertine,cmintegrals,bigdelims,varbb]{newtxmath}
-\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
 \usepackage[babel=true, tracking=true,final]{microtype}
 
 \usepackage{xparse} %if-then-else stuff
@@ -202,12 +202,12 @@
 
 %-- kommutative Diagramme
 \usepackage{tikz-cd} %-- meiner Meinung nach das beste Paket für kommutative Diagramme
-\tikzset{% um Kompatibilität mit Babel herzustellen und die angenehme "<label>"-Syntax zu nutzen
-  every picture/.append style={
-    execute at begin picture={\shorthandoff{"}},
-    execute at end picture={\shorthandon{"}}
-  }
-}
+% \tikzset{% um Kompatibilität mit Babel herzustellen und die angenehme "<label>"-Syntax zu nutzen
+%   every picture/.append style={
+%     execute at begin picture={\shorthandoff{"}},
+%     execute at end picture={\shorthandon{"}}
+%   }
+% }
 %changed the design of the arrow to "Straight Barb" instead of "Latex" or "Computer Modern Rightarrow"
 \tikzcdset{every arrow/.append style = -{Straight Barb[scale=0.9]}}
 
@@ -220,11 +220,13 @@
 	natbib,
 	hyperref,
 	backref,
+	language=english,
 	style=alphabetic % eine unvollständige Auswahl von Styles: ieee, numeric, apa
 	]%
 {biblatex}
-\addbibresource{../config/quellen.bib} % Literaturdatei einlesen
+\addbibresource{./config/quellen.bib} % Literaturdatei einlesen
 %muss geändert werden zwischen bachelorarbeit und section!!!
+%.. für BA und . für sectiontest
 
 % -- Konfiguration von Hyperref (sorgt für anklickbare Links und ein PDF-Inhaltsverzeichnis)
 \usepackage[hidelinks, pdfpagelabels, bookmarksopen=true, bookmarksnumbered=true, linkcolor=black, urlcolor=SkyBlue2, plainpages=false,pagebackref, citecolor=black, hypertexnames=true, pdfborderstyle={/S/U}, linkbordercolor=SkyBlue2, colorlinks=false, backref=false]{hyperref}
@@ -236,7 +238,7 @@
 \usepackage[german=quotes]{csquotes}
 % \setlist[itemize]{noitemsep, topsep=0pt} setzt global alle listen schmal
 %-- Für hilfreiche Anmerkungen am Seitenrand
-\usepackage[obeyDraft,textsize=small]{todonotes}
+\usepackage[obeyDraft,textsize=small,backgroundcolor=yellow,linecolor=black]{todonotes}
 
 \newenvironment{itemize1}{
   \begin{itemize}[noitemsep,topsep=0pt,leftmargin=*,itemindent=0pt]{
@@ -291,6 +293,17 @@
 \makeatother
 
 
+%-- Definition-Style
+\newtheoremstyle{definition}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\normalfont}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\sffamily\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+
 
 \declaretheoremstyle[%
 	headfont=\sffamily\bfseries,
@@ -322,20 +335,20 @@
 	spaceabove=3pt,spacebelow=3pt,]%
 {claim}
 %
-\declaretheorem[name=Definition,parent=chapter,style=definition,shaded={bgcolor=fb10_blue!10}]{definition}
-\declaretheorem[name=Theorem,sharenumber=definition,style=mainstyle]{theorem}
-\declaretheorem[name=Corollary,sharenumber=definition,style=mainstyle]{cor}
-\declaretheorem[name=Lemma,sharenumber=definition,style=mainstyle]{lemma}
-\declaretheorem[name=Proposition,sharenumber=definition,style=mainstyle]{proposition}
+\declaretheorem[name=Definition,numbered=no,style=definition,shaded={bgcolor=fb10_blue!10}]{definition}
+\declaretheorem[name=Theorem,parent=chapter,style=mainstyle]{theorem}
+\declaretheorem[name=Corollary,sharenumber=theorem,style=mainstyle]{cor}
+\declaretheorem[name=Lemma,sharenumber=theorem,style=mainstyle]{lemma}
+\declaretheorem[name=Proposition,sharenumber=theorem,style=mainstyle]{proposition}
 
-\declaretheorem[name=Remark,sharenumber=definition,style=definition]{remark}
+\declaretheorem[name=Remark,numbered=no,style=definition]{remark}
 
 \declaretheorem[name=Proof,numbered=no,style=beweise]{beweis}
 \declaretheorem[name=Example,numbered=yes,style=definition]{example}
 
 \declaretheorem[name=Claim,numbered=yes,style=claim]{claim}
 \declaretheorem[name=Claim,numbered=no,style=claim]{claim*}
-% Customize environments
+% Customize environments mit Strich links
 \RequirePackage{mdframed}
 \newmdenv[
 	topline=false,
@@ -356,7 +369,7 @@
 	innerbottommargin=0pt,
 	innerrightmargin=0pt,
 	rightmargin=0pt,
-	linecolor=light_gray,
+	linecolor=fb10_blue!30,
 	linewidth=2pt
 ]{graytheoremline}
 \RequirePackage{etoolbox}

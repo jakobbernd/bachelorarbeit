@@ -148,7 +148,7 @@ the following diagrams commute:
 \end{figure}
 
 \end{definition}
-
+\todo{whiskering}
 \begin{example}[preorder]
 Recall: A \textit{preorder} $(\cat{P},\le)$ is a category with $\cat{P}$ as objects and 
 a morphism between $X$ and $Y$ iff $X \le Y$.
@@ -173,7 +173,7 @@ Here an example for a closure operation is taking the topological closure $A \ma
 since it holds for all $A \subseteq X$ that $A \subseteq \overline{A}$ and
 $\overline{\overline{A}} = \overline{A}$.
 \end{example}
-
+\todo{abelianization}
 \begin{example}[M-action monad]
     Let $(M,\cdot,1)$ be a monoid. Then for each set $X$ we can form the set $X \times M$ and 
     for a map $f \colon X \to Y$ we have a map $f \times \id_M \colon X \times M \to Y \times M;
@@ -313,7 +313,7 @@ the following diagrams commute:
     Let $E$ be a set. Define a functor $C_E \colon \cat{Set} \to \cat{Set}$ by
     $C_E(X)=X \times E$ and, given $f \colon X \to Y,$ $C_E(f) = f \times \id_E
     \colon X \times E \to Y \times E.$
-    We can view $E$ as \dq extra information\dq{} and give $C_E$ a comonadic structure as follows:
+    We can view $E$ as `` extra information'' and give $C_E$ a comonadic structure as follows:
     \begin{itemize}
         \item the counit $\eps_X \colon X \times E \to X; (x,e)\mapsto x$ 
          "forgets the extra information"
@@ -1016,9 +1016,9 @@ $\mu^T_x = (G^T\eps^{T})_{F^Tx} = (G^T\eps^T)_{(Tx,\mu_x)} = G^T(\mu_x) = \mu_x$
         Kf &= Gf \colon (Ga,G(\eps_a)) \to (Ga',G(\eps_{a'}))
     \end{align*}
     We have to show that this is well-defined.
-    \begin{claim}
+    \begin{claim*}
         $Ka$ is a $T$-algebra.
-    \end{claim}
+    \end{claim*}
     \begin{smallproof}
         $Ka$ is the arrow $GFGFa \overset{G(\eps_a)}{\to} Ga$ and we need to show that 
         the following diagrams commute:
@@ -1059,9 +1059,9 @@ $\mu^T_x = (G^T\eps^{T})_{F^Tx} = (G^T\eps^T)_{(Tx,\mu_x)} = G^T(\mu_x) = \mu_x$
     \]
     which commutes by~\ref{lem: interchange law}. 
     \end{smallproof}
-    \begin{claim}
+    \begin{claim*}
         $Kf$ is a morphism of $T$-algebras.
-    \end{claim}
+    \end{claim*}
     \begin{smallproof}
         We have to show that the first of the following two diagrams commutes:
         \begin{figure}[H]
@@ -1109,9 +1109,9 @@ $\mu^T_x = (G^T\eps^{T})_{F^Tx} = (G^T\eps^T)_{(Tx,\mu_x)} = G^T(\mu_x) = \mu_x$
     form $(Ga,h)$ for some structure map $h$. We will show that the commutativity of the
     two diagrams implies $h = G(\eps_a)$.
     For that we need the following
-    \begin{claim}
+    \begin{claim*}
         $K(\eps_a) = \eps^T_{Ka}$ for all $a \in \cat{A}$.
-    \end{claim}
+    \end{claim*}
     \begin{smallproof}
         Denote by $\phi,\psi,\phi^T,\psi^T$ the natural $\Hom$-isomorphisms from the adjunctions $F \! \adj \! G$ respectively
         $F^T \!\! \adj \! G^T$.

@@ -656,8 +656,9 @@ We will need the following lemma:
     non-zero divisor in $\W_S(A)$ as well.
 \end{lemma}
 \begin{beweis}
-    We can assume that $S$ is finite, since $\W_S(A)$ is the projective limit \todo{elaborate}
-    of all $\W_T(A)$ where $T$ is a finite subset of S.
+    We can assume that $S$ is finite, since $\W_S(A)$ is the inverse limit
+    of all $\W_T(A)$ where $T$ is a finite sub-truncation set of S, together with the fact that
+    the inverse limit is left-exact, hence preserves injectivity. \todo{}
     We will prove the Lemma by induction over $\abs{S}$.
     If $S = \emptyset$, the statement is trivial, so let $\abs{S} = 1$, this means
     that $S = \{n\}$ for some $n \in \N$, but then $\W_{\set{n}}(A) \cong \W_{\set{1}}(A) = A$ via $V_n$.
