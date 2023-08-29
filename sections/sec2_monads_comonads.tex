@@ -225,16 +225,20 @@ $\overline{\overline{A}} = \overline{A}$.
 \end{example}
 \begin{example}[Maybe monad]
     The \textit{Maybe monad} $Y \colon \cat{Set} \to \cat{Set}$ is defined by
-    $X \mapsto X \cup \pt$ where $f \colon X \to Y$ gets mapped to the function
-    $Y(f) \colon X \cup \pt \to Y \cup \pt$ which maps $x$ to $f(x)$ and $\ast$ to $\ast$. 
+    $X \mapsto X \sqcup \pt$ where $f \colon X \to Y$ gets mapped to the function
+    $Y(f) \colon X \sqcup \pt \to Y \sqcup \pt$ which maps $x$ to $f(x)$ and $\ast$ to $\ast$. 
+    Unit and multiplication are defined to be the natural maps
     \begin{itemize}
-        \item $\eta_X \colon X \to X \cup \pt; x \mapsto x$
-        \item $\mu_X \colon X \cup \{\ast_1\}  \cup \{\ast_2\} \to X \cup \pt; x \mapsto x, 
+        \item $\eta_X \colon X \to X \sqcup \pt; x \mapsto x$
+        \item $\mu_X \colon X \sqcup \{\ast_1\}  \sqcup \{\ast_2\} \to X \sqcup \pt; x \mapsto x, 
         \ast_1 \mapsto \ast, \ast_2 \mapsto \ast$
     \end{itemize}
-    \todo{finish}
+    An easy computation shows that the monads axioms are indeed satisfied,
+    the reason being that in both diagrams, $x \in X$ is always mapped to itself,
+    while all extra points $\ast_1,\ast_2,\ast_3$ get mapped to the extra point $\ast$.
 \end{example}
 
+A \textit{comonad} in $\cat{A}$ is a monad in $\cat{A}^{op}$. Explicitly:
 \begin{definition}[comonad]
 A \textit{comonad} $(L,\eps, \omega) $ in a Category $\cat{A}$ consists of
 \begin{itemize}
@@ -350,7 +354,7 @@ the following diagrams commute:
     third element produces the same tuple. The second diagram commutes, because copying 
     the extra information and the deleting either one of the copies gives the same result.
     The resulting comonad $(C_E,\eps,\omega)$ on $\cat{Set}$ is called the \textit{reader comonad}.
-    Note that as a functor, it is almost the same as the \textit{writer comonad}, but we gave it
+    Note that as a functor, it is almost the same as the \textit{M-action comonad}, but we gave it
     kind of a dual structure.
 \end{example}
 
@@ -511,7 +515,7 @@ is the functor $R \mapsto \Z R$, which we call the \textit{free monoid ring func
     \centering
     %\phantomsection\label{name1}
     \begin{tikzcd}
-        \id_T \ar[rd,"\eta'"',Rightarrow] \ar[r, "\eta",Rightarrow] 
+        \id_X \ar[rd,"\eta'"',Rightarrow] \ar[r, "\eta",Rightarrow] 
         & T \ar[d,"\delta",Rightarrow] \\
         & T'
     \end{tikzcd}
@@ -580,12 +584,70 @@ is the functor $R \mapsto \Z R$, which we call the \textit{free monoid ring func
     then the resulting monad looks really similar to the \textit{Maybe monad}. 
     This is not a coincidence: the map
     \[
-        \delta_X \colon X \cup \pt \to \P^1(X); x \mapsto \{x\}, \ast \mapsto \emptyset
+        \delta_X \colon X \sqcup \pt \to \P^1(X); x \mapsto \{x\}, \ast \mapsto \emptyset
     \]
-    gives a natural isomorphism $Y \Rightarrow \P^1$ which is indeed an isomorphism of monads.
-    \todo{ausrechnen}
-
-
+    gives a natural isomorphism $Y \Rightarrow \P^1$ which is an isomorphism of monads.
+    Indeed: $\delta$ is clearly a natural bijection. It is left to show that the following 
+    diagrams commute for every set $X$:
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+        \begin{tikzcd}
+            X \ar[r,"\eta_X"] \ar[rd,"\eta'_X"']
+            & X \sqcup \set{\ast} \ar[d,"\delta_x"] \\
+            & \P^1(X)
+        \end{tikzcd}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{tikzcd}
+        X \sqcup \set{\ast_1} \sqcup \set{\ast_2} \arrow[r,"\mu_X"] \arrow[d,"(\delta \tensor \delta)_X"] 
+          & X \sqcup \set{\ast_1} \arrow[d,"\delta_X"] \\
+        \P^1(\P^1(X)) \arrow[r,"\mu'_X"]
+          & \P^1(X)
+    \end{tikzcd}
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
+    The left diagram commutes, since we have $\delta_X(\eta_X(x))=\delta_X(x)=\set{x}=\eta'_X(x).$
+    For the right diagram, first note that $(\delta \tensor \delta)_X = \P^1(\delta_X) \circ \delta_{X \sqcup \set{\ast}}$
+    is the map
+    \begin{alignat*}{2}
+        x &\mapsto \set{x} &&\mapsto \set{\set{x}} \\
+        \ast_1 &\mapsto \set{\ast_1} &&\mapsto \set{\emptyset} \\
+        \ast_2 &\mapsto \emptyset &&\mapsto \emptyset
+    \end{alignat*}
+    so we compute that going the lower way resp. the upper way are the following maps:
+    \begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name1}
+    \begin{alignat*}{2}
+        x &\mapsto \set{\set{x}} &&\mapsto \set{x} \\
+        \ast_1 &\mapsto \set{\emptyset} &&\mapsto \emptyset \\
+        \ast_2 &\mapsto \emptyset &&\mapsto \emptyset
+    \end{alignat*}
+    %\caption*{(cap1)}
+    \end{subfigure}
+    \hspace{2em}
+    \begin{subfigure}{0.4\textwidth}
+    \centering
+    %\phantomsection\label{name2}
+    \begin{alignat*}{2}
+        x &\mapsto x &&\mapsto \set{x} \\
+        \ast_1 &\mapsto \ast_1 &&\mapsto \emptyset \\
+        \ast_2 &\mapsto \ast_1 &&\mapsto \emptyset
+        \end{alignat*}
+    %\caption*{(cap2)}
+    \end{subfigure}
+    \end{figure}
+    which are equal. This proves that $\delta$ is an isomorphism of monads.
 \end{example}
 The following theorem gives us a way to create many examples of monads and comonads.
 It was first proven in \cite{huber}.
@@ -698,7 +760,7 @@ which is not only useful for forming the adjunction.
     %\caption*{(cap2)}
     \end{subfigure}
     \end{figure}
-    We call $h$ the \textit{stucture map} of $(x,h)$.
+    We call $h$ the \textit{structure map} of $(x,h)$.
     A \textit{morphism of $T$-algebras} $f \colon (x,h) \to (x',h')$ is an arrow
     $f \colon x \to x'$ such that
     \[
@@ -757,12 +819,12 @@ which is not only useful for forming the adjunction.
 
 \begin{example}[Maybe monad]
     The category of $Y$-algebras is isomorphic to the category of pointed spaces $\ptspaces$.
-    Indeed: by definition, a $Y$-algebra is a pair $(X,h)$ where $h \colon X \cup \pt \to X$
+    Indeed: by definition, a $Y$-algebra is a pair $(X,h)$ where $h \colon X \sqcup \pt \to X$
     and since 
     \[
      \begin{tikzcd}
          X \ar[r,"\eta_X"] \ar[rd,"\id_X"']
-         & X \cup \pt \ar[d,"h"] \\
+         & X \sqcup \pt \ar[d,"h"] \\
          & X 
      \end{tikzcd}
     \]
@@ -776,7 +838,9 @@ which is not only useful for forming the adjunction.
         (X,x) &\mapsto (X, \id_{X}^x) \\
         f \colon (X,x) \to (Y,y) &\mapsto f \colon (X,\id_{X}^x) \to (Y,\id_Y^y)
     \end{align*}
-    where $\id_X^x \colon X \cup \pt \to X$ is the identity on X and maps $\ast$ to $x$.
+    where $\id_X^x \colon X \sqcup \pt \to X$ is the identity on X and maps $\ast$ to $x$.
+    Then an easy computation shows that $F$ and $G$ are well-defined functors with
+    $GF=\id_{\cat{Set}^Y}$ and $FG=\id_{\ptspaces}$.
     \todo{finish}
 \end{example}
 \begin{theorem}[Every monad is defined by its T-algebras]
@@ -1176,7 +1240,25 @@ where the second equality is due to the right~\refunitality law for T.
 This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
 \in \Hom[\cat{X}_T](x_T,x_T)$
 \end{proof}
-\todo{beispiel}
+\begin{example}[M-action monad]
+    Let $(M,+)$ be a monoid, written additively. A Kleisli morphism for the M-action monad $T_M$
+    is a map $k \colon X \to Y \times M$. It can be interpreted as a process producing not only 
+    an output $y \in Y$ but also counting a cost $m \in M$ of this processs.
+    Now if we have two Kleisli morphisms 
+    \begin{align*}
+        &k \colon X \to Y \times M, x \mapsto (k_0(x),m) \\
+        &h \colon Y \to Z \times M, y \mapsto (h_0(y),n)
+    \end{align*}
+    the Kleisli composition is defined to be
+    \begin{tikzcd}[cramped]
+        X \arrow[r,"k"]
+          & Y \times M \arrow[r,"h \times \id_M"]
+            & Z \times M \times M \arrow[r,"\mu_x"]
+              & Z \times M
+    \end{tikzcd}
+    which maps $x$ to $(h_0(k_0(x)),m+n)$. So this composition allows us to model the assumption
+    that the cost of executing two processes one after another is the sum of the two costs.
+\end{example}
 \begin{theorem}
     Let $(T,\eta,\mu)$ be a monad in a category $\cat{X}$.
     Then there is an adjunction $F_T \! \! \adj G_T \colon \adjar{X}{X_T}$
@@ -1374,3 +1456,8 @@ This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
     \end{align*}  
     \end{itemize1}
 \end{beweis}
+\section{Co-Eilenberg-Moore and Co-Kleisli}
+Since a comonad is just a monad in the dual category, the definitions of the last two chapters can be 
+dualized to get the \textit{co-Eilenberg-Moore-category} and the \textit{co-Kleisli-category}.
+Every theorem that was proven in the last two chapters can also be dualized, the proofs being the dual ones.
+For space reasons, I will not restate the definitions and statements, but instead give some examples:

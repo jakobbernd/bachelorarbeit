@@ -1,15 +1,15 @@
 \chapter{Adjunctions}
-Let $\cat{A}, \cat{B}$ be two categories. We say that $\cat{A}$ and $\cat{B}$ are \textit{isomorphic},
+Adjunctions are a way to compare categories. Two categories $\cat{A}$ and $\cat{B}$ are said to be \textit{isomorphic},
 denoted $\cat{A} \cong \cat{B}$, if there exist functors $G \colon \cat{A} \to \cat{B},
 F \colon \cat{B} \to \cat{A}$ with $FG = \id_A, GF = \id_B$. This condition is too strict to provide us
-with many examples, which is why there is a different notion: We say that $\cat{A}$ and $\cat{B}$ 
-are \textit{equivalent},
+with many examples, which is why there is a different notion: $\cat{A}$ and $\cat{B}$ are said to be
+\textit{equivalent},
 denoted $\cat{A} \simeq \cat{B}$, if $FG \cong \id_A, GF \cong \id_B$ via natural isomorphisms
 $\alpha \colon FG \to \id_A$, $\beta \colon GF \to \id_B$. Equivalent categories are essentially the same,
 all categorical properties, like for example initial objects are preserved under equivalence. 
 But there is an even less strict relation between categories, which was first introduced by Daniel Kan in 
 \cite{kan} and which is a powerful concept, because it arises so often:
-Consider the categories $\cat{Set}$ and $\cat{Vect_K}$ for a fixed field $K$.
+consider the categories $\cat{Set}$ and $\cat{Vect_K}$ for a fixed field $K$.
 The two categories can't be equivalent, since $\cat{Vect_K}$ has a zero object while
 $\cat{Set}$ doesn't. But there still is a connection between them:
 
@@ -101,10 +101,9 @@ for $p\colon a\to a'$ and for $q\colon b \to b'$ the following two diagrams comm
 \hfill \mbox{}
 \end{figure}
 
-
 \begin{bigproof}
-    $(a)\implies (b):$ \\
-    define 
+    $(a)\Rightarrow (b):$
+    Define 
     \[
         \phi_{a,b}\colon \Hom[A](F(b),a)\to \Hom[B](b,G(a)) 
         \quad \text{ by } \quad \phi_{a,b}(g) = G(g) \circ \eta_b 
@@ -160,7 +159,7 @@ Let $f \colon b \to G(a)$.
        = G(g) \circ \eta_{b'} \circ q
      \]
 \end{smallproof}
-$(a)\Longleftarrow (b):$ Define 
+$(a)\Leftarrow (b):$ Define 
 \[
     \eta \colon id_{\cat{B}} \Rightarrow GF \quad \text{ by } \quad \eta_b := \phi_{F(b),b}(\id_{F(b)})
     \colon b \to GF(b) \\
@@ -173,7 +172,7 @@ $(a)\Longleftarrow (b):$ Define
     $\eta$ is a natural transformation.
 \end{claim}
 \begin{smallproof}
-    For $p \colon b \to b'$ we need to show that 
+    For $q \colon b \to b'$ we need to show that 
     \[
         \begin{tikzcd}
             b \arrow[r,"q"] \arrow[d,"\eta_b"] 
@@ -182,18 +181,33 @@ $(a)\Longleftarrow (b):$ Define
               & GF(b')
         \end{tikzcd}
     \]
-    commutes, which means $\phi_{F(b),b}(\id_{F(b)}) \circ p 
-    = GF(p) \circ \phi_{F(b'),b'}(\id_{F(b')})$. \todo{finish}
-    But 
-    \[
-        \phi(\id) \circ p = \phi(F(p)) = GF(p) \circ \phi
-    \]
+    commutes. But using the naturality of $\phi$ in $a$ (applied to $q \colon a \to a'$) and
+    $b$ (applied to $F(q) \colon Fa \to Fa'$), we get
+    \begin{align*}
+        \eta_{b'} \circ q &= \phi(\id_{Fb'}) \circ q = \phi(\id_{Fb'} \circ F(q))  = \phi(F(q) \circ \id_{Fb}) \\
+        &= GF(q) \circ \phi(\id_{F(b)}) = GF(q) \circ \eta_b.
+    \end{align*}
 \end{smallproof}
 \begin{claim}
     $\eps$ is a natural transformation.
 \end{claim}
 \begin{smallproof}
-    \todo{finish}
+    For $p \colon a \to a'$ we need to show that
+    \[
+      \begin{tikzcd}
+          FGa \arrow[r,"FG(p)"] \arrow[d,"\eps_a"] 
+            & FGa' \arrow[d,"\eps_{a'}"] \\
+          a \arrow[r,"p"]
+            & a'
+      \end{tikzcd}  
+    \]
+    commutes. Since $\phi$ is natural, $\psi$ is natural as well, meaning that the diagrams above
+    where $\phi$ is replaced by $\psi$ commute. Using the naturality of $\psi$ in $a$ (applied to $p \colon a \to a'$)
+    and $b$ (applied to $G(p) \colon Ga \to Ga'$), we get
+    \begin{align*}
+        p \circ \eps_a &= p \circ \psi(\id_{Ga}) = \psi(G(p) \circ \id_{Ga}) = \psi(\id_{Ga'} \circ G(p)) \\
+        &= \psi(\id_{Ga'}) \circ FG(p) = \eps_{a'} \circ FG(p).
+    \end{align*}
 \end{smallproof}
 \begin{claim} 
     $\eta$ and $\eps$ satisfy the triangle identities.
@@ -201,14 +215,15 @@ $(a)\Longleftarrow (b):$ Define
 \begin{smallproof}
     \[
         \id_{F(b)} = \psi(\phi(\id_{F(b)})) = \psi(\eta_b) 
-        = \psi(\eta_b \circ \id_b) = \eps_{F(b)} \circ F(\eta_b)
+        = \psi(\eta_b \circ \id_b) = \psi(\id_b) \circ F(\eta_b) = \eps_{F(b)} \circ F(\eta_b)
     \]
     \[
-       \id_{G(a)} = \phi(\psi(\id_{G(a)})) = \phi(\eps_a) = \phi(id_a) 
+       \id_{G(a)} = \phi(\psi(\id_{G(a)})) = \phi(\eps_a) = \phi(\id_a \circ \eps_a) 
+       = G(\eps_a) \circ \phi(\id_a) = G(\eps_a) \circ \eta_a
     \]
+    using the definitions of $\eta$, $\eps$ and the naturality of $\phi$ and $\psi$.
 \end{smallproof}
 \end{bigproof}
-\todo{or yoneda lemma, see p.193 Brandenburg}
 \begin{definition}[Adjunction]
     Let $\cat{A}$ and $\cat{B}$ be categories. 
     We say that functors
@@ -216,9 +231,7 @@ $(a)\Longleftarrow (b):$ Define
     form an \textit{adjunction between $\cat{A}$ and $\cat{B}$},
     if $F$ and $G$ satisfy the equivalent conditions of~\ref{prop: equiv def of adj}. 
     We then say that $F$ is \textit{left-adjoint} to $G$ and $G$ is \textit{right-adjoint}
-    to $F$.
-\end{definition}
-\begin{remark}
+    to $F$. \\ \\
     We will denote the adjunction either by $F \! \adj_{\phi}\!\! G \colon \adjar{B}{A}$ or by 
     $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{B}{A}$,
     sometimes even just $F \adj G$ or 
@@ -228,7 +241,7 @@ $(a)\Longleftarrow (b):$ Define
             \ar[r,"\bot",phantom,description]
           & \cat{A} \arrow[l ,bend left = 25,"G"{name=C}]
     \end{tikzcd}, depending on the context.
-\end{remark}
+\end{definition}
 
 \begin{remark}[{proven for example in \cite[{Chapter 4.5}]{riehl}}]
     Let $F \adj G$ be an adjunction.

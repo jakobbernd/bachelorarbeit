@@ -28,7 +28,7 @@
 	\HRule \\[1.5cm] 
 	
 
-	\begin{minipage}[t]{0.4\textwidth}
+	\begin{minipage}[t]{0.45\textwidth}
 	\begin{flushleft} \large
 	\emph{Author:}\\
 	Jakob \textsc{Bernd}\\ % Your name
@@ -37,7 +37,7 @@
 	\end{flushleft}
 	\end{minipage}
 	~
-	\begin{minipage}[t]{0.4\textwidth}
+	\begin{minipage}[t]{0.45\textwidth}
 	\begin{flushright} \large
 	\emph{Supervisor:} \\
 	Prof. Dr. Christopher \textsc{Deninger}\\ % Supervisor's Name
@@ -55,13 +55,23 @@
 \end{titlepage}
 \begin{abstract}
 \section*{Preface}
-In this bachelor thesis, I will give an introduction to the concept of monads,
-which are a generalization of monoids, and their categorical duals, comonads.
-Every adjunction induces a monad, but every monad is induced by an adjunction as well.
-In the third and last section, will also introduce Witt vectors, which are used a lot in
-algebraic number theory and proof that they admit a comonad structure. At last,
+The starting point for this bachelor thesis was the following statement:
+\[
+	\textit{The Witt vector functor has a comonadic structure.}
+\]
+The goal for this thesis
+is to explain everything that is needed to understand this statement and then prove it.
+For this, I will define monads, which are roughly speaking ``monoids on functors'' and comonads, their categorical duals.
+I will give lots of examples to get a feeling for 
+the definition and prove some important theorems from the theory of monads and comonads.
+Since adjunctions play an important role here, I will start by defining adjunctions, 
+proving some properties about them and again giving examples. 
+In the last sections, I will explain Witt vectors, how to define them and prove 
+everything that is needed to finally prove the statement in Theorem \ref{thm: comonad structure}.
+At last,
 I will show that the teichmüller map induces a morphism of comonads between
-the free monoid ring comonad and the witt vector comonad.
+the free monoid ring comonad and the Witt vector comonad. 
+
 \end{abstract}
 \tableofcontents
 \cleardoubleoddemptypage

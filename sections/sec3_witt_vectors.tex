@@ -3,7 +3,7 @@ The goal of this section is to give a very important example of a comonad:
 the Witt vector construction is a functor $\cat{CRing} \to \cat{CRing}$ which
 is used frequently in several mathematical fields, especially Number Theory
 and Algebraic Geometry. Historically, Witt vectors
-have been introduced by Ernst Witt in \cite{witt}, who discovered what is today called 
+have been introduced by Ernst Witt in \cite{witt}, who defined what is today called 
 \textit{p-typical Witt vectors} while studying cyclic algebras of degree $p^n$. 
 The ring structure on the Witt vectors is highly unintuitive and
 the whole construction is rather complicated, which is why this section starts with a 
@@ -18,11 +18,11 @@ The most complete account of Witt vectors that I know of is \cite{hazewinkel}.
 
 \begin{definition}[truncation set]
     Let $\N$ be the set of positive integers and let $S\subseteq
-    \N$ be a subset with the property that $\forall n\in \N:$
+    \N$ be a subset with the property that $\forall n\in S:$
     if $d$ is a divisor of $n$, then $d\in S$.
     We then say that S is a \textit{truncation set}.
 \end{definition}
-Now let $S$ be a truncation set. As a set, we define the \textit{big Witt ring} $\W_S(A)$ to be $A^S$,
+Now let $S$ be a truncation set. As a set, we define the \textit{Witt ring} $\W_S(A)$ to be $A^S$,
 and we will give it a unique ring structure such that the \textit{ghost map}
 is a ring homomorphism. Furthermore, if $f \colon A \to B$ is a ring homomorphism,
 we define $\W_S(f) \colon \W_S(A) \to \W_S(B)$ to be the function which applies
@@ -37,6 +37,7 @@ see that the Witt vector functor admits a comonadic structure.
     \[
         w_n = \sum_{d \mid n} d a_d^{n/d}
     \]
+    For $a \in \W_S(A)$, we call $(w_n(a))_n = (w_n)_n$ the \textit{ghost coordinates} of $a$.
 \end{definition}
 
 Recall that for every prime number $p$, we have the \textit{p-adic valuation map}:
@@ -234,8 +235,8 @@ Now we can finish the construction of the Witt vectors:
     \underline{Step 1:} Let $A=\Z [a_n,b_n \mid n \in S]$. Consider the unique
     ring homomorphism 
     \begin{align*}
-        \phi_p \colon A \to A; \\
-        a_n \mapsto a_n^p, \\
+        \phi_p \colon A \to A; \
+        a_n \mapsto a_n^p, \
         b_n \mapsto b_n^p
     \end{align*}
     $\phi_p$ satisfies that $\phi_p(f) \equiv f^p$ modulo $pA$ (Indeed: it suffices to show that $\overline{\phi_p(f)}
@@ -269,20 +270,22 @@ Now we can finish the construction of the Witt vectors:
     Let $a' = (a'_n)_{n \in S}$, $b' = (b'_n)_{n \in S}$ be two vectors in $\W_S(A')$.
     Then there is a unique ring homomorphism
     \begin{align*}
-        f \colon A \to A'; \\
-        a_n \mapsto a'_n, \\
+        e \colon A \to A'; \
+        a_n \mapsto a'_n, \
         b_n \mapsto b'_n
     \end{align*}
-    such that $\W_S(f)(a) = a'$ and $\W_S(f)(b) = b'$
+    such that $\W_S(e)(a) = a'$ and $\W_S(e)(b) = b'$
     (Remember that $A = \Z[a_n,b_n \mid n \in S]$).
     We define:
     \begin{align*}
-        a'+ b' &:= \W_S(f)(S) 
+        a'+ b' &:= \W_S(e)(S) 
         = (S_n(a'_1,\dots,a'_n,b'_1,\dots,b'_n))_{n \in S} \\
-        a' \cdot b' &:= \W_S(f)(P) = (P_n(a'_1,\dots,a'_n,b'_1,\dots,b'_n))_{n \in S} \\
-        -a' &:= \W_S(f)(I) = (I_n(a'_1,\dots,a'_n,b'_1,\dots,b'_n))_{n \in S}
+        a' \cdot b' &:= \W_S(e)(P) = (P_n(a'_1,\dots,a'_n,b'_1,\dots,b'_n))_{n \in S} \\
+        -a' &:= \W_S(e)(I) = (I_n(a'_1,\dots,a'_n,b'_1,\dots,b'_n))_{n \in S}
     \end{align*}
-    where $f$ commutes with integer polynomials, since it is a ring homomorphism.
+    where $e$ commutes with integer polynomials, since it is a ring homomorphism.
+    This is the unique way to define the ring structure on $\W_S(A')$, since functoriality
+    of $\W$ forces $\W_S(e)$ to be a ring homomorphism.
 \begin{claim*}
     These operations make $\W_S(A)$ into a ring.
 \end{claim*}
@@ -293,12 +296,12 @@ Now we can finish the construction of the Witt vectors:
     from a torsion-free ring $A''$(For example, one could take $A''$ to be $\Z A'$).
     Then $\W_S (g)\colon \W_S(A'') \to \W_S(A')$ is again surjective, and since the
     ring axioms are satisfied on the left-hand side, they are satisfied on the right-hand side.
-    \todo{ok so?}
+    \todo{}
 \end{smallproof}
 \begin{claim*}
     $w \colon \W_S(A) \to A^S$ is a natural ring homomorphism.
 \end{claim*}
-Naturality: let $f \colon A \to B$.
+$w$ is natural, because for $f \colon A \to B$:
 \[
     \begin{tikzcd}
         \W_S(A) \arrow[r,"\W_S(f)"] \arrow[d,"w"] 
@@ -307,20 +310,18 @@ Naturality: let $f \colon A \to B$.
           & B^S
     \end{tikzcd}
 \]
-commutes because $f$ is a ring homomorphism, hence commutes with the integer polynomials $w_n$.
-Let $a',b' \in \W_S(A)$. Then: 
+commutes since $f$ is a ring homomorphism, hence commutes with the integer polynomials $w_n$.
+To show that $w$ is a ring homomorphism, let $a',b' \in \W_S(A)$. Then: 
 \begin{align*}
-    w(a'+b') &= w(\W_S(f)(S)) = f(w(s)) = f(w(a)+w(b)) \\
-    &= f(w(a)) + f(w(b)) = w(a') +w(b')
+    w_n(a'+b') &= w_n(\W_S(e)(S)) = e(w(S)) = e(w(a)+w(b)) \\
+    &= e(w(a)) + e(w(b)) = w(a') +w(b')
 \end{align*}
-\todo{finish}
+and analogously $w(a' \cdot b') = w(a') \cdot w(b')$.
+\todo{}
 \end{bigproof}
 \begin{cor} \label{cor: ghost components are nat trafos}
     $w_n \colon \W_S(A) \to A$ is a natural ring homomorphism for all $n \in S$.
 \end{cor}
-\begin{beweis}
-    This follows immediately from~\ref{thm: existence of Witt vectors}.
-\end{beweis}
 \begin{lemma}
     The zero element in $\W_S(A)$ is given by $(0,0,0,\dots)$ and the
     unit in $\W_S(A)$ is given by $(1,0,0,\dots)$.
@@ -383,7 +384,7 @@ We have various operations on Witt vectors that are of interest.
     we have $S_n,P_n \in \Z[a_1,\dots,a_n,b_1,\dots,b_n]$(see the proof of Dwork's lemma, $(\Leftarrow)$).
     
 \end{definition}
-\todo{is that obvious?}
+\todo{}
 If $S\subseteq \N$ is a truncation set, $n \in \N$, then
 \[
    S/n := \{d \in \N \mid nd \in S\}
@@ -478,10 +479,11 @@ is again a truncation set.
     such that $\W_{S/n}(g)(x)=a, \W_{S/n}(g)(y)=b$.
     Then 
     \begin{align*}
-        V_n(a+b) &= V_n(\W g(x))= V_n(\W_{S/n}(g)(x+y))=\W_S(g)(V_n(x+y)) \\
-        &= \W_S(g)(V_n(x)) + \W_S(g)(V_n(y)) = V_n(a)+V_n(b)
+        V_n(a+b) &= V_n(\W_{S/n}(g)(x+y))=\W_S(g)(V_n(x+y)) \\
+        &= \W_S(g)(V_n(x)) + \W_S(g)(V_n(y)) = V_n(\W_{S/n}(g)(x)) + V_n(\W_{S/n}(g)(y)) \\
+        &= V_n(a)+V_n(b)
     \end{align*}
-    \todo{$\W g$ statt $\W_S(g)$}
+    \todo{}
 \end{bigproof}
 Next, we will introduce the \textit{frobenius homomorphism}, which will play 
 an important rule in the proof of the comonadic structure of $\W$ as well.
@@ -503,8 +505,6 @@ by $\widetilde{F}_n((x_m)_{m \in S}) = (x_{nm})_{m \in S/n}$.
     \]
     commutes.
 \end{lemma}
-\todo{remark und definition haben andere font}
-
     We call $F_n$ the \textit{nth Frobenius homomorphism}.
     The commutativity of the diagram above is equivalent to
     commutativity of the following diagram for every $d \in S/n$:
@@ -518,14 +518,16 @@ by $\widetilde{F}_n((x_m)_{m \in S}) = (x_{nm})_{m \in S/n}$.
 
 \begin{proof}[Proof of Lemma~\ref*{lem: frobenius}]
     We construct $F_n$ similar to the construction of the ring operations on $\W_S(A)$ 
-    using Lemma~\ref{lem: dwork} again. So let $A$ be the polynomial ring $\Z[a_n\mid n \in S]$
-    , let $a = (a_n)_{n \in S}$ and let $\phi_p$ be the unique ring homomorphism
-    $a_n \mapsto a_n^p$. Then Lemma~\ref{lem: dwork} shows that the sequence
+    using Lemma~\ref{lem: dwork} again. So let $A$ be the polynomial ring $\Z[a_i\mid i \in S]$
+    , let $a = (a_i)_{i \in S}$ and let $\phi_p$ be the unique ring homomorphism
+    $a_i \mapsto a_i^p$. It satisfies $\phi_p(a) \equiv a^p$ mod $pA$ 
+    (compare the proof of~\ref{thm: existence of Witt vectors}). Then Lemma~\ref{lem: dwork} shows that the sequence
     $\widetilde{F}_n(w(a)) \in A^{S/n}$ is in the image of a unique element
     \[
-      F_n(a)  =(f_{n,d})_{d \in S/n}
+      F_n(a)  =(f_{n,d}(a))_{d \in S/n}
     \]
-    by the ghost map. (Indeed: we have 
+    by the ghost map, where the $f_{n,d}$ are integer polynomials with indeterminates
+    $a_i$. (Indeed: we have 
     \begin{align*}
         \phi_{p}((\widetilde{F}_n(w(a)))_{m/p}) &= \phi_{p}((w_{nm/p})) 
         = \sum_{k \mid nm/p} k \cdot a_k^{nm/k} \\
@@ -534,38 +536,35 @@ by $\widetilde{F}_n((x_m)_{m \in S}) = (x_{nm})_{m \in S/n}$.
         = \sum_{k \mid nm} k \cdot a_k^{nm/k}
     \end{align*}
     and both sums are congruent mod $p^{v_p(m)}A$.)
-    If $A'$ is any ring and if $a' = (a'_n)_{n \in S}$ is a vector in $\W_S(A)$,
+    If $A'$ is any ring and if $a' = (a'_i)_{i \in S}$ is a vector in $\W_S(A)$,
     then we define
     \[
-      F_n(a') := \W_{S/n}(g)(F_n(a))  
+      F_n(a') := \W_{S/n}(e_{a'})(F_n(a)) = (f_{n,d}(a'))_{d \in S/n}
     \]
-    where $g \colon A \to A'$ is the unique ringhomomorphism that maps $a$ to $a'$.
+    where $e_{a'} \colon A \to A'$ is the unique ringhomomorphism that maps $a$ to $a'$.
     Now since $\widetilde{F}_n$ is clearly a ring homomorphism,
     we can argue similar as in the proof of Lemma~\ref{lem: verschiebung is additive}
-    to show that $F_n$ is a ring homomorphism. Finally, we show that $F_n$ is natural.
-    For that, let $f \colon A \to B$ be a ring homomorphism. Then we need to show that
+    to show that $F_n$ is a ring homomorphism. $F_n$ is natural, since for a ring homomorphism
+    $f \colon A' \to B'$ the diagram
+    \[
+       \begin{tikzcd}
+           \W_S(A') \arrow[r,"\W_S(f)"] \arrow[d,"F_n"] 
+             & \W_S(B') \arrow[d,"F_n"] \\
+           \W_{S/n}(A') \arrow[r,"\W_{S/n}(f)"]
+             & \W_{S/n}(B')
+       \end{tikzcd} 
+    \]
+    commutes, because $f$ commutes with integer polynomials, as it is a ring homomorphism.
+    Lastly, uniqueness of $F_n$ follows from naturality, since for $a' \in A'$, the following diagram has to 
+    commute:
     \[
         \begin{tikzcd}
-            \W_S(A) \arrow[r,"\W_S(F)"] \arrow[d,"F_n"] 
-              & \W_S(B) \arrow[d,"F_n"] \\
-            \W_{S/n}(A) \arrow[r,"\W_S(f)"]
-              & \W_{S/n}(B)
-        \end{tikzcd}
-    \]
-    commutes, but it again suffices to show \todo{naturality}
-    that it commutes after
-    evaluating the ghost coordinates, i.e. we can look at the following diagram:
-    \[
-        \begin{tikzcd}
-            \W_S(A) \arrow[r,"\W_S(F)"] \arrow[d,"F_n"] \ar[dd,"w_{nd}"',dotted,bend right = 60]
-              & \W_S(B) \arrow[d,"F_n"] \ar[dd,"w_{nd}",dotted,bend left = 60]\\
-            \W_{S/n}(A) \arrow[r,"\W_S(f)"] \ar[d,"w_d",dotted]
-              & \W_{S/n}(B) \ar[d,"w_d",blue] \\
-              A \ar[r,"f",dotted] 
-              & B
-        \end{tikzcd}  
-    \]
-    but by naturality of $w_{nd}$~(\ref{cor: ghost components are nat trafos}), the claim follows.
+            \W_S(A) \arrow[r,"\W_S(e_{a'})"] \arrow[d,"F_n"] 
+              & \W_S(A') \arrow[d,"F_n"] \\
+            \W_{S/n}(A) \arrow[r,"\W_{S/n}(e_{a'})"]
+              & \W_{S/n}(A')
+        \end{tikzcd} 
+     \]
 \end{proof}
 Note that for $n,m \in \N$ we have $(S/n)/m = S/nm$ by definition.
 \begin{lemma} \label{lem: F_n after F_m is F_{nm}}
@@ -586,11 +585,11 @@ Note that for $n,m \in \N$ we have $(S/n)/m = S/nm$ by definition.
     We have the following commutative diagram:
     \[
         \begin{tikzcd}
-            \W_S(A) \arrow[r,"w"] \arrow[d,"F_n"] 
+            \W_S(A) \arrow[r,"w",hook] \arrow[d,"F_n"] 
               & A^S \arrow[d,"\widetilde{F}_n"] \\
-            \W_{S/n}(A) \arrow[r,"w"], \ar[d,"F_m"]
+            \W_{S/n}(A) \arrow[r,"w",hook] \ar[d,"F_m"]
               & A^{S/n} \ar[d,"\widetilde{F}_m"]\\
-            \W_{S/nm}(A) \ar[r,"w"]
+            \W_{S/nm}(A) \ar[r,"w",hook]
             & A^{S/nm}
         \end{tikzcd}      
     \]
@@ -603,7 +602,7 @@ Note that for $n,m \in \N$ we have $(S/n)/m = S/nm$ by definition.
         \begin{tikzcd}
             \W_S(A) \arrow[r,"\W(g)",twoheadrightarrow] \arrow[d,"F_n"] 
               & \W_S(A') \arrow[d,"F'_n"] \\
-            \W_{S/n}(A) \arrow[r,"\W_(g)",twoheadrightarrow] \ar[d,"F_{m}"]
+            \W_{S/n}(A) \arrow[r,"\W(g)",twoheadrightarrow] \ar[d,"F_{m}"]
               & \W_{S/n} \ar[d,"F'_m"] \\
               \W_{S/nm}(A) \ar[r,"\W(g)",twoheadrightarrow] 
               & \W_{S/nm}(A')
@@ -657,11 +656,11 @@ We will need the following lemma:
     non-zero divisor in $\W_S(A)$ as well.
 \end{lemma}
 \begin{beweis}
-    We can assume that $S$ is finite, since $\W_S(A)$ is the projective limit
+    We can assume that $S$ is finite, since $\W_S(A)$ is the projective limit \todo{elaborate}
     of all $\W_T(A)$ where $T$ is a finite subset of S.
     We will prove the Lemma by induction over $\abs{S}$.
     If $S = \emptyset$, the statement is trivial, so let $\abs{S} = 1$, this means
-    that $S = \{n\}$ for some $n \in \N$, but then $\W_{n}(A) \cong A$ via $w$.
+    that $S = \{n\}$ for some $n \in \N$, but then $\W_{\set{n}}(A) \cong \W_{\set{1}}(A) = A$ via $V_n$.
     Now for the induction step, let $n \in S$ be maximal and let $T = S - \{n\}$.
     Then $S/n = \{1\}$ and therefore we have a short exact sequence 
     \[
@@ -697,9 +696,14 @@ We will need the following lemma:
     \label{cor: A torsion-free implies W(A) torsion-free}
     If $A$ is torsion-free, then $\W_S(A)$ is torsion-free as well.
 \end{cor}
-\begin{definition}
+\begin{definition}[p-typical and big Witt vectors]
+    For a prime $p$, the set $P := \set{1,p,p^2,\dots}$ is a truncation set.
+    The ring $\W_P(A)$ is called the \textit{p-typical Witt vectors}, the ring
+    $\W_n(A) := \W_{\set{1,p,p^2,\dots,p^n}}(A)$ is called the \textit{p-typical
+    Witt vectors of length n}.    
+    In most of the literature, elements in those two rings are indexed by their exponent.
+    We define the \textit{big Witt vectors} to be 
     $\W(A) := \W_{\N}(A)$
-    \todo[inline]{p-typical Witt vectors, big Witt vectors}
 \end{definition}
 For the construction of a natural transformation $\W(A) \to \W(\W(A))$
 we want to use Lemma~\ref{lem: dwork} again. Hence we first show:
@@ -722,8 +726,9 @@ we want to use Lemma~\ref{lem: dwork} again. Hence we first show:
         = \sum_{d \mid pn}d \cdot a_d^{pn/d} - ( \sum_{d \mid n} d \cdot a_d^{n/d})^p
     \end{align*}
     using Lemma~\ref{lem: frobenius}. This is now congruent to $0$ mod $pA$:
-    \todo{indeed}
-    \\
+    modulo $p$, $x \mapsto x^p$ is a ring homomorphism, so the second summand is congruent
+    to $\sum_{d \mid n}d \cdot a_d^{np/d}$. Now if $d \mid pn$, $d \nmid n$, then
+    $p \mid n$, which shows that the two summands are congruent.
     It follows that there exists $x = (x_n)_{n \in \N}$ such that 
     \begin{align}
         \label{eq: p cdot x_n}
@@ -736,12 +741,9 @@ we want to use Lemma~\ref{lem: dwork} again. Hence we first show:
         w(p \cdot b) = p \cdot w(b) = p \cdot x = w(F_p(a)-a^p)
     \]
     which implies by injectivity of $w$ that $p \cdot b = F_p(a) -a^p$.
-    So we want to use Lemma~\ref{lem: dwork} again.
+    For this, we want to use Lemma~\ref{lem: dwork} again.
     Consider the unique ring homomorphism $\phi_l \colon A \to A$ which maps
-    $a_n$ to $a_n^l$. It satisfies $\phi_l(f) \equiv f^l$ mod $lA$.
-    (indeed: \todo{indeed}
-    ). \\
-    so by Lemma~\ref{lem: dwork} it suffices to show: 
+    $a_n$ to $a_n^l$. By Lemma~\ref{lem: dwork} it suffices to show: 
     \[
         x_n \equiv \phi_l(x_{n/l}) \text{\hskip8mm mod }l^{v_l(n)}
     \]
@@ -793,7 +795,7 @@ we want to use Lemma~\ref{lem: dwork} again. Hence we first show:
     \]
     which proves the claim. Now in the general case, let $a' \in \W(A')$.
     Then \[
-        F_p(a') = \W g (F_p(a)) = \W g(a^p + p \cdot r) = a'^p + p \cdot \W g(r)
+        F_p(a') = \W g (F_p(a)) = \W g(a^p + p \cdot r) = (a')^p + p \cdot \W g(r)
     \]
     for some $r \in A$.
 \end{beweis}
@@ -803,11 +805,13 @@ we want to use Lemma~\ref{lem: dwork} again. Hence we first show:
     \[
       \Delta \colon \W(A) \to \W(\W(A))  
     \]
-    such that $w_n(\Delta(a))=F_n(A)$ for all $a \in A, n \in \N$.
+    such that $w_n(\Delta(a))=F_n(a)$ for all $a \in A, n \in \N$.
 \end{proposition}
 \begin{beweis}
-As before, we can assume $A = \Z[a_n \mid n \in \N]$.
-\todo{?}
+By naturality of $\Delta$, we can assume $A$ to be torsion-free. (If $A'$ is 
+an arbitrary ring, then the naturality implies uniqueness in the same way we argued
+in~\ref{lem: frobenius}.)
+\todo{}
 By applying Corollary~\ref{cor: A torsion-free implies W(A) torsion-free}
 twice, we get that the ghost map 
 \[
@@ -821,7 +825,8 @@ hence we can use Lemma~\ref{lem: dwork} again and just show that
 \]
 for all $p$ prime, $n \in p\N$. But this immediately follows from 
 Lemma~\ref{lem: F_n after F_m is F_{nm}}, so there is a unique $\Delta(a)
-\in \W(\W(A))$ such that $w_n(\Delta(a)) = F_n(a)$.
+\in \W(\W(A))$ such that $w_n(\Delta(a)) = F_n(a)$. Now $\Delta$ is a natural 
+ring homomorphism by construction, arguing as in~\ref{lem: frobenius}.
 \end{beweis}
 Recall that by~\ref{cor: ghost components are nat trafos},
 $w_1 \colon \W(A) \to A$; $(a_n)_{n \in \N} \mapsto a_1$
@@ -834,15 +839,15 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
 \begin{bigproof}
     By naturality of $\Delta$, we can assume that $A$ is torsion-free,
     because if $A'$ is an arbitrary ring, to show the~\refassociativity axiom,
-    we can choose $g \colon A \to A'$ surjective as always and then consider the following
+    we can choose a torsion-free ring $A$ and $g \colon A \to A'$ surjective as before and then consider the following
     cube:
     \[
         \begin{tikzcd}[row sep=1.5em, column sep = 1.5em]
-            \W(A) \arrow[rr,"\Delta_A"] \arrow[dr,swap,"\W(g)",twoheadrightarrow] \arrow[dd,swap,"\Delta_A"] &&
-            \W(\W(A)) \arrow[dd,"\Delta_{\W(A)}",near end,dotted] \arrow[dr,"\W(\W(g))"] \\
+            \W(A) \arrow[rr,"\Delta_A"] \arrow[dr,swap,"\W(g)",twoheadrightarrow,sloped] \arrow[dd,swap,"\Delta_A"] &&
+            \W(\W(A)) \arrow[dd,"\Delta_{\W(A)}",near end,dotted] \arrow[dr,"\W(\W(g))",sloped] \\
             & \W(A') \arrow[rr,"\Delta_{A'}",pos=0.4,crossing over] &&
             \W(\W(A')) \arrow[dd,"\Delta_{W(A')}"] \\
-            \W(\W(A)) \arrow[rr,"\W(\Delta_A)",near end,dotted] \arrow[dr,"\W(\W(g))"'] && \W(\W(\W(A))) \arrow[dr,"\W(\W(\W(g)))",near start,dotted] \\
+            \W(\W(A)) \arrow[rr,"\W(\Delta_A)",near end,dotted] \arrow[dr,"\W(\W(g))"',sloped] && \W(\W(\W(A))) \arrow[dr,"\W(\W(\W(g)))",near end,dotted,sloped] \\
             & \W(\W(A')) \arrow[rr,"\W(\Delta_{A'})"] \arrow[from=uu,"\Delta_{A'}"',pos=0.58,crossing over] && \W(\W(\W(A')))
             \end{tikzcd}
     \]
@@ -1000,7 +1005,7 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
     \begin{claim*}
         \begin{tikzcd}
             & \W(A) \arrow[d,"\Delta_A"] \arrow[ld,"\id_{\W(A)}"'] \\
-            \W(\W(A))  & \W(A) \arrow[l,"\eps_{\W(A)}"]
+            \W(A)  & \W(\W(A)) \arrow[l,"w_1"]
         \end{tikzcd}
         commutes.
     \end{claim*}
@@ -1015,12 +1020,12 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
 Now consider the \textit{teichmüller map} $\tau \colon A \to \W(A); 
 a \mapsto (a,0,0,0,\dots)$.
 It is multiplicative and preserves the unit, hence it extends uniquely to 
-a ring homomorphism
+a natural ring homomorphism
 \[
-\tau \colon \Z A \to \W(A)
+\tau_A \colon \Z A \to \W(A)
 \]
 \begin{theorem} \label{thm: morphism of comonads}
-    $\tau \colon \Z A \to \W(A)$ is a morphism of comonads.
+    $\tau \colon \Z[\_] \Rightarrow \W(\_)$ is a morphism of comonads.
 \end{theorem}
 \begin{beweis}
     We need to show that the following diagrams commute:
@@ -1052,7 +1057,7 @@ a ring homomorphism
     By the universal property of $\Z A$, it suffices 
     to consider elements of the form $[a]$ for $a \in A$.
     For the first diagram: $w_1(\tau([a])) = a = \eps([a])$.
-    For the second diagram, arguing as above, it suffices to show commutativity
+    For the second diagram, arguing as before, it suffices to show commutativity
     after evaluating the ghost coordinates: 
     \[
         \begin{tikzcd}
@@ -1063,14 +1068,13 @@ a ring homomorphism
               & \W(A)
         \end{tikzcd}
     \]
-    Note that $F_n(\tau(a)) = \tau(a^n)$ since evaluating the ghost coordinates 
-    shows that the equation holds if $A$ is torsion-free, and hence, in general.
+    Note that $F_n(\tau([a])) = \tau([a^n])$ since evaluating the ghost coordinates 
+    shows that the equation holds if $A$ is torsion-free (using~\ref{lem: frobenius}), and hence, in general.
     Using this, we see that $w_n(\tau \otimes \tau(\omega([a]))) 
         = w_n(\tau \otimes \tau([[a]]))
-        = w_n(((a,0,\dots),0,\dots))
-        = (a,0,\dots)^n = (a^n,0,\dots)$
-    and $F_n(\tau([a])) = F_n((a,0,\dots)) = (a^n,0,\dots)$
-    
-    \todo{?}    
+        = w_n((\tau([a]),0,\dots))
+        = \tau([a])^n = (a^n,0,\dots)$
+    and $F_n(\tau([a])) = \tau([a^n]) = (a^n,0,\dots)$.
+    This concludes the proof.
 \end{beweis}
 
