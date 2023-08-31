@@ -13,7 +13,7 @@ This chapter is based on \cite[Chapter VI]{maclane}, which is
 the standard resource for first learning about monads and comonads. Some of the proofs are
 taken from \cite[Chapter II.3]{monoidaltopology} instead. Another great exposition is
 \cite[Chapter 5]{perrone}.
-\section{Definition of monads and comonads}
+\section{Definition of Monads and Comonads}
 A central notion in algebra is that of a \textit{monoid},
 that is, a set $M$ equipped with a map 
 $\mu \colon M \times M \to M$; $(a,b) \mapsto a \cdot b$ 
@@ -108,9 +108,9 @@ such that the following diagrams commute:
         \centering
         \phantomsection\label{dia: unitality}
         \begin{tikzcd}
-            T \ar[rd,"\id_T"',Rightarrow] \ar[r, "\eta T",Rightarrow] 
+            T \ar[rd,"\id_T"',Rightarrow,sloped] \ar[r, "\eta T",Rightarrow] 
         & T^2 \ar[d,"\mu",Rightarrow] 
-        & T \ar[l,"T \eta"',Rightarrow] \ar[ld,"\id_T",Rightarrow]\\
+        & T \ar[l,"T \eta"',Rightarrow] \ar[ld,"\id_T"',Rightarrow,sloped]\\
         & T
         \end{tikzcd}
         \caption*{(unitality)}
@@ -138,9 +138,9 @@ the following diagrams commute:
 \centering
 %\phantomsection\label{name2}
 \begin{tikzcd}
-    Tx \ar[rd,"\id_{Tx}"'] \ar[r, "\eta_{Tx}"] 
+    Tx \ar[rd,"\id_{Tx}"',sloped] \ar[r, "\eta_{Tx}"] 
     & T(Tx) \ar[d,"\mu_x"] 
-    & Tx \ar[l,"T(\eta_x)"'] \ar[ld,"\id_{Tx}"]\\
+    & Tx \ar[l,"T(\eta_x)"'] \ar[ld,"\id_{Tx}"',sloped]\\
     & Tx
 \end{tikzcd}
 \caption*{(unitality)}
@@ -148,32 +148,46 @@ the following diagrams commute:
 \end{figure}
 
 \end{definition}
-\todo{whiskering}
-\begin{example}[preorder]
-Recall: A \textit{preorder} $(\cat{P},\le)$ is a category with $\cat{P}$ as objects and 
+\begin{remark}
+    In general, if $\cat{A},\cat{B},\cat{C},\cat{D}$ are categories, 
+    $G \colon \cat{A} \to \cat{B}$, $S,S' \colon \cat{B} \to \cat{C}$ and
+    $F \colon \cat{C} \to \cat{D}$ are functors and
+    $\sigma \colon S \to S'$ is a natural transformation,
+    then 
+    \[
+        F \sigma G \colon F \circ S \circ G \to F \circ S' \circ G,
+    \]
+    defined by $(F\sigma G)_x := F(\sigma_{Gx})$
+    is again a natural transformation.
+    In particular, if we take $F$ or $G$ to be identity functors, we get
+    the definition of $T\mu$ and $\mu T$ above.
+
+\end{remark}
+\begin{example}[Partial order]
+Recall: A \textit{partial order} $(\cat{P},\le)$ is a category with $\cat{P}$ as objects and 
 a morphism between $X$ and $Y$ iff $X \le Y$.
-A functor $T\colon \cat{P} \to \cat{P}$ is thus a monotonic function $\cat{P}\to \cat{P}$
-($x \le y \implies Tx\le Ty$).
-The existence of the natural transformations $\eta$ is equivalent to
-\[x \le Tx \ \forall x \in \cat{P}\]
+A functor $T\colon \cat{P} \to \cat{P}$ is a monotone function $\cat{P}\to \cat{P}$.
+Now the existence of the natural transformation $\eta$ is equivalent to
+$x \le Tx$
 and the existence of $\mu$ is equivalent to
-\[T(Tx) \le Tx \ \forall x \in \cat{P}\] 
-because there is at most one morphism $x \to y$, so the neccessary diagrams commute trivially.\\
-Now suppose $\cat{P}$ is a \textit{partial order}, i.e. $x \le y \le x \implies x = y \ \forall x,y \in \cat{P}$. \\
+$T(Tx) \le Tx$ $\forall x \in \cat{P}$
+because there is at most one morphism $x \to y$, so the neccessary diagrams commute trivially.
 Then:
 \begin{align*}
     x \le Tx \implies Tx \le T(Tx) \\
     T(Tx) \le Tx \implies Tx = T(Tx)
 \end{align*}
 so a monad $T$ in a partial order $\cat{P}$ is a \textit{closure operation} in $\cat{P}$, i.e. 
-a monotonic function $T \colon \cat{P} \to \cat{P}$ 
+a monotone function $T \colon \cat{P} \to \cat{P}$ 
 with $x \le Tx$ and $T(Tx)=Tx \ \forall x \in \cat{P}.$ \\
 Now every topological space $X$ induces a partial order $\cat{P} = (\mathscr{P}(X),\subseteq)$.
 Here an example for a closure operation is taking the topological closure $A \mapsto \overline{A}$,
 since it holds for all $A \subseteq X$ that $A \subseteq \overline{A}$ and
 $\overline{\overline{A}} = \overline{A}$.
+Dually, a comonad $L$ in $\cat{P}$ is an \textit{interior operation}, that is a 
+monotone function $L \colon \cat{P} \to \cat{P}$ with $Lx \leq x$ and $L(Lx)=x$ $\forall x \in \cat{P}$.
 \end{example}
-\todo{abelianization}
+
 \begin{example}[M-action monad]
     Let $(M,\cdot,1)$ be a monoid. Then for each set $X$ we can form the set $X \times M$ and 
     for a map $f \colon X \to Y$ we have a map $f \times \id_M \colon X \times M \to Y \times M;
@@ -266,8 +280,8 @@ such that the following diagrams commute:
 \centering
 %\phantomsection\label{name2}
     \begin{tikzcd} 
-        & L \ar[ld,"\id_L"',Rightarrow] 
-        \ar[rd,"\id_L",Rightarrow] \ar[d,"\omega",Rightarrow] & \\
+        & L \ar[ld,"\id_L",Rightarrow,sloped] 
+        \ar[rd,"\id_L",Rightarrow,sloped] \ar[d,"\omega",Rightarrow] & \\
         L 
         & L^2 \ar[l,"\eps L"',Rightarrow] \ar[r,"L \eps",Rightarrow] 
         & L
@@ -298,8 +312,8 @@ the following diagrams commute:
 \centering
 %\phantomsection\label{name2}
     \begin{tikzcd}
-        & Lx \ar[ld,"\id_{Lx}"'] 
-        \ar[rd,"\id_{Lx}"] \ar[d,"\omega_x"] & \\
+        & Lx \ar[ld,"\id_{Lx}",sloped] 
+        \ar[rd,"\id_{Lx}",sloped] \ar[d,"\omega_x"] & \\
         Lx 
         & L(Lx) \ar[l,"\eps_{Lx}"'] \ar[r,"L(\eps_x)"] 
         & Lx
@@ -359,7 +373,7 @@ the following diagrams commute:
 \end{example}
 
 
-We now consider another example of a comonad; the \textit{free monoid comonad}.
+We now consider another example of a comonad; the \textit{free monoid ring comonad}.
 \begin{definition}[monoid ring]
     Let $R$ be a ring and let $G$ be a monoid.
     The \textit{monoid ring} of $G$ over $R$, denoted $R[G]$ or $RG$
@@ -469,8 +483,8 @@ is the functor $R \mapsto \Z R$, which we call the \textit{free monoid ring func
         \centering
         %\phantomsection\label{name2}
             \begin{tikzcd}
-                & \Z R \ar[ld,"\id_{Lx}"'] 
-                \ar[rd,"\id_{Lx}"] \ar[d,"\omega_x"] & \\
+                & \Z R \ar[ld,"\id_{Lx}",sloped] 
+                \ar[rd,"\id_{Lx}",sloped] \ar[d,"\omega_x"] & \\
                 \Z R 
                 & \Z \Z R \ar[l,"\eps_{Lx}"'] \ar[r,"L(\eps_x)"] 
                 & \Z R 
@@ -483,7 +497,7 @@ is the functor $R \mapsto \Z R$, which we call the \textit{free monoid ring func
    where $(0) = \set{r \cdot 0 \mid r \in \Z R }$ is the ideal generated by $0 \in R$.
 \end{remark}
 
-\begin{lemma} \label{lem: interchange law}
+\begin{lemma}[Interchange law] \label{lem: interchange law}
     For every object $x$ in $\cat{X}$, the following diagram commutes:
     \[
       \begin{tikzcd}
@@ -624,6 +638,7 @@ is the functor $R \mapsto \Z R$, which we call the \textit{free monoid ring func
     \end{alignat*}
     so we compute that going the lower way resp. the upper way are the following maps:
     \begin{figure}[H]
+    \vspace{-1.5em}
     \centering
     \begin{subfigure}{0.4\textwidth}
     \centering
@@ -686,13 +701,13 @@ It was first proven in \cite{huber}.
     %\caption*{(cap2)}
     \end{subfigure}
     \end{figure}
-    The second diagram now commutes by the interchange law for natural transformations.
+    The second diagram now commutes by~\ref{lem: interchange law}.
     To show~\refunitality we need to show that the following diagram commutes.
     \[
         \begin{tikzcd}
-            GF \ar[rd,"\id_{GF}"',Rightarrow] \ar[r, "\eta GF",Rightarrow] 
+            GF \ar[rd,"\id_{GF}"',Rightarrow,sloped] \ar[r, "\eta GF",Rightarrow] 
         & GFGF \ar[d,"G \eps F",Rightarrow] 
-        & GF \ar[l,"GF \eta"',Rightarrow] \ar[ld,"\id_{GF}",Rightarrow]\\
+        & GF \ar[l,"GF \eta"',Rightarrow] \ar[ld,"\id_{GF}"',Rightarrow,sloped]\\
         & GF
         \end{tikzcd}    
     \]
@@ -700,8 +715,51 @@ It was first proven in \cite{huber}.
     for the adjunction after applying $F$ respectively $G$.
     The proof that $(FG,\eps,F \eta G)$ is a comonad on $A$ is dual.
 \end{beweis}
+
+\begin{example}[Galois connection]
+    Recall the examples from the first section:
+    \begin{itemize}[topsep = 0pt,noitemsep]
+        \item (Convex sets):
+        The monotone Galois connection
+        \begin{tikzcd}[cramped]
+            \cat{S}
+                \arrow[r,"F"{name=D},shift left = .60ex]
+              & \cat{C} \arrow[l,"G"{name=C},shift left = .60ex]
+        \end{tikzcd}
+        , where $F$ is the convex hull operator
+        and the $G$ is the forgetful map, induces the closure operator $GF = \hull{\cdot} \colon S \to S$,
+        which is indeed monotone. The induced interior operator is $FG = \id_{\cat{C}}$.
+        \item (Algebraic geometry):
+        Note that for the antitone Galois connection 
+        \begin{tikzcd}[cramped]
+            \mathcal{R}
+                \arrow[r,"\mathcal{V}"{name=D},shift left = .60ex]
+              & \mathcal{A} \arrow[l,"\mathcal{I}"{name=C},shift left = .60ex]
+        \end{tikzcd}
+        we get an induced \textit{co}monad on 
+        $\mathcal{A}^{op}$, which is just a monad on $\mathcal{A}$. Therefore the connection
+        induces two closure operators, $\mathcal{VI} = \overline{(\_)}, \mathcal{IV}= \sqrt{(\_)}$,
+        where $\overline{(\_)}$ is the \textit{Zariski closure} and $I \mapsto \sqrt{I}$ is taking
+        the \textit{radical ideal} of $I$.
+    \end{itemize}
+
+\end{example}
+
+\begin{example}[Abelianization]
+    The functor $(\_)^{ab} \colon \cat{Grp} \to \cat{Grp}$,  $G^{ab} = 
+    G/[G:G]$, where $[G:G] = \subgroup{\set{a^{-1}b^{-1}ab\mid a,b \in G}}$ is a monad,
+    induced by the adjunction $(\_)^{ab} \adj U \colon \adjar{Grp}{AbGrp}$,
+    where $U$ is the forgetful functor. The unit of the adjunction is given by
+    $\eta_G \colon G \to G/[G:G]$; $g \mapsto [g]$ and 
+    since for every abelian group $N$ we have $[N:N] = \subgroup{1}$, 
+    the counit is given by
+    $\eps_N \colon N/\subgroup{1} \to N$; $[n] \mapsto n$, it is then easy
+    to check that the triangle identities are satisfied.
+\end{example}
+
+
 Now that we know that every adjunction induces a monad, one may ask, if the converse is true,
-that is if every monad is induced by an adjunction.This can be reformulated to asking if the following category is non-empty: 
+that is if every monad is induced by an adjunction. This can be reformulated to asking if the following category is non-empty: 
 
 \begin{definition}[Category of $T$-inducing adjunctions]
     Let $\cat{X}$ be a category, $T = (T,\eta,\mu)$ a monad on $X$. The \textit{category of T-inducing adjunctions},
@@ -724,13 +782,12 @@ that is if every monad is induced by an adjunction.This can be reformulated to a
     where a diagram of this form is said to commute if the $F$-diagram and the $G$-diagram commute,
     i.e. we have $HF = F'$ and $G'H = G$.
 \end{definition}
-We will see that indeed there exists objects in this category and there are even 
+We will see that indeed there exist objects in this category and there are even 
 multiple ways to induce a given monad $T$. The first one is a construction called the \textit{Eilenberg-Moore-Category}
 due to S. Eilenberg and J. Moore in \cite{eilenbergmoore}.
-which is not only useful for forming the adjunction.
 
 
-\section{The Eilenberg-Moore-Category of a monad}\label{sec: Eilenberg-Moore-Category}%
+\section{The Eilenberg-Moore-Category of a Monad}\label{sec: Eilenberg-Moore-Category}%
 \begin{definition}[Eilenberg-Moore-Category]
     Let $T = (T,\eta,\mu)$ be a monad in a category $\cat{X}$.
     A \textit{$T$-algebra} is a pair $(x,h)$ where $x$ is an object of $\cat{X}$ and $h \colon Tx \to x$ is 
@@ -753,7 +810,7 @@ which is not only useful for forming the adjunction.
     \centering
     %\phantomsection\label{name2}
     \begin{tikzcd}
-        x \ar[r,"\eta_x"] \ar[rd,"id_x"']
+        x \ar[r,"\eta_x"] \ar[rd,"id_x"',sloped]
         & Tx \ar[d,"h"] \\
         & x 
     \end{tikzcd}
@@ -773,7 +830,7 @@ which is not only useful for forming the adjunction.
     \]
     commutes.
     The set of all $T$-algebras together with their morphisms clearly  form a category,
-    which is called the \textit{Eilenberg-Moore-Category} and denoted by $\cat{X}^T$.
+    which is called the \textit{Eilenberg-Moore-category} and denoted by $\cat{X}^T$.
 \end{definition}
 \begin{example}[M-action monad]
     A $T_M$-algebra is a set $X$ together with a map $h \colon X \times M \to X$
@@ -796,7 +853,7 @@ which is not only useful for forming the adjunction.
         \centering
         %\phantomsection\label{name2}
         \begin{tikzcd}
-            X \ar[r,"\eta_x"] \ar[rd,"id_x"']
+            X \ar[r,"\eta_x"] \ar[rd,"id_x"',sloped]
             & X \times M \ar[d,"h"] \\
             & X 
         \end{tikzcd}
@@ -806,11 +863,9 @@ which is not only useful for forming the adjunction.
         commute. If we denote $h(x,m)$ by $(x . m)$, this means that
         $(x . m) . n = x . (m \cdot n)$ and $x . 1 = 1$.
         So $T_M$-algebras are nothing but sets equipped with a right $M$-action.
-        In particular, if $M$ is a group, the $T_M$-algebras are just right $M$-sets.
-        \todo{all correct? right/left?}
 \end{example}
-\begin{example}[preorder]
-    If $T \colon \cat{P} \to \cat{P}$ is a monotonic function viewed as a monad, then a $T$-algebra is
+\begin{example}[Partial order]
+    If $T \colon \cat{P} \to \cat{P}$ is a closure operator viewed as a monad, then a $T$-algebra is
     an object $x \in \cat{P}$ with $Tx \leq x$. Since $x \leq Tx$, it follows that $x = Tx$, which means that
     a $T$-algebra is just a \textit{closed element} in $\cat{P}$.
     In particular, if we consider $A \mapsto \overline{A}$ in a topological space,
@@ -823,7 +878,7 @@ which is not only useful for forming the adjunction.
     and since 
     \[
      \begin{tikzcd}
-         X \ar[r,"\eta_X"] \ar[rd,"\id_X"']
+         X \ar[r,"\eta_X"] \ar[rd,"\id_X"',sloped]
          & X \sqcup \pt \ar[d,"h"] \\
          & X 
      \end{tikzcd}
@@ -841,7 +896,26 @@ which is not only useful for forming the adjunction.
     where $\id_X^x \colon X \sqcup \pt \to X$ is the identity on X and maps $\ast$ to $x$.
     Then an easy computation shows that $F$ and $G$ are well-defined functors with
     $GF=\id_{\cat{Set}^Y}$ and $FG=\id_{\ptspaces}$.
-    \todo{finish}
+    \todo{}
+\end{example}
+
+\begin{example}[Free-forgetful adjunction]
+    The category of algebras for the free-forgetful adjunction $\adjar{Set}{Grp}$
+    is $\cat{Grp}$. \\
+    \textit{Sketch of proof:}
+        For every group $G$ we can define $h \colon UFG \to G$ to be the evaluation map
+        which maps a reduced word to the actual evaluated expression in $G$, then this gives a $UF$-algebra.
+        Conversely, let $S$ be a set together with a structure map $h \colon UFS \to S$ and
+        denote the group multiplication in $FS$ by $\star$. Then we can define a canonical group structure
+        on $S$ as follows:
+        \begin{itemize1}
+            \item $1_S := h(e)$ where $e$ is the empty word
+            \item for $a,b \in S$, set $a \cdot b := h(a \star b)$.
+        \end{itemize1}
+        Since $h$ is a structure map, this satisfies the group axioms. One can check that $UF$-algebra morphisms are
+        exactly those maps preserving multiplication, i.e. group homomorphisms.
+        In a similar way, one can show that the algebras of the free-forgetful adjunction
+        $\adjar{Set}{Vect_K}$ are vector spaces.
 \end{example}
 \begin{theorem}[Every monad is defined by its T-algebras]
     Let $(T,\eta,\mu)$ be a monad in a category $\cat{X}$.
@@ -969,7 +1043,7 @@ but this is exactly the definition of $f$ being a morphism of $T$-algebras.
 \centering
 %\phantomsection\label{name1}
 \begin{tikzcd}
-    Tx \ar[r,"T\eta_x"] \ar[rd,"\id_{Tx}"']
+    Tx \ar[r,"T\eta_x"] \ar[rd,"\id_{Tx}"',sloped]
     & T^2x \ar[d,"\mu_x"] \\
     & Tx 
 \end{tikzcd}
@@ -980,7 +1054,7 @@ but this is exactly the definition of $f$ being a morphism of $T$-algebras.
 \centering
 %\phantomsection\label{name2}
 \begin{tikzcd}
-    x \ar[r,"\eta_x"] \ar[rd,"\id_x"']
+    x \ar[r,"\eta_x"] \ar[rd,"\id_x"',sloped]
     & Tx \ar[d,"h"] \\
     & x 
 \end{tikzcd}
@@ -1040,7 +1114,7 @@ $\mu^T_x = (G^T\eps^{T})_{F^Tx} = (G^T\eps^T)_{(Tx,\mu_x)} = G^T(\mu_x) = \mu_x$
         \centering
         %\phantomsection\label{name2}
         \begin{tikzcd}
-            Ga \ar[r,"\eta_{Ga}"] \ar[rd,"\id_{Ga}"']
+            Ga \ar[r,"\eta_{Ga}"] \ar[rd,"\id_{Ga}"',sloped]
             & GFGa \ar[d,"G(\eps_a)"] \\
             & Ga 
         \end{tikzcd}
@@ -1155,7 +1229,7 @@ $\mu^T_x = (G^T\eps^{T})_{F^Tx} = (G^T\eps^T)_{(Tx,\mu_x)} = G^T(\mu_x) = \mu_x$
         G(\eps_a) = K(\eps_a) = \eps^T_{Ka} = h.
     \]
 \end{beweis}
-\section{The Kleisli category of a monad}
+\section{The Kleisli Category of a Monad}
 There is another way to induce a monad by an adjunction, which was introduced by Heinrich Kleisli in \cite{kleisli}:
 \begin{definition}[Kleisli category]
     Let $\cat{X}$ be a category, $T = (T,\eta, \mu)$ be a monad in $\cat{X}$.
@@ -1341,7 +1415,7 @@ This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
     \centering
     %\phantomsection\label{name1}
     \begin{tikzcd}
-        F_Tx \ar[r,"F_T(\eta_x)"] \ar[rd,"\id_{F_Tx}"']
+        F_Tx \ar[r,"F_T(\eta_x)"] \ar[rd,"\id_{F_Tx}"',sloped]
         & F_TG_TF_Tx \ar[d,"\eps_{F_Tx}"] \\
         & F_Tx 
     \end{tikzcd}
@@ -1352,7 +1426,7 @@ This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
     \centering
     %\phantomsection\label{name2}
     \begin{tikzcd}
-        G_Tx_T \ar[r,"\eta_{G_Tx_T}"] \ar[rd,"\id_{G_Tx_T}"']
+        G_Tx_T \ar[r,"\eta_{G_Tx_T}"] \ar[rd,"\id_{G_Tx_T}"',sloped]
         & G_TF_TG_Tx_T \ar[d,"G_T(\eps_x)"] \\
         & G_Tx_T
     \end{tikzcd} 
@@ -1458,6 +1532,18 @@ This proves that for $x_T \in \cat{X}_T$ we have $\id_{x_T} = (\eta_x)^b
 \end{beweis}
 \section{Co-Eilenberg-Moore and Co-Kleisli}
 Since a comonad is just a monad in the dual category, the definitions of the last two chapters can be 
-dualized to get the \textit{co-Eilenberg-Moore-category} and the \textit{co-Kleisli-category}.
+dualized to get the \textit{co-Eilenberg-Moore category} and the \textit{co-Kleisli-category}.
 Every theorem that was proven in the last two chapters can also be dualized, the proofs being the dual ones.
-For space reasons, I will not restate the definitions and statements, but instead give some examples:
+Due to space limitations, I will not restate the definitions and statements, but instead give an example for
+a co-Eilenberg-Moore category:
+
+\begin{example}[Topology]
+    Recall that a comonad on a partial order $(\cat{P},\leq)$ is an \textit{interior operator},
+    that is a monotone function $L \colon \cat{P} \to \cat{P}$ such that $Lx \leq x$
+    and $L(Lx) = x$ for all $x \in \cat{P}$. 
+    Now if $X$ is a set equipped with a topology, we can again consider the partial order
+    $(\mathcal{P}(X),\subseteq)$.
+    Then the topological interior operator $U \mapsto \mathring{U}$ is a comonad on $\mathcal{P}(X)$. 
+    A coalgebra is a set $U$ with $U \subseteq \mathring{U}$, which implies $U = \mathring{U}$,
+    so the coalgebras are exactly the open sets.
+\end{example}

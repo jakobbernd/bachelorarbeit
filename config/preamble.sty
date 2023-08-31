@@ -110,6 +110,8 @@
 \DeclarePairedDelimiter{\abs}{|}{|}
 \DeclarePairedDelimiterX\skal[2]{\langle}{\rangle}{#1\,\delimsize\vert\,#2}
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\hull}{\langle}{\rangle_c}
+\DeclarePairedDelimiter{\subgroup}{\langle}{\rangle}
 
 %-- Differentialrechnung
 \newcommand{\mathd}{\mathrm{d}\mkern-0.5mu}
@@ -142,6 +144,7 @@
 \newcommand{\Fp}{\mathbb{F}_p}
 \newcommand{\W}{\mathbb{W}}
 \renewcommand{\P}{\mathbb{P}}
+\newcommand{\A}{\mathbb{A}}
 
 \newcommand{\hin}{(\Rightarrow)}
 \newcommand{\rueck}{(\Leftarrow)}
@@ -256,6 +259,7 @@
 
 %--damit das diagramm genau an der Stelle steht
 \usepackage{float}
+
 %-- Kopf- und Fußzeilen bearbeiten
 \usepackage[draft=false]{scrlayer-scrpage}
 \pagestyle{scrheadings}
@@ -263,7 +267,7 @@
 \rohead{\rightmark} % section erscheint rechts oben
 \lehead{\scshape\leftmark} % chapter erscheint links oben in ist in small caps gesetzt
 \ofoot[\pagemark]{\pagemark} % Seitenzahlen immer außen, hier wir auch der plain Stil bearbeitet!
-\ifoot[Monads, Comonads and Witt Vectors]{Monads, Comonads and Witt Vectors}
+% \ifoot[Monads, Comonads and Witt Vectors]{Monads, Comonads and Witt Vectors}
 \renewcommand*{\pnumfont}{\LARGE\sffamily} % Seitenzahlen in groß und serifenlos
 \renewcommand*{\footfont}{\large\sffamily\color{gray}}
 \renewcommand*{\headfont}{\normalfont}

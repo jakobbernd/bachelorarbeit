@@ -1,4 +1,4 @@
-\documentclass[a4paper,index=totoc,toc=bibliography,fontsize=12,DIV=13,headinclude,twoside,BCOR=12mm,cleardoublepage=empty,headsepline=1pt,draft]{scrreprt}
+\documentclass[a4paper,index=totoc,toc=bibliography,fontsize=12,DIV=13,headinclude,twoside,BCOR=12mm,cleardoublepage=empty,headsepline=1pt]{scrreprt}
 \usepackage{./config/preamble}
 %\hfuzz=500pt %ignorieren von underfulll hbox
 
@@ -9,7 +9,7 @@
 }
 
 \begin{document}
-\pagenumbering{Roman} % Seitennummerierung auf römische Zahlen setzen
+% \pagenumbering{Roman} % Seitennummerierung auf römische Zahlen setzen
 \begin{titlepage}
 	% Nach einer Vorlage von http://www.LaTeXTemplates.com
 	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
@@ -17,7 +17,7 @@
 	\center % Center everything on the page
  
 
-	\textsc{\LARGE Westfälische Wilhelms-Universität Münster}\\[1.5cm] % Name of your university/college
+	\textsc{\LARGE Westfälische Wilhelms-Universität Münster}\\[1.4cm] % Name of your university/college
 	\textsc{\Large Bachelor thesis}\\[0.5cm] % Major heading such as course name
 
 
@@ -37,7 +37,7 @@
 	\end{flushleft}
 	\end{minipage}
 	~
-	\begin{minipage}[t]{0.45\textwidth}
+	\begin{minipage}[t]{0.47\textwidth}
 	\begin{flushright} \large
 	\emph{Supervisor:} \\
 	Prof. Dr. Christopher \textsc{Deninger}\\ % Supervisor's Name
@@ -53,6 +53,8 @@
 	\vfill % Fill the rest of the page with whitespace
 	
 \end{titlepage}
+\cleardoubleoddemptypage
+\input{plagiatserklärung.tex}
 \begin{abstract}
 \section*{Preface}
 The starting point for this bachelor thesis was the following statement:
@@ -74,10 +76,10 @@ the free monoid ring comonad and the Witt vector comonad.
 
 \end{abstract}
 \tableofcontents
+\thispagestyle{empty}
 \cleardoubleoddemptypage
 \pagenumbering{arabic}
 \setcounter{page}{1}
-
 \input{sections/sec1_adjoint_situations.tex}
 \input{sections/sec2_monads_comonads.tex}
 \input{sections/sec3_witt_vectors.tex}

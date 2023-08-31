@@ -2,7 +2,7 @@
 *My bachelor thesis*
 The starting point for this bachelor thesis was the following statement:
 
-	*The Witt vector functor has a comonadic structure.*
+	The Witt vector functor has a comonadic structure.
 
 The goal for this thesis
 is to explain everything that is needed to understand this statement and then prove it.

@@ -8,7 +8,7 @@ denoted $\cat{A} \simeq \cat{B}$, if $FG \cong \id_A, GF \cong \id_B$ via natura
 $\alpha \colon FG \to \id_A$, $\beta \colon GF \to \id_B$. Equivalent categories are essentially the same,
 all categorical properties, like for example initial objects are preserved under equivalence. 
 But there is an even less strict relation between categories, which was first introduced by Daniel Kan in 
-\cite{kan} and which is a powerful concept, because it arises so often:
+\cite{kan} and which formalizes the notion of a free object:
 consider the categories $\cat{Set}$ and $\cat{Vect_K}$ for a fixed field $K$.
 The two categories can't be equivalent, since $\cat{Vect_K}$ has a zero object while
 $\cat{Set}$ doesn't. But there still is a connection between them:
@@ -29,16 +29,16 @@ there is a "natural" way to make a set $X$ into a vector space:
     \]
 (note that we can assume linear combinations in $FX$ to have the same length, since we can just add 0.)
 \end{itemize}
-This gives a vector space which has $X$ as a basis. Now the universal property of a vector space states that
+This gives a vector space, the \textit{free vector space over X} which has $X$ as a basis. Now the universal property of a vector space states that
 each map $X \to U(W)$ extends uniquely to a map $F(X) \to W$ and every map $F(X) \to W$ gives a map 
 $X \to U(W)$ by restriction. This amounts to a bijection
 \[
     \Hom[Vect_K](F(X),W) \cong \Hom[Set](X,U(W))
 \]
-which is also natural in a sense we will discuss later. The functors $F$ and $U$ form what is called
-a \textit{free-forgetful adjunction}, which is the first example of an adjunction.
+which is also natural in a sense we will discuss later. The functors $F$ and $U$ form the first example and
+one of the best known examples of an adjunction.
 
-\section{Definition of adjunctions}
+\section{Definition of Adjunctions}
 We will start by giving two equivalent definitions of an adjunction, where the first one is especially useful 
 when it comes to monads, while the second, more standard one, is easier to find examples.
 \begin{proposition} \label{prop: equiv def of adj}
@@ -242,41 +242,131 @@ $(a)\Leftarrow (b):$ Define
           & \cat{A} \arrow[l ,bend left = 25,"G"{name=C}]
     \end{tikzcd}, depending on the context.
 \end{definition}
-
+The following is another reason why adjunctions are a very useful concept:
 \begin{remark}[{proven for example in \cite[{Chapter 4.5}]{riehl}}]
     Let $F \adj G$ be an adjunction.
     Then
-    \begin{enumerate}
+    \begin{enumerate}[(a)]
         \item G preserves limits
         \item F preserves colimits.
     \end{enumerate}
 \end{remark}
 
 \section{Examples}
-Examples for adjunctions can be found all over mathematics.
-Here are a few: \todo{finish}
 
-\begin{example}[Coproduct $\adj$ $\Delta$ $\adj$ Product]
-    TODO
-\end{example}
 \begin{example}[free-forgetful adjunction]
-    TODO free group
+    The example from the introduction is an example of a so called \textit{free-forgetful adjunction},
+    where a functor is left-adjoint to a forgetful functor.
+    These adjunctions arise for almost any algebraic structure: groups, semigroups, rings, monoids, etc.
+    For example the \textit{free group} $F_S$ of a set $S$ can be constructed as the set
+    of all reduced words in the alphabet $S \cup S^{-1}$, with the group
+    multiplication being concatenation followed by reduction. This construction is
+    again functorial and enjoys a universal property, which can be reformulated as
+    \[
+        \Hom[Grp](F_S,G) \cong \Hom[Set](S,U(G))
+    \]
+    for every set $S$ and every group $G$, where $U$ is the forgetful functor $\cat{Grp} \to \cat{Set}$.
+    Thus we again have an adjunction $F \adj U \colon \adjar{Set}{Grp}$.
 \end{example}
 \begin{example}[Tensor-Hom-Adjunction]
-    There is a natural bijection
+    If $A$ is a ring, then by the universal property of the tensor product
+    of $A$-modules, for a fixed $A$-module $N$, there is a natural bijection
     \[
         \Hom[A](M \tensor_A N,P) \cong \Hom[A](M,\Hom[A](N,P))
     \]
-    This implies that the tensor-product is right-exact, since it preserves cokernels. 
+    for all $A$-modules $M$ and $P$.
+    This implies that the tensor-product is right-exact, since as a left-adjoint,
+    it preserves colimits, so in particular cokernels. 
 \end{example}
 \begin{example}[Galois connection]
-    monotone and antitone galois connections, examples are:
+    Let $(\cat{A},\leq)$ and $(\cat{B},\leq)$ be two partially ordered sets.
+    A \textit{monotone Galois connection} consists of two monotone functions
+    $F \colon \cat{B} \to \cat{A}$ and $G \colon \cat{A} \to \cat{B}$ such that
+    $\forall a \in \cat{A}, b \in \cat{B}$, we have
+    \begin{equation}
+        Fb \leq a \iff b \leq Ga \label{eq: monotone galois} \tag{$\ast$}
+    \end{equation}
+    An \textit{antitone Galois connection} consists of two antitone (order-reversing)
+    functions $F \colon \cat{B} \to \cat{A}$ and $G \colon \cat{A} \to \cat{B}$
+    such that $\forall a \in \cat{A}, b \in \cat{B}$, we have
+    \begin{equation}
+        a \leq Fb \iff b \leq Ga \label{eq: antitone galois} \tag{$\ast \ast$}
+    \end{equation}
+    Now every partially ordered set $(\cat{P},\leq)$ can be viewed as a category
+    with objects the elements of $\cat{P}$ and a morphism between $x$ and $y$ if and only
+    if $x \leq y$. Then if $F$ and $G$ are monotone, they are functors and (\ref{eq: monotone galois})
+    can be restated as
+    \[
+        \Hom[A](Fb,a) \cong \Hom[B](b,Ga)
+    \]
+    thus a monotone Galois connection froms and adjunction between the categories
+    $\cat{A}$ and $\cat{B}$ (the naturality diagrams alle commute, because there is at 
+    most one morphism between objects). 
+    For the antitone case, (\ref{eq: antitone galois}) gives us
+    \begin{align*}
+        &\Hom[A](a,Fb) \cong \Hom[B](b,Ga) \\
+        \iff &\Hom[A^{op}](Fb,a) \cong \Hom[B](b,Ga)
+    \end{align*}
+    and since $F$ and $G$ are antitone, we can view them as (covariant) functors
+    $\adjar{B}{A^{op}}$. Thus an antitone Galois connection forms an adjunction between $\cat{A^{op}}$
+    and $\cat{B}$. 
+    Galois connections appear all over mathematics, here are a few examples:
     \begin{enumerate}
-        \item (Convex sets): TODO
-        \item (Fundamental theorem of Galois theory): 
-        TODO
-        \item  (Algebraic geometry):
-        TODO
-    \end{enumerate}
+        \item (Convex sets):
+        Let $\cat{C}:=\set{U \subseteq \R^n \mid U \text{ is convex}}$ and
+        $\cat{S} := \set{V \subseteq \R^n}$, both partially ordered by inclusion.
+        Define two monotonic functions $F \colon \cat{S} \to \cat{C}$ and
+        $G \colon \cat{C} \to \cat{S}$ by $F(V) = \hull{V}$, where $\hull{\cdot}$
+        denotes the convex hull operator, and $G(U) = U$. Then we have
+        \[
+          \hull{V} \subseteq U \iff V \subseteq U  
+        \]
+        hence a monotone Galois connection.
+        
+        \item (Algebraic geometry): 
+        Let $k$ be an algebraically closed field, $n \in \N$. Then for
+        $\mathcal{R} := \set{I \subseteq k[X_1,\dots,X_n]}$ and
+        $\mathcal{A} := \set{M \subseteq \A^n(k)}$ there are inclusion-reversing
+        maps \begin{tikzcd}
+            \mathcal{R}
+                \arrow[r,"\mathcal{V}"{name=D},shift left = .60ex]
+              & \mathcal{A} \arrow[l,"\mathcal{I}"{name=C},shift left = .60ex]
+        \end{tikzcd}
+        where $\mathcal{V}(I)$ is the \textit{zero set} of $I$ and $\mathcal{I}(M)$
+        is the \textit{vanishing ideal} of $M$ (\textit{Hilbert's Nullstellensatz} deals 
+        precisely with this correspondence). In particular we have
+        \[
+          M \subseteq \mathcal{V}(I) \iff I \subseteq \mathcal{I}(M)  
+        \]
+        hence an antitone Galois connection.
 
+        \item  (Galois theory):
+        Let $L/K$ be a field extension, let $\cat{A} := \set{K \subseteq M \subseteq L \mid M \text{ is a field}}$
+        and $\cat{B} := \set{G \subseteq Gal(L/K)}$ where 
+        $Gal(L/K)$ is the group of automorphisms on $L$ that fix $K$. 
+        For a subgroup $G \subseteq Gal(L/K)$ let $L^G$ be the \textit{fixed field}
+        of $G$. Then there is an antitone Galois connection given by
+        \[
+            E \mapsto Gal(L/E), \ G \mapsto L^G.
+        \]
+
+    \end{enumerate}
+\begin{example}[Coproduct $\adj$ $\Delta$ $\adj$ Product]
+    Even universal construction such as (co-)products can be seen as adjunctions:
+    For a category $\cat{C}$ that has finite products and coproducts, we have the 
+    \textit{diagonal functor} $\Delta \colon \cat{C} \to \cat{C} \times \cat{C}$,
+    $\Delta X = (X,X)$, $\Delta(f) = (f,f)$ as well as the \textit{product functor}
+    $Prod \colon \cat{C} \times \cat{C} \to \cat{C}$, $Prod(X,Y) = X \times Y$,
+    $Prod((f,g) \colon (X_1,Y_1) \to (X_2,Y_2)) = f \times g \colon X_1 \times Y_1
+    \to X_2 \times Y_2$ and the \textit{coproduct functor} 
+    $Coprod \colon \cat{C} \times \cat{C} \to \cat{C}$, $Prod(X,Y) = X \sqcup Y$,
+    $Coprod((f,g) \colon (X_1,Y_1) \to (X_2,Y_2)) = f \sqcup g \colon X_1 \sqcup Y_1
+    \to X_2 \sqcup Y_2$.
+    Then the universal property of the product states that 
+    \[
+        \Hom[{C \times C}]((A,A),(X,Y)) \cong \Hom[C](A,X \times Y)
+    \]
+    for every $A \in \cat{C}$, which shows $\Delta \adj Prod$. 
+    Analogous one sees that $Coprod \adj \Delta$.
+\end{example}
 \end{example}

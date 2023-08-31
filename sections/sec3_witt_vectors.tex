@@ -14,7 +14,7 @@ for proving the final theorem. For different expositions to Witt vectors, consid
 \cite{rabinoff}, \cite{serre}. 
 The most complete account of Witt vectors that I know of is \cite{hazewinkel}.
 
-\section{Construction of the Witt vectors}
+\section{Construction of the Witt Vectors}
 
 \begin{definition}[truncation set]
     Let $\N$ be the set of positive integers and let $S\subseteq
@@ -371,7 +371,7 @@ An identical computation shows that
     W_S(f)(x \cdot y) = \W_S(f)(x) \cdot \W_S(f)(y)
 \]
 \end{beweis}
-\section{The Verschiebung, Frobenius and Teichmüller maps}
+\section{The Verschiebung, Frobenius and Teichmüller Maps}
 We have various operations on Witt vectors that are of interest.
 \begin{definition}[Restriction map]
     If $T \subseteq S$ are two truncation sets, the \textit{restriction from S to T}
@@ -510,7 +510,7 @@ by $\widetilde{F}_n((x_m)_{m \in S}) = (x_{nm})_{m \in S/n}$.
     commutativity of the following diagram for every $d \in S/n$:
     \[
         \begin{tikzcd}
-            \W_S(A) \arrow[d,"F_n"] \arrow[dr,"w_{nd}"] \\
+            \W_S(A) \arrow[d,"F_n"] \arrow[dr,"w_{nd}",sloped] \\
             \W_{S/n}(A) \arrow[r,"w_d"'] 
             & A
         \end{tikzcd}
@@ -649,7 +649,7 @@ Note that for $n,m \in \N$ we have $(S/n)/m = S/nm$ by definition.
     by definition of $w_n$.
 
 \end{beweis}
-\section{The comonad structure of Witt vectors}
+\section{The Comonad Structure of Witt Vectors}
 We will need the following lemma:
 \begin{lemma}\label{lem: non-zero divisor}
     Let $m \in \Z$. If $m$ is a non-zero divisor in A, then it is a
@@ -922,7 +922,7 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
         \]
         using the fact that 
         \begin{tikzcd}
-            \W(\W(A)) \arrow[d,"w",dotted] \arrow[rd,"w_{nm}",dotted]\\
+            \W(\W(A)) \arrow[d,"w",dotted] \arrow[rd,"w_{nm}",dotted,sloped]\\
             \W(A)^{\N} \arrow[r,"(\widetilde{F}_n)_{\W(A)}",dotted]
             & \W(A)^{\N}
         \end{tikzcd}
@@ -934,7 +934,7 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
         \centering
         %\phantomsection\label{name1}
         \begin{tikzcd}
-            \W(A) \arrow[r,"F_n"] \arrow[d,"\Delta_A"] \arrow[rd,"F_{nm}",dotted]
+            \W(A) \arrow[r,"F_n"] \arrow[d,"\Delta_A"] \arrow[rd,"F_{nm}",dotted,sloped]
                  & \W(A) \arrow[d,"F_m"] \\
                 \W(\W(A)) \arrow[r,"w_{nm}"] 
                   & \W(A)
@@ -946,7 +946,7 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
         \centering
         %\phantomsection\label{name2}
         \begin{tikzcd}
-            \W(A) \arrow[r,"F_n"] \arrow[rd,"F_{nm}"']
+            \W(A) \arrow[r,"F_n"] \arrow[rd,"F_{nm}"',sloped]
             & \W(A) \arrow[d,"F_m"]\\
             & \W(A)
         \end{tikzcd}
@@ -957,7 +957,7 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
     \end{smallproof}
     \begin{claim*}
         \begin{tikzcd}
-            \W(A) \arrow[d,"\Delta_A"'] \arrow[rd,"\id_{\W(A)}"]\\
+            \W(A) \arrow[d,"\Delta_A"'] \arrow[rd,"\id_{\W(A)}",sloped]\\
             \W(\W(A)) \arrow[r,"\W(w_1)"']
             & \W(A) 
         \end{tikzcd}
@@ -967,7 +967,7 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
         evaluate the ghost coordinates:
         \[
             \begin{tikzcd}
-                \W(A) \arrow[d,"\Delta_A"'] \arrow[rd,"\id_{\W(A)}"] 
+                \W(A) \arrow[d,"\Delta_A"'] \arrow[rd,"\id_{\W(A)}",sloped] 
                 \arrow[dd,bend right = 60,"F"',dotted]\\
                 \W(\W(A)) \arrow[r,"\W(w_1)"'] \arrow[d,"w",dotted]
                 & \W(A) \arrow[d,"w",blue] \\
@@ -993,7 +993,7 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
     \centering
     %\phantomsection\label{name2}
     \begin{tikzcd}
-        \W(A) \arrow[d,"F_n"'] \arrow[dr,"w_n"]\\
+        \W(A) \arrow[d,"F_n"'] \arrow[dr,"w_n",sloped]\\
         \W(A) \arrow[r,"w_1"'] 
         & A
       \end{tikzcd}
@@ -1005,7 +1005,7 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
     \end{smallproof}
     \begin{claim*}
         \begin{tikzcd}
-            & \W(A) \arrow[d,"\Delta_A"] \arrow[ld,"\id_{\W(A)}"'] \\
+            & \W(A) \arrow[d,"\Delta_A"] \arrow[ld,"\id_{\W(A)}",sloped] \\
             \W(A)  & \W(\W(A)) \arrow[l,"w_1"]
         \end{tikzcd}
         commutes.
@@ -1017,7 +1017,7 @@ is a natural transformation of functors $\W \Rightarrow \id_{\cat{CRing}}$.
     \end{smallproof}
     This concludes the proof.
 \end{bigproof}
-\section{The Teichmüller map induces a morphism of comonads}
+\section{The Teichmüller Map induces a Morphism of Comonads}
 Now consider the \textit{teichmüller map} $\tau \colon A \to \W(A); 
 a \mapsto (a,0,0,0,\dots)$.
 It is multiplicative and preserves the unit, hence it extends uniquely to 
