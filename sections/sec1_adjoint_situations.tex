@@ -115,9 +115,9 @@ for $p\colon a\to a'$ and for $q\colon b \to b'$ the following two diagrams comm
         \colon F(b) \to a
     \]
     for $g\colon F(b)\to a$, $f\colon b \to G(a)$.
-\begin{claim}
+\begin{claim*}
 $\phi \circ \psi = \id$
-\end{claim}
+\end{claim*}
 \begin{smallproof}
 Let $f \colon b \to G(a)$.
 \begin{align*}
@@ -128,9 +128,9 @@ Let $f \colon b \to G(a)$.
     &= \id_{G(a)} \circ f = f \tag{right~\ref{eq: triangle identity of adjunction}}
 \end{align*}
 \end{smallproof}
-\begin{claim}
+\begin{claim*}
     $\psi \circ \phi = \id$
-\end{claim}
+\end{claim*}
 \begin{smallproof}
 \begin{align*}
         \psi(\phi(g)) &= \psi (G(g) \circ \eta_b) \tag{Definition of $\phi$}\\
@@ -140,23 +140,24 @@ Let $f \colon b \to G(a)$.
         &= g \circ \id_{F(b)} = g \tag{left~\ref{eq: triangle identity of adjunction}}
 \end{align*}
 \end{smallproof}
-\begin{claim}
+\begin{claim*}
     $\phi_{a,b}$ is natural in $a$.
-\end{claim}
+\end{claim*}
 \begin{smallproof}
     Let $p \colon a \to a'$. Then by functoriality of $G$ we have:
     \[
-       G(p) \circ G(g) \circ \eta_b = G(p \circ g) \circ \eta_b.
+      G(p) \circ \phi_{a,b}(g)=  G(p) \circ G(g) \circ \eta_b =
+      G(p \circ g) \circ \eta_b = \phi_{a',b}(p \circ g).
     \]
 \end{smallproof}
-\begin{claim}
+\begin{claim*}
     $\phi_{a,b}$ is natural in $b$.
-\end{claim}
+\end{claim*}
 \begin{smallproof}
     Let $q \colon b \to b'$. Then by functoriality of $G$ and naturality of $\eta$ we have: 
     \[
-       G(g \circ F(q)) \circ \eta_b = G(g) \circ GF(q) \circ \eta_b
-       = G(g) \circ \eta_{b'} \circ q
+       \phi_{a,b}(g \circ F(q)) = G(g \circ F(q)) \circ \eta_b = G(g) \circ GF(q) \circ \eta_b
+       = G(g) \circ \eta_{b'} \circ q = \phi_{a,b'}(g) \circ q
      \]
 \end{smallproof}
 $(a)\Leftarrow (b):$ Define 
@@ -168,9 +169,9 @@ $(a)\Leftarrow (b):$ Define
     \eps \colon FG \Rightarrow id_{\cat{A}} \quad \text{ by } \quad \eps_a := \psi_{a,G(a)}(\id_{G(a)})
     \colon FG(a) \to a
 \]
-\begin{claim}
+\begin{claim*}
     $\eta$ is a natural transformation.
-\end{claim}
+\end{claim*}
 \begin{smallproof}
     For $q \colon b \to b'$ we need to show that 
     \[
@@ -181,16 +182,16 @@ $(a)\Leftarrow (b):$ Define
               & GF(b')
         \end{tikzcd}
     \]
-    commutes. But using the naturality of $\phi$ in $a$ (applied to $q \colon a \to a'$) and
-    $b$ (applied to $F(q) \colon Fa \to Fa'$), we get
+    commutes. But using the naturality of $\phi$ (applied to $q \colon b \to b'$ and
+    $F(q) \colon Fb \to Fb'$), we get
     \begin{align*}
         \eta_{b'} \circ q &= \phi(\id_{Fb'}) \circ q = \phi(\id_{Fb'} \circ F(q))  = \phi(F(q) \circ \id_{Fb}) \\
         &= GF(q) \circ \phi(\id_{F(b)}) = GF(q) \circ \eta_b.
     \end{align*}
 \end{smallproof}
-\begin{claim}
+\begin{claim*}
     $\eps$ is a natural transformation.
-\end{claim}
+\end{claim*}
 \begin{smallproof}
     For $p \colon a \to a'$ we need to show that
     \[
@@ -209,9 +210,9 @@ $(a)\Leftarrow (b):$ Define
         &= \psi(\id_{Ga'}) \circ FG(p) = \eps_{a'} \circ FG(p).
     \end{align*}
 \end{smallproof}
-\begin{claim} 
+\begin{claim*} 
     $\eta$ and $\eps$ satisfy the triangle identities.
-\end{claim}
+\end{claim*}
 \begin{smallproof}
     \[
         \id_{F(b)} = \psi(\phi(\id_{F(b)})) = \psi(\eta_b) 
@@ -226,11 +227,11 @@ $(a)\Leftarrow (b):$ Define
 \end{bigproof}
 \begin{definition}[Adjunction]
     Let $\cat{A}$ and $\cat{B}$ be categories. 
-    We say that functors
+    Then functors
     $F \colon \cat{B} \to \cat{A}$, $G \colon \cat{A} \to \cat{B}$
-    form an \textit{adjunction between $\cat{A}$ and $\cat{B}$},
+    are said to form an \textit{adjunction between $\cat{A}$ and $\cat{B}$},
     if $F$ and $G$ satisfy the equivalent conditions of~\ref{prop: equiv def of adj}. 
-    We then say that $F$ is \textit{left-adjoint} to $G$ and $G$ is \textit{right-adjoint}
+    In this case $F$ is called \textit{left-adjoint} to $G$ and $G$ is called \textit{right-adjoint}
     to $F$. \\ \\
     We will denote the adjunction either by $F \! \adj_{\phi}\!\! G \colon \adjar{B}{A}$ or by 
     $F {\ }_{\eps}^{\text{\tiny{$\eta$}}}\!\!\!\!\adj G \colon \adjar{B}{A}$,
@@ -240,7 +241,10 @@ $(a)\Leftarrow (b):$ Define
             \arrow[r, bend left = 25, "F"{name=D}]
             \ar[r,"\bot",phantom,description]
           & \cat{A} \arrow[l ,bend left = 25,"G"{name=C}]
-    \end{tikzcd}, depending on the context.
+    \end{tikzcd}, depending on the context. The natural transformations
+    $\eta$ and $\eps$ are called \textit{unit} respectively \textit{counit}
+    of the adjunction.
+
 \end{definition}
 The following is another reason why adjunctions are a very useful concept:
 \begin{remark}[{proven for example in \cite[{Chapter 4.5}]{riehl}}]
@@ -310,7 +314,7 @@ The following is another reason why adjunctions are a very useful concept:
     and since $F$ and $G$ are antitone, we can view them as (covariant) functors
     $\adjar{B}{A^{op}}$. Thus an antitone Galois connection forms an adjunction between $\cat{A^{op}}$
     and $\cat{B}$. 
-    Galois connections appear all over mathematics, here are a few examples:
+    Galois connections appear all over mathematics, here are a few examples: \\
     \begin{enumerate}
         \item (Convex sets):
         Let $\cat{C}:=\set{U \subseteq \R^n \mid U \text{ is convex}}$ and

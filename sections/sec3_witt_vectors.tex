@@ -53,7 +53,7 @@ Recall that for every prime number $p$, we have the \textit{p-adic valuation map
     \]
 
 \end{definition}
-
+\newpage
 \begin{lemma}\label{lem: congruences}
     Let $A$ be a ring, $a,b \in A$, $v \in \N$, and p a prime number. Then:
     \[
@@ -71,7 +71,7 @@ Recall that for every prime number $p$, we have the \textit{p-adic valuation map
     for every $1 \leq i \leq p^v$: $v_p\bigl(\binom{p^v}{i}\bigr) = v - v_p(i)$.
     \end{claim*}
     \begin{smallproof}
-        First, note that $v_p(p^v-i) = v - v_p(i).$
+        First, note that $v_p(p^v-i) = v_p(i).$
         (Indeed: write $i = p^{v_p(i)} \cdot k$ for some $k \in \Z, p \nmid k$.
         Then $p^v-i = p^v-p^{v_p(i)}\cdot k = p^{v_p(i)}\cdot (p^{v-v_p(i)}-k)$,
         hence $p^{v_p(i)} \mid p^v-i$. But $p^{v_p(i)+1} \nmid p^v-i,$ since $p \nmid k$.)
@@ -95,6 +95,7 @@ Recall that for every prime number $p$, we have the \textit{p-adic valuation map
         which means that those summands vanish mod $p^{v+1}A$.
 \end{bigproof}
 The core of the construction is contained in the following Lemma:
+\newpage
 \begin{lemma}[Dwork]\label{lem: dwork}
 Suppose that for every prime number
 $p$ there exists a ring homomorphism $\phi_p \colon A \to A$ with
@@ -120,18 +121,19 @@ $$x_n \equiv \phi_p(x_{n/p}) \hskip8mm \text{modulo $p^{v_p(n)}A$.}$$
     since $\phi$ is a ring homomorphism and $d \in \N$.
     Now
     \begin{align}
-        \label{eq: congruence 1}
+        \label{eq: congruence 1} \tag{Eq.1}
         \sum_{d \mid n/p} d \cdot \phi(a_d^{n/pd}) 
         &\equiv
         \sum_{d \mid n/p} d \cdot a_d^{n/d} &\text{\hskip8mm mod} \ p^{v_p(n)}A \\
-        \label{eq: congruence 2}
+        \label{eq: congruence 2} \tag{Eq.2}
         &\equiv \sum_{d \mid n} d \cdot a_d^{n/d} &\text{\hskip8mm mod} \ p^{v_p(n)}A
     \end{align}
     so we get
     \[
         \phi(x_{n/p}) \equiv \sum_{d \mid n} d \cdot a_d^{n/d} = w_n(a) = x_n \text{\hskip8mm mod} \ p^{v_p(n)}A.
         \]
-    \begin{proof}[Proof of~(\ref{eq: congruence 1})]
+
+\begin{proof}[Proof of~(\ref{eq: congruence 1})]
     First, note that 
 \begin{align}\label{eq: multiplication helps congruence} \tag{$\ast$}
         x \equiv y \text{\hskip8mm mod }p^mA \implies dx \equiv dy \text{\hskip8mm mod } p^{m+v_p(d)}A
@@ -167,6 +169,7 @@ $$x_n \equiv \phi_p(x_{n/p}) \hskip8mm \text{modulo $p^{v_p(n)}A$.}$$
     \] 
     which implies (1).
     \end{proof}
+    
     \begin{proof}[Proof of~(\ref{eq: congruence 2})]
         It suffices to show that if $d \mid n$, $d \nmid n/p$, the term 
         $d \cdot a_d^{n/d}$ vanishes mod $p^{v_p(n)}A$.
@@ -225,7 +228,7 @@ We will often need the following
 \end{beweis}
 Now we can finish the construction of the Witt vectors:
 \begin{theorem} \label{thm: existence of Witt vectors}
-    There exists a unique ring structure such that the ghost map 
+    There exists a unique ring structure on $\W_S(A)$ such that the ghost map 
     \[
       w:\W_S(A) \to A^s  
     \]
@@ -240,7 +243,7 @@ Now we can finish the construction of the Witt vectors:
         b_n \mapsto b_n^p
     \end{align*}
     $\phi_p$ satisfies that $\phi_p(f) \equiv f^p$ modulo $pA$ (Indeed: it suffices to show that $\overline{\phi_p(f)}
-    = \overline{f^p}$ in $\Fp[a_n,b_n \mid n \in S]$, which is apparent). \todo{}
+    = \overline{f^p}$ in $\Fp[a_n,b_n \mid n \in S]$, which is apparent). Let $a = (a_n)_n,b=(b_n)_n$.
     \begin{claim*}
         $w(a)+w(b)$, $w(a) \cdot w(b)$ and $-w(a)$ are in the image of the ghost map.
     \end{claim*}
@@ -266,7 +269,7 @@ Now we can finish the construction of the Witt vectors:
     Since A is torsion-free, the ghost map is injective by~\ref{lem: injective ghost map}
     and hence, these polynomials are unique.
 
-    \underline{Step 2:} Now let $A'$ be any ring.
+    \underline{Step 2:} Now let $A'$ be any ring (Remember that $A = \Z[a_n,b_n \mid n \in S]$).
     Let $a' = (a'_n)_{n \in S}$, $b' = (b'_n)_{n \in S}$ be two vectors in $\W_S(A')$.
     Then there is a unique ring homomorphism
     \begin{align*}
@@ -275,19 +278,18 @@ Now we can finish the construction of the Witt vectors:
         b_n \mapsto b'_n
     \end{align*}
     such that $\W_S(e)(a) = a'$ and $\W_S(e)(b) = b'$
-    (Remember that $A = \Z[a_n,b_n \mid n \in S]$).
     We define:
     \begin{align*}
         a'+ b' &:= \W_S(e)(S) 
         = (S_n(a'_1,\dots,a'_n,b'_1,\dots,b'_n))_{n \in S} \\
         a' \cdot b' &:= \W_S(e)(P) = (P_n(a'_1,\dots,a'_n,b'_1,\dots,b'_n))_{n \in S} \\
-        -a' &:= \W_S(e)(I) = (I_n(a'_1,\dots,a'_n,b'_1,\dots,b'_n))_{n \in S}
+        -a' &:= \W_S(e)(I) = (I_n(a'_1,\dots,a'_n))_{n \in S}
     \end{align*}
     where $e$ commutes with integer polynomials, since it is a ring homomorphism.
     This is the unique way to define the ring structure on $\W_S(A')$, since functoriality
     of $\W$ forces $\W_S(e)$ to be a ring homomorphism.
 \begin{claim*}
-    These operations make $\W_S(A)$ into a ring.
+    These operations make $\W_S(A')$ into a ring.
 \end{claim*}
 \begin{smallproof}
     Suppose first that $A'$ is torsion-free, then the ghost map is injective
@@ -311,10 +313,10 @@ $w$ is natural, because for $f \colon A \to B$:
     \end{tikzcd}
 \]
 commutes since $f$ is a ring homomorphism, hence commutes with the integer polynomials $w_n$.
-To show that $w$ is a ring homomorphism, let $a',b' \in \W_S(A)$. Then: 
+To show that $w$ is a ring homomorphism, let $a',b' \in \W_S(A')$. Then: 
 \begin{align*}
-    w_n(a'+b') &= w_n(\W_S(e)(S)) = e(w(S)) = e(w(a)+w(b)) \\
-    &= e(w(a)) + e(w(b)) = w(a') +w(b')
+    w(a'+b') &= w(\W_S(e)(S)) = e^S(w(S)) = e^S(w(a)+w(b)) \\
+    &= e^S(w(a)) + e^S(w(b)) = w(a') +w(b')
 \end{align*}
 and analogously $w(a' \cdot b') = w(a') \cdot w(b')$.
 \todo{}
@@ -339,7 +341,7 @@ and analogously $w(a' \cdot b') = w(a') \cdot w(b')$.
     \] 
     since $w_n(1,0,0,\dots) = 1^n = 1$ for all $n$.
     By injectivity of the ghost map, the claim follows, because $(0,0,0,\dots)$
-    and $(1,0,0,\dots)$ are the zero element respectively the unit in $A^{\N}$.
+    and $(1,1,1,\dots)$ are the zero element respectively the unit in $A^{\N}$.
     In the general case: For $A'$ any ring, $(a'_n)_n \in \W_S(A')$,
     $(a'_n)_n + (0,0,\dots)$ is defined as $(S_1(a'_1,0),S_2(a'_1,a'_2,0,0),\dots)$
     and since $(S_1(a_1,0),S_2(a_1,a_2,0,0),\dots) = (a_1,a_2,\dots) \in \Z[a_n,b_n \mid n \in \N]$,
@@ -386,9 +388,7 @@ We have various operations on Witt vectors that are of interest.
 \end{definition}
 \todo{}
 If $S\subseteq \N$ is a truncation set, $n \in \N$, then
-\[
-   S/n := \{d \in \N \mid nd \in S\}
-\]
+   $S/n := \{d \in \N \mid nd \in S\}$
 is again a truncation set.
 \begin{definition}[Verschiebung] \
     Define 
@@ -426,15 +426,15 @@ is again a truncation set.
     \begin{smallproof}
     Let $a = (a_d)_{d \in S/n} \in \W_{S/n}(A).$ Let $m \in S$.
     \begin{itemize}
-        \item case 1: $m \neq n \cdot d$ $\forall d \in S$: Then
+        \item case 1: $m \neq n \cdot d$ $\forall d \in S/n$: Then
         $\widetilde{V_n}(w(a))_m = (\widetilde{V_n}(w_d)_{d \in S/n})_m = 0$ and
         \[
           w(V_n(a))_m = \sum_{k \mid m, k = nd} k \cdot a_d^{m/k} = 0
         \]
         because if there would be $k \mid m, k = nd$, this would mean that 
-        $m =k \cdot d' = n \cdot d \cdot d'$ for $d,d' \in S$ and then $d \cdot d' \mid m$
+        $m =k \cdot d' = n \cdot d \cdot d'$ for $d,d' \in S/n$ and then $d \cdot d' \mid m$
         which is a contradiction to case 1.
-        \item case 2: $m = n \cdot d$ for some $d \in S$:
+        \item case 2: $m = n \cdot d$ for some $d \in S/n$:
         \begin{align*}
         \widetilde{V_n}(w(a))_m &= (\widetilde{V_n}(w_d)_{d \in S/n})_m 
           = n \cdot w_d = n \cdot \sum_{k \mid d} k \cdot a_k^{d/k}. \\
@@ -565,7 +565,7 @@ by $\widetilde{F}_n((x_m)_{m \in S}) = (x_{nm})_{m \in S/n}$.
               & \W_{S/n}(A')
         \end{tikzcd} 
      \]
-\end{proof}
+\end{proof} 
 Note that for $n,m \in \N$ we have $(S/n)/m = S/nm$ by definition.
 \begin{lemma} \label{lem: F_n after F_m is F_{nm}}
     Let $n,m \in \N$.
@@ -663,7 +663,7 @@ We will need the following lemma:
     If $S = \emptyset$, the statement is trivial, so let $\abs{S} = 1$, this means
     that $S = \{n\}$ for some $n \in \N$, but then $\W_{\set{n}}(A) \cong \W_{\set{1}}(A) = A$ via $V_n$.
     Now for the induction step, let $n \in S$ be maximal and let $T = S - \{n\}$.
-    Then $S/n = \{1\}$ and therefore we have a short exact sequence 
+    Then $S/n = \{1\}$ and therefore we have a short exact sequence of $\Z$-modules
     \[
     \begin{tikzcd}
         0 \arrow[r]
@@ -732,7 +732,7 @@ we want to use Lemma~\ref{lem: dwork} again. Hence we first show:
     $p \mid n$, which shows that the two summands are congruent.
     It follows that there exists $x = (x_n)_{n \in \N}$ such that 
     \begin{align}
-        \label{eq: p cdot x_n}
+        \label{eq: p cdot x_n} \tag{Eq.3}
         p \cdot x_n = w_n(F_p(a)-a^p)
         \iff x_n = \frac{1}{p} \cdot w_n(F_p(a)-a^p)
     \end{align}
@@ -752,7 +752,7 @@ we want to use Lemma~\ref{lem: dwork} again. Hence we first show:
     But this is equivalent to:
     \[
         w_n(F_p(a)-a^p) \equiv \phi_l(w_{n/l}(F_p(a)-a^p))
-         \text{\hskip8mm mod }l^{v_l(n)A} \quad \forall l \neq p, \forall n \in l\N
+         \text{\hskip8mm mod }l^{v_l(n)}A \quad \forall l \neq p, \forall n \in l\N
     \]
     and 
     \[
@@ -796,7 +796,7 @@ we want to use Lemma~\ref{lem: dwork} again. Hence we first show:
     \]
     which proves the claim. Now in the general case, let $a' \in \W(A')$.
     Then \[
-        F_p(a') = \W g (F_p(a)) = \W g(a^p + p \cdot r) = (a')^p + p \cdot \W g(r)
+        F_p(a') = \W e (F_p(a)) = \W e(a^p + p \cdot r) = (a')^p + p \cdot \W e(r)
     \]
     for some $r \in A$.
 \end{beweis}
@@ -806,15 +806,15 @@ we want to use Lemma~\ref{lem: dwork} again. Hence we first show:
     \[
       \Delta \colon \W(A) \to \W(\W(A))  
     \]
-    such that $w_n(\Delta(a))=F_n(a)$ for all $a \in A, n \in \N$.
+    such that $w_n(\Delta(a))=F_n(a)$ for all $a \in \W(A), n \in \N$.
 \end{proposition}
 \begin{beweis}
 By naturality of $\Delta$, we can assume $A$ to be torsion-free. (If $A'$ is 
 an arbitrary ring, then the naturality implies uniqueness in the same way we argued
 in~\ref{lem: frobenius}.)
 \todo{}
-By applying Corollary~\ref{cor: A torsion-free implies W(A) torsion-free}
-twice, we get that the ghost map 
+By applying Corollary~\ref{cor: A torsion-free implies W(A) torsion-free},
+we get that the ghost map 
 \[
     w \colon \W(\W(A)) \to \W(A)^{\N}
 \]
@@ -1025,6 +1025,7 @@ a natural ring homomorphism
 \[
 \tau_A \colon \Z A \to \W(A)
 \]
+(see Example~\ref{ex: free monoid ring}).
 \begin{theorem} \label{thm: morphism of comonads}
     $\tau \colon \Z[\_] \Rightarrow \W(\_)$ is a morphism of comonads.
 \end{theorem}
